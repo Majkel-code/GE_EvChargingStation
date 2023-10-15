@@ -1,5 +1,5 @@
 BATTERY_LEVEL: 5 # value in %
-CHARGING_PORT: CHADEMO # DC: CHAdeMO >= 50kW | AC >= 6.6kW (europe)
+CHARGING_PORT: 'CHADEMO' # DC: CHAdeMO >= 50kW | AC >= 6.6kW (europe)
 MAX_BATTERY_CAPACITY_IN_KWH: 40 # max battery capacity in KWH
 ACTUAL_BATTERY_STATUS_IN_KWH: 0 # actual bettery capacity in KWH
 BATTERY_VOLTAGE: 350

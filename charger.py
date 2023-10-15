@@ -2,8 +2,8 @@ from threading import Thread
 from fastapi import APIRouter, HTTPException
 import charge_simulation
 from pydantic import BaseModel
-from charger_vehicle_config import VehicleBridge as Vehicle
-from charger_vehicle_config import ChargerBridge as Charger
+from configs.charger_vehicle_config_bridge import VehicleBridge as Vehicle
+from configs.charger_vehicle_config_bridge import ChargerBridge as Charger
 
 
 class Structure(BaseModel):
@@ -33,7 +33,8 @@ async def read_item(item_id: str):
 @router.post("/start")
 async def read_items():
 	if Vehicle.connect["is_connected"]:
-		thread = Thread(target=charge_simulation.prepare_charging)
+		initialize_charge_simulation = charge_simulation.ChargeSimulation()
+		thread = Thread(target=initialize_charge_simulation.prepare_charging)
 		thread.start()
 		return "CHARGING STARTED!"
 	raise HTTPException(status_code=404, detail="TO START SESSION FIRST CONNECT VEHICLE!")

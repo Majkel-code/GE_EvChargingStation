@@ -1,8 +1,7 @@
 from fastapi import APIRouter, HTTPException
-import read_default_settings
 from pydantic import BaseModel
-from charger_vehicle_config import VehicleBridge as Vehicle
-from charger_vehicle_config import ChargerBridge as Charger
+from charger_vehicle_config_bridge import VehicleBridge as Vehicle
+from charger_vehicle_config_bridge import ChargerBridge as Charger
 
 
 class Structure(BaseModel):

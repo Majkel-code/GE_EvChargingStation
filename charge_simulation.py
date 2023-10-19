@@ -16,6 +16,7 @@ class ChargeSimulation:
 		self.estimated_time_to_full_charge_in_min = self.estimated_time_needed_to_full_charge()
 		self.actual_kw_per_min = self.charged_kw_per_minute()
 
+
 	def check_connectivity_and_set_max_power(self):
 		if Vehicle.settings['CHARGING_PORT'] in Charger.settings['CHARGING_OUTLETS']:
 			return Charger.settings[f"MAX_CHARGING_POWER_{Vehicle.settings['CHARGING_PORT']}"]
@@ -99,98 +100,3 @@ class ChargeSimulation:
 
 	def prepare_charging(self):
 		print(self.first_stage_charging())
-
-# def charging_service(self):
-# 	charging_target = self.charging_without_voltage_drop()
-# 	# if charging_target["complete"] and charging_target['error'] is None:
-# 	# 	charging_target = charging_to_max_battery_capacity(current_battery, kw_per_minute)
-# 	return charging_target
-#
-#
-# def prepare_charging(self):
-# 	print(type(Charger.settings['ACTUAL_KW_PER_MIN']))
-# 	current_battery = self.current_battery_status_kwh()
-# 	kwh_to_full_charge = self.energy_needed_to_full_charge()
-# 	time_in_hours_to_full_charge = self.estimated_time_needed_to_full_charge()
-# 	kw_per_minute = self.charged_kw_per_minute()
-# 	print(self.charging_service())
-
-# ___________________________________________________
-# def current_battery_status_kwh():
-# 	current_battery = (Vehicle.settings["BATTERY_LEVEL"] / 100) * Vehicle.settings["MAX_BATTERY_CAPACITY_IN_KWH"]
-# 	Vehicle.settings['ACTUAL_BATTERY_STATUS_IN_KWH'] = current_battery
-# 	return current_battery
-#
-#
-# def energy_needed_to_full_charge():
-# 	kwh_before_losses = Vehicle.settings["MAX_BATTERY_CAPACITY_IN_KWH"] - Vehicle.settings['ACTUAL_BATTERY_STATUS_IN_KWH']
-# 	lost_kwh_when_charging = kwh_before_losses * 0.1
-# 	return kwh_before_losses + lost_kwh_when_charging
-#
-#
-# def time_needed_to_full_charge(kwh_to_full_charge):
-# 	time_needed = (kwh_to_full_charge / Charger.settings["MAX_CHARGING_POWER"])
-# 	time_needed_str = str(time_needed).split('.')
-# 	print(time_needed_str)
-# 	hours = time_needed_str[0]
-# 	minutes = time_needed_str[1]
-# 	print(f"Estimated charging time to 80% is {hours} hours and {minutes} minutes")
-# 	return time_needed * 60
-#
-#
-# def charged_kw_per_minute(kwh_to_full_charge, time_in_hours_to_full_charge):
-# 	kw_per_minute = kwh_to_full_charge / time_in_hours_to_full_charge
-# 	Charger.settings['ACTUAL_KW_PER_MIN'] = kw_per_minute
-# 	return kw_per_minute
-#
-#
-# def exchange_kw_to_percent():
-# 	actual_percent = round((Vehicle.settings['ACTUAL_BATTERY_STATUS_IN_KWH'] / Vehicle.settings["MAX_BATTERY_CAPACITY_IN_KWH"]) * 100, 2)
-# 	Vehicle.settings["BATTERY_LEVEL"] = actual_percent
-#
-#
-# def charging_to_max_battery_capacity():
-# 	while Vehicle.settings["BATTERY_LEVEL"] < 100:
-# 		if Vehicle.connect["is_connected"]:
-# 			if Vehicle.settings['ACTUAL_BATTERY_STATUS_IN_KWH'] + Charger.settings['ACTUAL_KW_PER_MIN'] > Vehicle.settings["MAX_BATTERY_CAPACITY_IN_KWH"]:
-# 				Charger.settings['ACTUAL_KW_PER_MIN'] = Vehicle.settings["MAX_BATTERY_CAPACITY_IN_KWH"] - Vehicle.settings['ACTUAL_BATTERY_STATUS_IN_KWH']
-# 			Vehicle.settings['ACTUAL_BATTERY_STATUS_IN_KWH'] += Charger.settings['ACTUAL_KW_PER_MIN']
-# 			Charger.settings['ACTUAL_KW_PER_MIN'] = Charger.settings['ACTUAL_KW_PER_MIN'] / 1.04
-# 			exchange_kw_to_percent()
-# 			print(f"CHARGING ONGOING: {Vehicle.settings['BATTERY_LEVEL']}%")
-# 			time.sleep(1)
-# 		else:
-#
-# 			return {'complete': True, 'error': f"Vehicle disconnected from CHARGER! \n"
-# 											   f" Last battery status: {Vehicle.settings['BATTERY_LEVEL']}"}
-# 	return {'complete': True, 'error': None}
-#
-#
-# def charging_without_voltage_drop():
-# 	print(Vehicle.settings['ACTUAL_BATTERY_STATUS_IN_KWH'])
-# 	while Vehicle.settings["BATTERY_LEVEL"] < 80:
-# 		if Vehicle.connect["is_connected"]:
-# 			Vehicle.settings['ACTUAL_BATTERY_STATUS_IN_KWH'] += Charger.settings['ACTUAL_KW_PER_MIN']
-# 			exchange_kw_to_percent()
-# 			print(f"CHARGING ONGOING: {Vehicle.settings['BATTERY_LEVEL']}%")
-# 			time.sleep(1)
-# 		else:
-# 			return {'complete': True, 'error': f"Vehicle disconnected from CHARGER! \n"
-# 											   f" Last battery status: {Vehicle.settings['BATTERY_LEVEL']}"}
-# 	return charging_to_max_battery_capacity()
-#
-#
-# def charging_service():
-# 	charging_target = charging_without_voltage_drop()
-# 	# if charging_target["complete"] and charging_target['error'] is None:
-# 	# 	charging_target = charging_to_max_battery_capacity(current_battery, kw_per_minute)
-# 	return charging_target
-#
-#
-# def prepare_charging():
-# 	print(type(Charger.settings['ACTUAL_KW_PER_MIN']))
-# 	current_battery = current_battery_status_kwh()
-# 	kwh_to_full_charge = energy_needed_to_full_charge()
-# 	time_in_hours_to_full_charge = time_needed_to_full_charge(kwh_to_full_charge)
-# 	kw_per_minute = charged_kw_per_minute(kwh_to_full_charge, time_in_hours_to_full_charge)
-# 	print(charging_service())

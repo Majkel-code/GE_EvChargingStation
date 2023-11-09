@@ -4,6 +4,7 @@ import datetime
 import yaml
 
 
+
 class CustomFormatter(logging.Formatter):
 	LOG_DIR = 'server_logs/'
 
@@ -33,7 +34,7 @@ class CustomFormatter(logging.Formatter):
 
 
 class Logger:
-	with open("server_config.yaml", "r+") as f:
+	with open(f"config/config_files/server_config.yaml", "r+") as f:
 		server_config = yaml.safe_load(f)
 	logger = logging.getLogger()
 	logger.setLevel(server_config['LOG_LEVEL_CONSOLE'].upper())

@@ -1,12 +1,11 @@
-from logging_config import Logger
+from config.logging_system.logging_config import Logger
 import uvicorn
 import yaml
 from fastapi import FastAPI
-import charger
-import charger_vehicle_config_bridge
-from charger_vehicle_config_bridge import __IsServerAlive__ as _is_server_alive
-import vehicle_simulator
-
+import modules.charger.charger as charger
+import config.charger_vehicle_config_bridge as charger_vehicle_config_bridge
+from config.charger_vehicle_config_bridge import __IsServerAlive__ as _is_server_alive
+import modules.vehicle.vehicle_simulator as vehicle_simulator
 
 logger= Logger.logger
 app = FastAPI()
@@ -33,7 +32,7 @@ class InitialiseServer:
 	try:
 		config_charger = charger_vehicle_config_bridge.ChargerBridge()
 		config_vehicle = charger_vehicle_config_bridge.VehicleBridge()
-		with open("server_config.yaml", "r+") as f:
+		with open("config/config_files/server_config.yaml", "r+") as f:
 			server_config = yaml.safe_load(f)
 		config = uvicorn.Config(app=server_config["SERVER_APP"],
 								port=server_config["PORT"],

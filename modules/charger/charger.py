@@ -1,11 +1,11 @@
 from threading import Thread
 from fastapi import APIRouter, HTTPException
-import charge_simulation
+import simulations.charge_simulation as charge_simulation
 from pydantic import BaseModel
-from charger_vehicle_config_bridge import VehicleBridge as Vehicle
-from charger_vehicle_config_bridge import ChargerBridge as Charger
-import charger_vehicle_config_bridge
-from logging_config import Logger
+from config.charger_vehicle_config_bridge import VehicleBridge as Vehicle
+from config.charger_vehicle_config_bridge import ChargerBridge as Charger
+import config.charger_vehicle_config_bridge as charger_vehicle_config_bridge
+from config.logging_system.logging_config import Logger
 
 
 class Structure(BaseModel):

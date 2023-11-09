@@ -1,9 +1,9 @@
-from charger_vehicle_config_bridge import VehicleBridge as Vehicle
-from charger_vehicle_config_bridge import ChargerBridge as Charger
+from config.charger_vehicle_config_bridge import VehicleBridge as Vehicle
+from config.charger_vehicle_config_bridge import ChargerBridge as Charger
 from fastapi import Request
 import time
-from logging_config import Logger, LoggerChargingSession
-import cheaker
+from config.logging_system.logging_config import Logger, LoggerChargingSession
+import config.cheaker as cheaker
 
 logger = Logger.logger
 logger_charge_session = LoggerChargingSession.logger
@@ -43,8 +43,6 @@ class ChargeSimulation:
 		return kwh_before_losses + lost_kwh_when_charging
 
 	def estimated_time_needed_to_full_charge(self):
-		print(self.kw_needed_to_full_charge)
-		print(self.max_charging_power)
 		time_needed = round((self.kw_needed_to_full_charge / self.max_charging_power), 2)
 		time_needed_str = str(time_needed).split('.')
 		hours = time_needed_str[0]
@@ -76,12 +74,6 @@ class ChargeSimulation:
 			logger_charge_session.debug(f"actual battery status: {self.actual_battery_status_in_kwh} ")
 			logger_charge_session.debug(f"actual kw/min{self.actual_kw_per_min}")
 			logger_charge_session.debug("_____________________________________________________________")
-			# logger_charge_session.warning(
-			# 	f"INFORMATION ABOUT ACTUAL CHARGING STATE.... \n"
-			# 	f"actual battery status: {self.actual_battery_status_in_kwh} \n"
-			# 	f"actual kw/min{self.actual_kw_per_min} \n"
-			# 	f"_____________________________________________________________"
-			# )
 			if Vehicle.connect["is_connected"]: 
 				if self.actual_battery_status_in_kwh + self.actual_kw_per_min > self.max_battery_capacity_in_kwh:
 					self.actual_kw_per_min = self.max_battery_capacity_in_kwh - self.actual_battery_status_in_kwh
@@ -104,7 +96,6 @@ class ChargeSimulation:
 		return {'complete': True, 'error': None}
 
 	def first_stage_charging(self):
-		print(self.actual_battery_status_in_kwh)
 		while self.actual_battery_level < 80:
 			if Vehicle.connect["is_connected"] and cheaker.check_server_is_alive():
 				self.actual_battery_status_in_kwh += self.actual_kw_per_min

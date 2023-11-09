@@ -4,22 +4,38 @@ import yaml
 from fastapi import FastAPI
 import charger
 import charger_vehicle_config_bridge
+from charger_vehicle_config_bridge import __IsServerAlive__ as _is_server_alive
 import vehicle_simulator
 
 
-logger = Logger.logger
+logger= Logger.logger
 app = FastAPI()
 app.include_router(charger.router)
 app.include_router(vehicle_simulator.router)
 
 
-class ChargerServer:
+class Server:
+	def start():
+		if not _is_server_alive._is_alive_:
+			try:
+				server = InitialiseServer
+				_is_server_alive._is_alive_ = True
+				InitialiseServer.server.run()
+				logger.info("SERVER CLOSED SUCCESSFUL!")
+				_is_server_alive._is_alive_ = False
+			except Exception as e:
+				logger.critical("UNABLE TO ESTABLISH SERVER!")
+				return {"response": False, "error": e}
+		return _is_server_alive._is_alive_
+
+
+class InitialiseServer:
 	try:
 		config_charger = charger_vehicle_config_bridge.ChargerBridge()
 		config_vehicle = charger_vehicle_config_bridge.VehicleBridge()
 		with open("server_config.yaml", "r+") as f:
 			server_config = yaml.safe_load(f)
-		config = uvicorn.Config(server_config["SERVER_APP"],
+		config = uvicorn.Config(app=server_config["SERVER_APP"],
 								port=server_config["PORT"],
 								log_config=None,
 								log_level=server_config["LOG_LEVEL"],
@@ -31,6 +47,4 @@ class ChargerServer:
 
 
 if __name__ == "__main__":
-	prepare = ChargerServer
-	prepare.server.run()
-	logger.info("SERVER CLOSED SUCCESSFUL!")
+	start = Server.start()

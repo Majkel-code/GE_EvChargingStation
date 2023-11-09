@@ -1,7 +1,12 @@
 from charger_vehicle_config_bridge import VehicleBridge as Vehicle
 from charger_vehicle_config_bridge import ChargerBridge as Charger
+from fastapi import Request
 import time
+from logging_config import Logger, LoggerChargingSession
+import cheaker
 
+logger = Logger.logger
+logger_charge_session = LoggerChargingSession.logger
 
 class ChargeSimulation:
 	def __init__(self):
@@ -10,18 +15,22 @@ class ChargeSimulation:
 		self.actual_battery_level = Vehicle.settings["BATTERY_LEVEL"]
 		self.actual_battery_status_in_kwh = self.current_battery_status_kwh()
 		self.kw_needed_to_full_charge = self.energy_needed_to_full_charge()
+		logger.info("VEHICLE SETTING READ PROPERLY...")
 
 		# CHARGER INIT
 		self.max_charging_power = self.check_connectivity_and_set_max_power()
 		self.estimated_time_to_full_charge_in_min = self.estimated_time_needed_to_full_charge()
 		self.actual_kw_per_min = self.charged_kw_per_minute()
+		logger.info("CHARGER SETTINGS READ PROPERLY...")
 
 
 	def check_connectivity_and_set_max_power(self):
 		if Vehicle.settings['CHARGING_PORT'] in Charger.settings['CHARGING_OUTLETS']:
+			logger.info("CHECKING CONNECTIVITY...")
+			time.sleep(2)
 			return Charger.settings[f"MAX_CHARGING_POWER_{Vehicle.settings['CHARGING_PORT']}"]
 		else:
-			print("CHECK CONNECTIVITY AND TRY AGAIN!")
+			logger.warning("CHECK CONNECTIVITY AND TRY AGAIN!")
 			return 0
 
 	def current_battery_status_kwh(self):
@@ -36,12 +45,14 @@ class ChargeSimulation:
 	def estimated_time_needed_to_full_charge(self):
 		print(self.kw_needed_to_full_charge)
 		print(self.max_charging_power)
-		time_needed = (self.kw_needed_to_full_charge / self.max_charging_power)
-		# time_needed_str = str(time_needed).split('.')
-		# print(time_needed_str)
-		# hours = time_needed_str[0]
-		# minutes = time_needed_str[1]
-		print(f"Estimated charging time to 80% is {time_needed} hour")
+		time_needed = round((self.kw_needed_to_full_charge / self.max_charging_power), 2)
+		time_needed_str = str(time_needed).split('.')
+		hours = time_needed_str[0]
+		if len(time_needed_str[1]) < 2:
+			minutes = int(time_needed_str[1]) * 10
+		else:
+			minutes = int(time_needed_str[1])
+		logger_charge_session.info(f"Estimated charging time to 80% is {hours} hours and {round((minutes / 100) * 60)} minutes")
 		return time_needed * 60
 
 	def charged_kw_per_minute(self, charging_after_voltage_drop=None):
@@ -60,43 +71,53 @@ class ChargeSimulation:
 		return actual_percent
 
 	def charging_to_max_battery_capacity(self):
-		while self.actual_battery_level < 100:
-			print(
-				f"DATA PRINTED ONLY FOR TEST'S!!! \n"
-				f"actual battery status: {self.actual_battery_status_in_kwh} \n"
-				f"actual kw/min{self.actual_kw_per_min} \n"
-				f"_____________________________________________________________"
-			)
-			if Vehicle.connect["is_connected"]:
+		while self.actual_battery_level < 100 and cheaker.check_server_is_alive():
+			logger_charge_session.debug("INFORMATION ABOUT ACTUAL CHARGING STATE.... ")
+			logger_charge_session.debug(f"actual battery status: {self.actual_battery_status_in_kwh} ")
+			logger_charge_session.debug(f"actual kw/min{self.actual_kw_per_min}")
+			logger_charge_session.debug("_____________________________________________________________")
+			# logger_charge_session.warning(
+			# 	f"INFORMATION ABOUT ACTUAL CHARGING STATE.... \n"
+			# 	f"actual battery status: {self.actual_battery_status_in_kwh} \n"
+			# 	f"actual kw/min{self.actual_kw_per_min} \n"
+			# 	f"_____________________________________________________________"
+			# )
+			if Vehicle.connect["is_connected"]: 
 				if self.actual_battery_status_in_kwh + self.actual_kw_per_min > self.max_battery_capacity_in_kwh:
 					self.actual_kw_per_min = self.max_battery_capacity_in_kwh - self.actual_battery_status_in_kwh
 					Charger.settings['ACTUAL_KW_PER_MIN'] = self.actual_kw_per_min
 				self.actual_battery_status_in_kwh += self.actual_kw_per_min
 				self.actual_kw_per_min = self.charged_kw_per_minute(Charger.settings['VOLTAGE_DROP'])
 				self.actual_battery_level = self.exchange_kw_to_percent()
-				print(f"CHARGING ONGOING: {self.actual_battery_level}%")
+				logger_charge_session.info(f"CHARGING ONGOING: {self.actual_battery_level}%")
 				time.sleep(1)
 			else:
+				logger_charge_session.warning("VEHICLE DISCONNECTED CHARGE SESSION ABORD!")
+				Request.get("http://127.0.0.1:5000/vehicle/disconnect")
 				return {
 					'complete': True,
 					'error':
 						f"Vehicle disconnected from CHARGER! \n"
 						f" Last battery status: {self.actual_battery_level}"
 				}
+		logger_charge_session.info("CHARGE SESSION COMPLETE...")
 		return {'complete': True, 'error': None}
 
 	def first_stage_charging(self):
 		print(self.actual_battery_status_in_kwh)
 		while self.actual_battery_level < 80:
-			if Vehicle.connect["is_connected"]:
+			if Vehicle.connect["is_connected"] and cheaker.check_server_is_alive():
 				self.actual_battery_status_in_kwh += self.actual_kw_per_min
 				self.actual_battery_level = self.exchange_kw_to_percent()
-				print(f"CHARGING ONGOING: {self.actual_battery_level}%")
+				logger_charge_session.info(f"CHARGING ONGOING: {self.actual_battery_level}%")
 				time.sleep(1)
 			else:
+				logger_charge_session.warning("VEHICLE DISCONNECTED CHARGE SESSION ABORD!")
 				return {'complete': True, 'error': f"Vehicle disconnected from CHARGER! \n"
 												   f" Last battery status: {self.actual_battery_level}"}
+		logger_charge_session.info("80% OF BATTERY LEVEL ACHIVE...")
 		return self.charging_to_max_battery_capacity()
 
 	def prepare_charging(self):
+		logger_charge_session.info("STARTING CHARGING SESSION...")
 		print(self.first_stage_charging())

@@ -1,12 +1,11 @@
 import logging.handlers
 import logging
 import datetime
+import yaml
 
 
 class CustomFormatter(logging.Formatter):
 	LOG_DIR = 'server_logs/'
-	LOG_LVL_FILE = logging.INFO
-	LOG_LVL_CONSOLE = logging.INFO
 
 	blue = '\x1b[38;5;39m'
 	green = '\x1b[1;32m'
@@ -34,21 +33,49 @@ class CustomFormatter(logging.Formatter):
 
 
 class Logger:
+	with open("server_config.yaml", "r+") as f:
+		server_config = yaml.safe_load(f)
+	logger = logging.getLogger()
+	logger.setLevel(server_config['LOG_LEVEL_CONSOLE'].upper())
+	logger.handlers = []
+
+	# output custom log format in console
+	console = logging.StreamHandler()
+	console.setLevel(server_config['LOG_LEVEL'].upper())
+	console.setFormatter(CustomFormatter())
+
+	# save custom logs format to file
+	today = datetime.date.today()
+	save_in_file = logging.handlers.RotatingFileHandler(
+		CustomFormatter.LOG_DIR +
+		'server_application{}.log'.format(today.strftime('%Y_%m_%d'))
+	)
+	save_in_file.setLevel(logging.DEBUG)
+	save_in_file.setFormatter(CustomFormatter())
+
+	# Add both handlers to the logger
+	logger.addHandler(console)
+	logger.addHandler(save_in_file)
+
+
+class LoggerChargingSession:
 	logger = logging.getLogger()
 	logger.setLevel(logging.DEBUG)
 	logger.handlers = []
 
+	# output custom log format in console
 	console = logging.StreamHandler()
 	console.setLevel(logging.DEBUG)
 	console.setFormatter(CustomFormatter())
 
+	# save custom logs format to file
 	today = datetime.date.today()
 	save_in_file = logging.handlers.RotatingFileHandler(
 		CustomFormatter.LOG_DIR +
-		'application{}.log'.format(today.strftime('%Y_%m_%d'))
+		'charge_session{}.log'.format(today.strftime('%Y_%m_%d'))
 	)
 	save_in_file.setLevel(logging.DEBUG)
-	save_in_file.setFormatter(logging.Formatter())
+	save_in_file.setFormatter(CustomFormatter())
 
 	# Add both handlers to the logger
 	logger.addHandler(console)

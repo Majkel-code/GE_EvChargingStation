@@ -30,8 +30,8 @@ async def read_items():
 async def read_items():
 	if Vehicle.connect["is_connected"]:
 		Vehicle.connect["is_connected"] = False
-		return {"response": True, "error": None}
 		logger.info(f"VEHICLE SUCCESSFULY DISCONNECTED: {Vehicle.connect}")
+		return {"response": True, "error": None}
 	logger.warning(f"VEHICLE ACTUALLY DISCONNECTED: {Vehicle.connect}")
 	{"response": False, "error": "VEHICLE ACTUALLY DISCONNECTED!"}
 

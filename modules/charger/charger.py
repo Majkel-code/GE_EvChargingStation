@@ -5,8 +5,8 @@ from pydantic import BaseModel
 from config.charger_vehicle_config_bridge import VehicleBridge as Vehicle
 from config.charger_vehicle_config_bridge import ChargerBridge as Charger
 import config.charger_vehicle_config_bridge as charger_vehicle_config_bridge
-from config.logging_system.logging_config import Logger
-
+from config.logging_system.logging_config import Logger 
+import time
 
 class Structure(BaseModel):
 	key: str
@@ -18,9 +18,6 @@ router = APIRouter(
 )
 
 logger = Logger.logger
-@router.get("/live")
-async def read_items():
-	return charger_vehicle_config_bridge.__IsServerAlive__._is_alive_
 
 @router.get("/all")
 async def read_items():
@@ -47,6 +44,24 @@ async def read_items():
 			thread = Thread(target=initialize_charge_simulation.prepare_charging)
 			thread.start()
 			logger.info("SESSION INITIALIZE...")
+			return {"response": True, "error": None}
+		except Exception as e:
+			logger.error(f"UNABLE TO INITIALIZE SESSION! {e}")
+			return {"response": False, "error": e}
+	logger.warning("TO START SESSION FIRST CONNECT VEHICLE!")
+	raise HTTPException(status_code=404, detail="REQUEST CAN'T BE FIND!")
+
+
+@router.post("/start_{percent}")
+async def read_items(percent: int):
+	if Vehicle.connect["is_connected"]:
+		try:
+			initialize_charge_simulation = charge_simulation.ChargeSimulation()
+			logger.info(f"CUSTOM CHARGING LEVEL SET TO: {percent}%")
+			thread = Thread(target=initialize_charge_simulation.prepare_charging, args=[percent])
+			logger.info("SESSION INITIALIZE...")
+			thread.start()
+			time.sleep(0.2)
 			return {"response": True, "error": None}
 		except Exception as e:
 			logger.error(f"UNABLE TO INITIALIZE SESSION! {e}")

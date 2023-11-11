@@ -37,12 +37,12 @@ class Logger:
 	with open(f"config/config_files/server_config.yaml", "r+") as f:
 		server_config = yaml.safe_load(f)
 	logger = logging.getLogger()
-	logger.setLevel(server_config['LOG_LEVEL_CONSOLE'].upper())
+	logger.setLevel(server_config['LOG_LEVEL_CONSOLE'])
 	logger.handlers = []
 
 	# output custom log format in console
 	console = logging.StreamHandler()
-	console.setLevel(server_config['LOG_LEVEL'].upper())
+	console.setLevel(server_config['LOG_LEVEL_CONSOLE'])
 	console.setFormatter(CustomFormatter())
 
 	# save custom logs format to file
@@ -51,7 +51,7 @@ class Logger:
 		CustomFormatter.LOG_DIR +
 		'server_application{}.log'.format(today.strftime('%Y_%m_%d'))
 	)
-	save_in_file.setLevel(logging.DEBUG)
+	save_in_file.setLevel(server_config['LOG_LEVEL'])
 	save_in_file.setFormatter(CustomFormatter())
 
 	# Add both handlers to the logger
@@ -59,26 +59,6 @@ class Logger:
 	logger.addHandler(save_in_file)
 
 
-class LoggerChargingSession:
-	logger = logging.getLogger()
-	logger.setLevel(logging.DEBUG)
-	logger.handlers = []
-
-	# output custom log format in console
-	console = logging.StreamHandler()
-	console.setLevel(logging.DEBUG)
-	console.setFormatter(CustomFormatter())
-
-	# save custom logs format to file
-	today = datetime.date.today()
-	save_in_file = logging.handlers.RotatingFileHandler(
-		CustomFormatter.LOG_DIR +
-		'charge_session{}.log'.format(today.strftime('%Y_%m_%d'))
-	)
-	save_in_file.setLevel(logging.DEBUG)
-	save_in_file.setFormatter(CustomFormatter())
-
-	# Add both handlers to the logger
-	logger.addHandler(console)
-	logger.addHandler(save_in_file)
-
+class ServerLogger(Logger):
+	def __init__(self) -> None:
+		super().__init__()

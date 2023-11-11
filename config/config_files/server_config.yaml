@@ -1,7 +1,8 @@
 # Server config
 SERVER_APP: "Server:app"
 PORT: 5000
-LOG_LEVEL: "debug"
-LOG_LEVEL_CONSOLE: "debug"
+LOG_LEVEL: 10 # log levels in int || 10 = debug | 20 = info | 30 = warning | 40 = error | 50 = critical
+LOG_LEVEL_CONSOLE: 10 # log levels in int || 10 = debug | 20 = info | 30 = warning | 40 = error | 50 = critical
+LOG_LEVEL_SERVER: 10 # log levels in int || 10 = debug | 20 = info | 30 = warning | 40 = error | 50 = critical
 HOST_IP: "127.0.0.1"
 RELOAD: True

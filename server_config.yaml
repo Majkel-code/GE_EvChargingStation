@@ -1,0 +1,6 @@
+# Server config
+SERVER_APP: "Server:app"
+PORT: 5000
+LOG_LEVEL: "debug"
+HOST_IP: "127.0.0.1"
+RELOAD: True

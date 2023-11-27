@@ -1,0 +1,76 @@
+# SERVER URL AND SERVER ENDPOINTS
+SERVER_URL: "http://127.0.0.1:5000/"
+SERVER_IS_ALIVE: 'is_alive'
+SERVER_SHUTDOWN: 'server_stop'
+#_____________________________________________
+# CHARGER URL AND CHARGER ENDPOINTS
+CHARGER_URL: "http://127.0.0.1:5000/charger/"
+CHARGER_TAKE_ALL: 'all'
+CHARGER_CHANGE_VALUE: {           # THIS KEY:VALUE WILL BE CHNAGE IN CHARGER SETTINGS
+            "key": "VOLT",
+            "value": 300
+          }
+CHARGER_CHECK_EVERY_SETTING: [    # KEY'S THAT WILL BE CHECK IN CHARGING_CONFIG FILE IF THEY EXIST
+            "CHARGING_OUTLETS",
+            "MAX_CHARGING_POWER_CHADEMO",
+            "MAX_CHARGING_POWER_AC",
+            "ACTUAL_KW_PER_MIN",
+            "MAX_CHARGING_AMPERE",
+            "VOLT",
+            "LOSSES_DURING_CHARGING",
+            "VOLTAGE_DROP",
+            "EFFECTIVE_CHARGING_CAP"
+        ]
+CHARGER_PROPER_VALUE: {           # PROPER VALUES SHOULD BE THE SAME AS THE VALUE IN CHARGING_CONFIG FILE
+          "CHARGING_OUTLETS": [
+            "CHADEMO",
+            "AC"
+          ],
+          "MAX_CHARGING_POWER_CHADEMO": 49,
+          "MAX_CHARGING_POWER_AC": 6.6,
+          "ACTUAL_KW_PER_MIN": 0,
+          "MAX_CHARGING_AMPERE": 48,
+          "VOLT": 400,
+          "LOSSES_DURING_CHARGING": 10,
+          "VOLTAGE_DROP": 1.08,
+          "EFFECTIVE_CHARGING_CAP": 90
+      }
+#_____________________________________________
+# VEHICLE URL AND VEHICLE ENDPOINTS
+VEHICLE_URL: "http://127.0.0.1:5000/vehicle/"
+VEHICLE_CONNECT: 'connect'
+VEHICLE_DISCONNECT: 'disconnect'
+VEHICLE_TAKE_ALL: 'all'
+VEHICLE_CHANGE_VALUE: {               # IN VEHICLE TEST THIS KEY:VALUE WILL BE CHNAGE AND CHECK OUTPUT
+            "key": "BATTERY_LEVEL",
+            "value": 50
+          }
+VEHICLE_INCORRECT_CHANGE_VALUE: {     # INCORRECT KEY WILL BE SEND IN TEST AND CHECK NEGATIVE OUTPUT
+            "key": "BATTERY_PERCENT",
+            "value": 70
+          }
+VEHICLE_TAKE_SPECIFIC_KEY: 'BATTERY_LEVEL'
+VEHICLE_CHECK_EVERY_SETTINGS: [       # KEY'S THAT WILL BE CHECK IN VEHICLE_CONFIG FILE IF THEY EXIST
+            "BATTERY_LEVEL",
+            "CHARGING_PORT", 
+            "MAX_BATTERY_CAPACITY_IN_KWH",
+            "ACTUAL_BATTERY_STATUS_IN_KWH",
+            "BATTERY_VOLTAGE",
+            "COOLING_SYSTEM",
+        ]
+VEHICLE_PROPER_VALUE: {               # PROPER VALUES SHOULD BE THE SAME AS THE VALUE IN VEHICLE_CONFIG FILE
+        "BATTERY_LEVEL": 5,
+        "CHARGING_PORT": "CHADEMO",
+        "MAX_BATTERY_CAPACITY_IN_KWH": 64,
+        "ACTUAL_BATTERY_STATUS_IN_KWH": 0,
+        "BATTERY_VOLTAGE": 356,
+        "COOLING_SYSTEM": "PASSIVE",
+    }
+#_______________________________________________
+# CHARGE SESSION CONFIG
+START_SESSION: "start"
+START_SESSION_CUSTOM_PERCENT: 70    #Custom charging cap value || IF EMPTY THE DEFAULT CHARGING SESSION WILL BE PREPARE
+VEHICLE_START_BATTERY_LEVEL: {
+            "key": "BATTERY_LEVEL",
+            "value": 50             # VALUE THAT WILL BE START POINT FOR CHARGING SESSION
+          }

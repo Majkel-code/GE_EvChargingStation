@@ -1,12 +1,12 @@
 import logging.handlers
 import logging
 import datetime
+import yaml
+
 
 
 class CustomFormatter(logging.Formatter):
 	LOG_DIR = 'server_logs/'
-	LOG_LVL_FILE = logging.INFO
-	LOG_LVL_CONSOLE = logging.INFO
 
 	blue = '\x1b[38;5;39m'
 	green = '\x1b[1;32m'
@@ -34,23 +34,31 @@ class CustomFormatter(logging.Formatter):
 
 
 class Logger:
+	with open(f"config/config_files/server_config.yaml", "r+") as f:
+		server_config = yaml.safe_load(f)
 	logger = logging.getLogger()
-	logger.setLevel(logging.DEBUG)
+	logger.setLevel(server_config['LOG_LEVEL_CONSOLE'])
 	logger.handlers = []
 
+	# output custom log format in console
 	console = logging.StreamHandler()
-	console.setLevel(logging.DEBUG)
+	console.setLevel(server_config['LOG_LEVEL_CONSOLE'])
 	console.setFormatter(CustomFormatter())
 
+	# save custom logs format to file
 	today = datetime.date.today()
 	save_in_file = logging.handlers.RotatingFileHandler(
 		CustomFormatter.LOG_DIR +
-		'application{}.log'.format(today.strftime('%Y_%m_%d'))
+		'server_application{}.log'.format(today.strftime('%Y_%m_%d'))
 	)
-	save_in_file.setLevel(logging.DEBUG)
-	save_in_file.setFormatter(logging.Formatter())
+	save_in_file.setLevel(server_config['LOG_LEVEL'])
+	save_in_file.setFormatter(CustomFormatter())
 
 	# Add both handlers to the logger
 	logger.addHandler(console)
 	logger.addHandler(save_in_file)
 
+
+class ServerLogger(Logger):
+	def __init__(self) -> None:
+		super().__init__()

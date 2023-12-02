@@ -5,7 +5,8 @@ from fastapi import FastAPI
 import modules.charger.charger as charger
 import config.charger_vehicle_config_bridge as charger_vehicle_config_bridge
 from config.charger_vehicle_config_bridge import __IsServerAlive__ as _main_server
-import modules.vehicle.vehicle_simulator as vehicle_simulator
+import modules.vehicle.vehicle_ac_simulator as vehicle_ac_simulator
+import modules.vehicle.vehicle_chademo_simulator as vehicle_chademo_simulator
 from config import cheaker 
 
 import os
@@ -19,7 +20,8 @@ class InitialiseServer:
 		try:
 			self.app = FastAPI()
 			self.app.include_router(charger.router)
-			self.app.include_router(vehicle_simulator.router)
+			self.app.include_router(vehicle_ac_simulator.router)
+			self.app.include_router(vehicle_chademo_simulator.router)
 			self.server = uvicorn.Server
 			config_charger = charger_vehicle_config_bridge.ChargerBridge()
 			config_vehicle = charger_vehicle_config_bridge.VehicleBridge()

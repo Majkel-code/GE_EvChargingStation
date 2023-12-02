@@ -2,3 +2,4 @@ __pycache__/
 server_logs/*
 .vscode
 .DS_Store
+.idea

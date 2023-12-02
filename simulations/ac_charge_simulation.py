@@ -54,7 +54,7 @@ class AcVehicle(ChargeSimulation):
 				self.actual_battery_level = self.exchange_kw_to_percent()
 				self.actual_battery_status_in_kwh = self.current_battery_status_kwh()
 				logger_charge_session.info(f"CHARGING ONGOING: {self.actual_battery_level}%")
-				Charger._energy_is_send_loop_ += 1
+				Charger._energy_is_send_loop_ac_ += 1
 				time.sleep(1)
 			else:
 				logger_charge_session.warning("VEHICLE DISCONNECTED CHARGE SESSION ABORD!")
@@ -81,7 +81,7 @@ class AcVehicle(ChargeSimulation):
 					Vehicle.settings_ac["BATTERY_LEVEL"] = self.actual_battery_level
 					self.actual_battery_status_in_kwh = self.current_battery_status_kwh()
 					logger_charge_session.info(f"AC CHARGING ONGOING: {self.actual_battery_level}%")
-					Charger._energy_is_send_loop_ += 1
+					Charger._energy_is_send_loop_ac_ += 1
 					time.sleep(1)
 				else:
 					logger_charge_session.warning("VEHICLE DISCONNECTED CHARGE SESSION ABORD!")
@@ -104,13 +104,13 @@ class AcVehicle(ChargeSimulation):
 		constant_power_level_charging = self.first_stage_charging(percent=percent)
 		if constant_power_level_charging['complete'] and constant_power_level_charging['error'] is None and percent > self.effective_charging_cap:
 			charging_with_energy_drop = self.charging_to_max_battery_capacity(percent=percent)
-			Charger._charging_finished_ = True
+			Charger._charging_finished_ac_ = True
 			logger_charge_session.info(f"AC SESSION END!")
-			Charger._energy_is_send_loop_ = 0
+			Charger._energy_is_send_loop_ac_ = 0
 			return charging_with_energy_drop
 		logger_charge_session.info(f"AC SESSION END!")
 		logger_charge_session.info(f"PLEASE DISCONNECT YOUR VEHICLE..")
 		logger_charge_session.info(f"CHARGER STATE: IDLE")
-		Charger._charging_finished_ = True
-		Charger._energy_is_send_loop_ = 0
+		Charger._charging_finished_ac_ = True
+		Charger._energy_is_send_loop_ac_ = 0
 		return constant_power_level_charging

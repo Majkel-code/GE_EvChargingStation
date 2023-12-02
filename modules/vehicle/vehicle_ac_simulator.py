@@ -29,16 +29,13 @@ async def read_items():
 
 @router.post("/disconnect")
 async def read_items():
-	if Charger._outlet_in_use_["AC"] == Vehicle.settings_ac["VEHICLE_ID"]:
-		if Vehicle._connected_ac_:
-			Bridge.disconnect_vehicle("AC")
-			logger.info(f"VEHICLE SUCCESSFULY DISCONNECTED: {Vehicle._connected_ac_}")
-			return {"response": True, "error": None}
-		else:
-			logger.warning(f"VEHICLE ACTUALLY IS DISCONNECTED: {Vehicle._connected_ac_}")
-			{"response": False, "error": "VEHICLE ACTUALLY IS DISCONNECTED!"}
+	if Vehicle._connected_ac_:
+		Bridge.disconnect_vehicle("AC")
+		logger.info(f"VEHICLE SUCCESSFULY DISCONNECTED: {Vehicle._connected_ac_}")
+		return {"response": True, "error": None}
 	else:
-		logger.warning(f"VEHICLE DOESN'T USE THIS OUTLET!")		
+		logger.warning(f"VEHICLE ACTUALLY IS DISCONNECTED: {Vehicle._connected_ac_}")
+		{"response": False, "error": "VEHICLE ACTUALLY IS DISCONNECTED!"}
 
 @router.get("/all")
 async def read_items():

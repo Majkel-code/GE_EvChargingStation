@@ -30,25 +30,40 @@ class TestConfigureServer(unittest.TestCase):
         else:
             pass
 
-    def read_vehicle_settings(self):
-        charger_vehicle_config_bridge.VehicleBridge.settings = read_default_settings.read_vehicle_settings()
+    def read_vehicle_chademo_settings(self):
+        charger_vehicle_config_bridge.VehicleBridge.settings_chademo = read_default_settings.read_vehicle_chademo_settings()
+    
+    def read_vehicle_ac_settings(self):
+        charger_vehicle_config_bridge.VehicleBridge.settings_ac = read_default_settings.read_vehicle_ac_settings()
 
     def read_charger_settings(self):
         charger_vehicle_config_bridge.ChargerBridge.settings = read_default_settings.read_charger_settings()
 
-    def custom_timeout(self):
+    def custom_timeout_chademo(self):
         timeout_iteration = 0
-        first_check = charger_vehicle_config_bridge.ChargerBridge._energy_is_send_loop_
+        first_check = charger_vehicle_config_bridge.ChargerBridge._energy_is_send_loop_chademo_
         while timeout_iteration < 30:
             time.sleep(1)
-            if first_check < charger_vehicle_config_bridge.ChargerBridge._energy_is_send_loop_:
+            if first_check < charger_vehicle_config_bridge.ChargerBridge._energy_is_send_loop_chademo_:
                 return False
-            elif charger_vehicle_config_bridge.ChargerBridge._charging_finished_:
+            elif charger_vehicle_config_bridge.ChargerBridge._charging_finished_chademo_:
                 return True
             else:
                 timeout_iteration += 1
         return True
-        
+    
+    def custom_timeout_ac(self):
+        timeout_iteration = 0
+        first_check = charger_vehicle_config_bridge.ChargerBridge._energy_is_send_loop_chademo_
+        while timeout_iteration < 30:
+            time.sleep(1)
+            if first_check < charger_vehicle_config_bridge.ChargerBridge._energy_is_send_loop_chademo_:
+                return False
+            elif charger_vehicle_config_bridge.ChargerBridge._charging_finished_chademo_:
+                return True
+            else:
+                timeout_iteration += 1
+        return True
 
     @classmethod
     def tearDownClass(self):

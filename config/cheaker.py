@@ -3,8 +3,6 @@ from config.logging_system.logging_config import Logger
 
 logger = Logger.logger
 
+
 def check_server_is_alive():
     return _main_server._is_alive_
-
-
-

@@ -57,8 +57,4 @@ class TestAcVehicleEndpoints(TestConfigureServer):
     def tearDown(self) -> None:
         print('SEND DISCONNECT VEHICLE!')
         response_disconnect_vehicle = requests.post(F'{self.VEHICLE_URL_AC}{self.test_config['VEHICLE_DISCONNECT_AC']}')
-    #__________________________________
 
-    @classmethod
-    def tearDownClass(self) -> None:
-        super().tearDownClass()

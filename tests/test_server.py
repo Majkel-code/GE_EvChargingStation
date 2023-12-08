@@ -3,7 +3,7 @@ import threading
 import yaml
 import requests
 import time
-from Server import Server
+from server import Server
 import config.config_reader.read_default_settings as read_default_settings
 from config import charger_vehicle_config_bridge
 
@@ -19,9 +19,7 @@ class TestConfigureServer(unittest.TestCase):
         print('load data config')
         unittest.TestLoader.sortTestMethodsUsing = None
         self.test_config = read_tests_settings()
-        self.SERVER_URL = self.test_config['SERVER_URL']
-        request = requests.get(f'{self.SERVER_URL}is_alive')
-        if request.status_code != 200:
+        if charger_vehicle_config_bridge.IsServerAlive._is_alive_ == False:
             print('START FASTAPI SERVER!')
             start = Server()
             self.thread = threading.Thread(target=start.start,args=(), daemon=True)
@@ -68,12 +66,6 @@ class TestConfigureServer(unittest.TestCase):
     @classmethod
     def tearDownClass(self):
         print('FUNCTION THAT SHOULD CHECK SHUTDOWN ENDPOINT // COMING SOON!')
-        shut_down = requests.get(f'{self.test_config['SERVER_URL']}/something_stopped')
-        assert shut_down.status_code == 404
-        # shut_down = requests.get('http://127.0.0.1:5000/server_stop')
-        # print(shut_down.json())
-        # assert shut_down.json() == {"response": True, "error": None}
-        # time.sleep(10)
    
 class TestServer(TestConfigureServer):
     @classmethod

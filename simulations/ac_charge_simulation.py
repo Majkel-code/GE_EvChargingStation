@@ -1,10 +1,10 @@
 from simulations.charge_simulation import ChargeSimulation
 from config.charger_vehicle_config_bridge import VehicleBridge as Vehicle
 from config.charger_vehicle_config_bridge import ChargerBridge as Charger
+from config.charger_vehicle_config_bridge import IsServerAlive as Main_server
 from fastapi import Request
 import time
 from config.logging_system.logging_config import Logger
-import config.cheaker as cheaker
 
 logger = Logger.logger
 logger_charge_session = logger
@@ -40,7 +40,7 @@ class AcVehicle(ChargeSimulation):
     def charging_to_max_battery_capacity(self, percent):
         Charger._charging_finished_ = False
         while (
-            self.actual_battery_level < 100 and cheaker.check_server_is_alive() and self.actual_battery_level <= percent
+            self.actual_battery_level < 100 and Main_server.check_server_is_alive() and self.actual_battery_level <= percent
         ):
             logger_charge_session.debug("INFORMATION ABOUT ACTUAL AC CHARGING STATE.... ")
             logger_charge_session.debug(f"actual ac battery status: {self.actual_battery_status_in_kwh}")
@@ -75,7 +75,7 @@ class AcVehicle(ChargeSimulation):
                 if self.actual_battery_level >= self.effective_charging_cap:
                     logger_charge_session.info(f"{self.effective_charging_cap}% OF BATTERY LEVEL ACHIVE...")
                     return {"complete": True, "error": None}
-                if Vehicle._connected_ac_ and cheaker.check_server_is_alive():
+                if Vehicle._connected_ac_ and Main_server.check_server_is_alive():
                     self.actual_battery_status_in_kwh += self.actual_kw_per_min
                     self.actual_battery_level = self.exchange_kw_to_percent()
                     Vehicle.settings_ac["BATTERY_LEVEL"] = self.actual_battery_level

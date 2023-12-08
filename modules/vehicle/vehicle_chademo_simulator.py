@@ -22,9 +22,9 @@ logger = Logger.logger
 async def read_items():
     if Vehicle._connected_chademo_:
         logger.warning(f"VEHICLE ACTUALLY CONNECTED: {Vehicle._connected_chademo_}")
-        {"response": False, "error": "VEHICLE ACTUALLY CONNECTED!"}
+        return {"response": False, "error": "VEHICLE ACTUALLY CONNECTED!"}
     else:
-        Bridge.connect_vehicle("CHADEMO")
+        Vehicle.connect_vehicle("CHADEMO")
         logger.info(f"VEHICLE SUCCESSFULY CONNECTED: {Vehicle._connected_chademo_}")
         return {"response": True, "error": None}
 
@@ -32,12 +32,12 @@ async def read_items():
 @router.post("/disconnect")
 async def read_items():
     if Vehicle._connected_chademo_:
-        Bridge.disconnect_vehicle("CHADEMO")
+        Vehicle.disconnect_vehicle("CHADEMO")
         logger.info(f"VEHICLE SUCCESSFULY DISCONNECTED: {Vehicle._connected_chademo_}")
         return {"response": True, "error": None}
     else:
         logger.warning(f"VEHICLE ACTUALLY IS DISCONNECTED: {Vehicle._connected_chademo_}")
-        {"response": False, "error": "VEHICLE ACTUALLY IS DISCONNECTED!"}
+        return {"response": False, "error": "VEHICLE ACTUALLY IS DISCONNECTED!"}
 
 
 @router.get("/all")

@@ -53,6 +53,3 @@ class TestAcChargingSession(TestAcVehicleEndpoints):
             response_disconnect_vehicle = requests.post(F'{self.VEHICLE_URL_AC}{self.test_config['VEHICLE_DISCONNECT_AC']}')
         else: pass
 
-    @classmethod
-    def tearDownClass(self) -> None:
-        super().tearDownClass()

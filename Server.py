@@ -1,21 +1,19 @@
-from config.logging_system.logging_config import Logger
 import uvicorn
 import yaml
 from fastapi import FastAPI
+from pathlib import Path
 import modules.charger.charger as charger
+from config.logging_system.logging_config import Logger
 import config.charger_vehicle_config_bridge as charger_vehicle_config_bridge
-from config.charger_vehicle_config_bridge import __IsServerAlive__ as _main_server
+from config.charger_vehicle_config_bridge import IsServerAlive as _main_server
 import modules.vehicle.vehicle_ac_simulator as vehicle_ac_simulator
 import modules.vehicle.vehicle_chademo_simulator as vehicle_chademo_simulator
-from config import cheaker
 
 import os
 import signal
 
 
 logger = Logger.logger
-
-disct = {"apple": "green", "orange": "orange", "number": 12}
 
 
 class InitialiseServer:
@@ -26,9 +24,10 @@ class InitialiseServer:
             self.app.include_router(vehicle_ac_simulator.router)
             self.app.include_router(vehicle_chademo_simulator.router)
             self.server = uvicorn.Server
-            config_charger = charger_vehicle_config_bridge.ChargerBridge()
-            config_vehicle = charger_vehicle_config_bridge.VehicleBridge()
-            with open("config/config_files/server_config.yaml", "r+") as f:
+            charger_vehicle_config_bridge.ChargerBridge()
+            charger_vehicle_config_bridge.VehicleBridge()
+            current_path = Path(__file__).absolute().parent
+            with open(f"{current_path}/config/config_files/server_config.yaml", "r+") as f:
                 server_config = yaml.safe_load(f)
             self.config = uvicorn.Config(
                 app=self.app,
@@ -41,16 +40,13 @@ class InitialiseServer:
 
             @self.app.get("/is_alive")
             async def alive():
-                return {"is_alive": cheaker.check_server_is_alive(), "error": None}
+                return {"is_alive": _main_server.check_server_is_alive(), "error": None}
 
         except Exception as e:
             logger.error(e)
 
 
 class Server(InitialiseServer):
-    def __init__(self) -> None:
-        super().__init__()
-
     def start(self):
         if not _main_server._is_alive_:
             try:
@@ -61,8 +57,6 @@ class Server(InitialiseServer):
                 _main_server._is_alive_ = False
             except Exception as e:
                 logger.critical("UNABLE TO ESTABLISH SERVER!")
-                return {"response": False, "error": e}
-        return _main_server._is_alive_
 
 
 if __name__ == "__main__":

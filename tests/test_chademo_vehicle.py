@@ -8,7 +8,6 @@ class TestChademoVehicleEndpoints(TestConfigureServer):
         super().setUpClass()
         self.VEHICLE_URL_CHADEMO = self.test_config['VEHICLE_URL_CHADEMO']
         self.VEHICLE_EVERY_SETTING = self.test_config['VEHICLE_CHECK_EVERY_SETTINGS_CHADEMO']
-        print('vehicle')
     
     def setUp(self) -> None:
         if not charger_vehicle_config_bridge.VehicleBridge._connected_chademo_:
@@ -60,8 +59,4 @@ class TestChademoVehicleEndpoints(TestConfigureServer):
             print("in teardown vehicle")
             response_disconnect_vehicle = requests.post(F'{self.VEHICLE_URL_CHADEMO}{self.test_config['VEHICLE_DISCONNECT_CHADEMO']}')
         else: pass
-    #__________________________________
 
-    @classmethod
-    def tearDownClass(self) -> None:
-        super().tearDownClass()

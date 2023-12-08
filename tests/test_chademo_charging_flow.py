@@ -54,7 +54,3 @@ class TestChademoChargingSession(TestChademoVehicleEndpoints):
         if charger_vehicle_config_bridge.VehicleBridge._connected_chademo_:
             response_disconnect_vehicle = requests.post(F'{self.VEHICLE_URL_CHADEMO}{self.test_config['VEHICLE_DISCONNECT_CHADEMO']}')
         else: pass
-
-    @classmethod
-    def tearDownClass(self) -> None:
-        super().tearDownClass()

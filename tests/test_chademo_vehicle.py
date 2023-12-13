@@ -11,12 +11,12 @@ class TestChademoVehicleEndpoints(TestConfigureServer):
     
     def setUp(self) -> None:
         if not charger_vehicle_config_bridge.VehicleBridge._connected_chademo_:
-            response_connect = requests.post(f'{self.VEHICLE_URL_CHADEMO}{self.test_config['VEHICLE_CONNECT_CHADEMO']}')
+            response_connect = requests.post(f"{self.VEHICLE_URL_CHADEMO}{self.test_config['VEHICLE_CONNECT_CHADEMO']}")
         else: pass
 
     def test_check_vehicle_settings(self):
         print("TEST PROPERLY TAKE VEHICLE SETTINGS!")
-        response_get_vehicle_settings = requests.get(f'{self.VEHICLE_URL_CHADEMO}{self.test_config['VEHICLE_TAKE_ALL_CHADEMO']}')
+        response_get_vehicle_settings = requests.get(f"{self.VEHICLE_URL_CHADEMO}{self.test_config['VEHICLE_TAKE_ALL_CHADEMO']}")
         assert response_get_vehicle_settings.status_code == 200
         geted_settings = response_get_vehicle_settings.json()
         check_data = [param for param in self.VEHICLE_EVERY_SETTING if param in geted_settings]
@@ -28,8 +28,8 @@ class TestChademoVehicleEndpoints(TestConfigureServer):
         for param in self.VEHICLE_EVERY_SETTING:
             response_take_specific_setting = requests.get(f'{self.VEHICLE_URL_CHADEMO}{param}')
             assert response_take_specific_setting.status_code == 200
-            print(f'take_specific_setting response json: {response_take_specific_setting.json()}')
-            print(f'take_specific_setting test config: {self.test_config[f'VEHICLE_PROPER_VALUE_CHADEMO'][f'{param}']}')
+            print(f"take_specific_setting response json: {response_take_specific_setting.json()}")
+            print(f"take_specific_setting test config: {self.test_config[f'VEHICLE_PROPER_VALUE_CHADEMO'][f'{param}']}")
             assert response_take_specific_setting.json() == self.test_config[f'VEHICLE_PROPER_VALUE_CHADEMO'][f'{param}']
         
     def test_reconfigure_parameter(self):
@@ -47,9 +47,9 @@ class TestChademoVehicleEndpoints(TestConfigureServer):
         assert negative_response_edit_param.json() == {"response": False, "error": f"{self.test_config['VEHICLE_INCORRECT_CHANGE_VALUE_CHADEMO']['key']}' CAN'T BE FIND!"}
 
     def test_negative_read_setting_before_connection(self):
-        response_disconnect_vehicle = requests.post(F'{self.VEHICLE_URL_CHADEMO}{self.test_config['VEHICLE_DISCONNECT_CHADEMO']}')
+        response_disconnect_vehicle = requests.post(f"{self.VEHICLE_URL_CHADEMO}{self.test_config['VEHICLE_DISCONNECT_CHADEMO']}")
         print("TEST NEGATIVE TAKE CHARGER SETTING BEFORE CONNECTION!")
-        negative_response_get_vehicle_settings = requests.get(f'{self.VEHICLE_URL_CHADEMO}{self.test_config['VEHICLE_TAKE_SPECIFIC_KEY_CHADEMO']}')
+        negative_response_get_vehicle_settings = requests.get(f"{self.VEHICLE_URL_CHADEMO}{self.test_config['VEHICLE_TAKE_SPECIFIC_KEY_CHADEMO']}")
         assert negative_response_get_vehicle_settings.status_code != 200
         assert negative_response_get_vehicle_settings.json() == {"detail": f"'{self.test_config['VEHICLE_TAKE_SPECIFIC_KEY_CHADEMO']}' CAN'T BE FIND!"}
 
@@ -57,6 +57,6 @@ class TestChademoVehicleEndpoints(TestConfigureServer):
         print('SEND DISCONNECT VEHICLE!')
         if charger_vehicle_config_bridge.VehicleBridge._connected_chademo_:
             print("in teardown vehicle")
-            response_disconnect_vehicle = requests.post(F'{self.VEHICLE_URL_CHADEMO}{self.test_config['VEHICLE_DISCONNECT_CHADEMO']}')
+            response_disconnect_vehicle = requests.post(f"{self.VEHICLE_URL_CHADEMO}{self.test_config['VEHICLE_DISCONNECT_CHADEMO']}")
         else: pass
 

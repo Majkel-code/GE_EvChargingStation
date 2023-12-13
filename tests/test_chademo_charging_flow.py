@@ -16,7 +16,7 @@ class TestChademoChargingSession(TestChademoVehicleEndpoints):
 
     def setUp(self) -> None:
         if not charger_vehicle_config_bridge.VehicleBridge._connected_chademo_:
-            response_connect = requests.post(f'{self.VEHICLE_URL_CHADEMO}{self.test_config['VEHICLE_CONNECT_CHADEMO']}')
+            response_connect = requests.post(f"{self.VEHICLE_URL_CHADEMO}{self.test_config['VEHICLE_CONNECT_CHADEMO']}")
         else: pass
 
     def test_reconfigure_parameter(self):
@@ -32,9 +32,9 @@ class TestChademoChargingSession(TestChademoVehicleEndpoints):
         requests.put(self.VEHICLE_URL_CHADEMO, json=self.test_config['VEHICLE_START_BATTERY_LEVEL_CHADEMO'])
         print('CHECK SESSION FLOW AND PROPERLY COMPLETE')
         if self.test_config['START_SESSION_CUSTOM_PERCENT_CHADEMO'] is not None:
-            start_session_url = f'{self.CHARGER_URL}{self.test_config['START_SESSION_CHADEMO']}_chademo_{self.test_config['START_SESSION_CUSTOM_PERCENT_CHADEMO']}'
+            start_session_url = f"{self.CHARGER_URL}{self.test_config['START_SESSION_CHADEMO']}_chademo_{self.test_config['START_SESSION_CUSTOM_PERCENT_CHADEMO']}"
         else:
-            start_session_url = f'{self.CHARGER_URL}{self.test_config['START_SESSION_CHADEMO']}_chademo'
+            start_session_url = f"{self.CHARGER_URL}{self.test_config['START_SESSION_CHADEMO']}_chademo"
         response_session = requests.post(start_session_url)
         assert response_session.status_code == 200
         assert response_session.json() == {"response": True, "error": None}
@@ -46,11 +46,11 @@ class TestChademoChargingSession(TestChademoVehicleEndpoints):
     def test_vehicle_state_saved(self):
         self.test_session_start()
         print('CHECK SETTINGS AFTER SESSION SAVE PROPERLY!')
-        response_check_setting = requests.get(f'{self.VEHICLE_URL_CHADEMO}{self.test_config['VEHICLE_TAKE_SPECIFIC_KEY_CHADEMO']}')
+        response_check_setting = requests.get(f"{self.VEHICLE_URL_CHADEMO}{self.test_config['VEHICLE_TAKE_SPECIFIC_KEY_CHADEMO']}")
         assert response_check_setting.status_code == 200
         assert response_check_setting.json() > self.test_config['VEHICLE_CHANGE_VALUE_CHADEMO']['value']
 
     def tearDown(self) -> None:
         if charger_vehicle_config_bridge.VehicleBridge._connected_chademo_:
-            response_disconnect_vehicle = requests.post(F'{self.VEHICLE_URL_CHADEMO}{self.test_config['VEHICLE_DISCONNECT_CHADEMO']}')
+            response_disconnect_vehicle = requests.post(f"{self.VEHICLE_URL_CHADEMO}{self.test_config['VEHICLE_DISCONNECT_CHADEMO']}")
         else: pass

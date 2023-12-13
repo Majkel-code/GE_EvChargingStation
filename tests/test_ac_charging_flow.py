@@ -15,7 +15,7 @@ class TestAcChargingSession(TestAcVehicleEndpoints):
 
     def setUp(self) -> None:
         if not charger_vehicle_config_bridge.VehicleBridge._connected_ac_:
-            response_connect = requests.post(f'{self.VEHICLE_URL_AC}{self.test_config['VEHICLE_CONNECT_AC']}')
+            response_connect = requests.post(f"{self.VEHICLE_URL_AC}{self.test_config['VEHICLE_CONNECT_AC']}")
         else: pass
 
     def test_reconfigure_parameter(self):
@@ -30,9 +30,9 @@ class TestAcChargingSession(TestAcVehicleEndpoints):
         requests.put(self.VEHICLE_URL_AC, json=self.test_config['VEHICLE_START_BATTERY_LEVEL_AC'])
         print('CHECK SESSION FLOW AND PROPERLY COMPLETE')
         if self.test_config['START_SESSION_CUSTOM_PERCENT_AC'] is not None:
-            start_session_url = f'{self.CHARGER_URL}{self.test_config['START_SESSION_AC']}_ac_{self.test_config['START_SESSION_CUSTOM_PERCENT_AC']}'
+            start_session_url = f"{self.CHARGER_URL}{self.test_config['START_SESSION_AC']}_ac_{self.test_config['START_SESSION_CUSTOM_PERCENT_AC']}"
         else:
-            start_session_url = f'{self.CHARGER_URL}{self.test_config['START_SESSION_AC']}_ac'
+            start_session_url = f"{self.CHARGER_URL}{self.test_config['START_SESSION_AC']}_ac"
         response_session = requests.post(start_session_url)
         assert response_session.status_code == 200
         assert response_session.json() == {"response": True, "error": None}
@@ -44,12 +44,12 @@ class TestAcChargingSession(TestAcVehicleEndpoints):
     def test_vehicle_state_saved(self):
         self.test_session_start()
         print('CHECK SETTINGS AFTER SESSION SAVE PROPERLY!')
-        response_check_setting = requests.get(f'{self.VEHICLE_URL_AC}{self.test_config['VEHICLE_TAKE_SPECIFIC_KEY_AC']}')
+        response_check_setting = requests.get(f"{self.VEHICLE_URL_AC}{self.test_config['VEHICLE_TAKE_SPECIFIC_KEY_AC']}")
         assert response_check_setting.status_code == 200
         assert response_check_setting.json() > self.test_config['VEHICLE_CHANGE_VALUE_AC']['value']
 
     def tearDown(self) -> None:
         if charger_vehicle_config_bridge.VehicleBridge._connected_ac_:
-            response_disconnect_vehicle = requests.post(F'{self.VEHICLE_URL_AC}{self.test_config['VEHICLE_DISCONNECT_AC']}')
+            response_disconnect_vehicle = requests.post(f"{self.VEHICLE_URL_AC}{self.test_config['VEHICLE_DISCONNECT_AC']}")
         else: pass
 

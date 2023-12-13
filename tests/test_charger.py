@@ -11,7 +11,7 @@ class TestChargerEndpoints(TestConfigureServer):
 
     def test_check_charger_settings(self):
         print("TEST PROPERLY TAKE CHARGER SETTINGS!")
-        response_get_charger_settings = requests.get(f'{self.CHARGER_URL}{self.test_config['CHARGER_TAKE_ALL']}')
+        response_get_charger_settings = requests.get(f"{self.CHARGER_URL}{self.test_config['CHARGER_TAKE_ALL']}")
         assert response_get_charger_settings.status_code == 200
         geted_settings = response_get_charger_settings.json()
         check_data = [param for param in self.CHARGER_EVERY_SETTING if param in geted_settings]
@@ -22,8 +22,8 @@ class TestChargerEndpoints(TestConfigureServer):
         for param in self.CHARGER_EVERY_SETTING:
             response_take_specific_setting = requests.get(f'{self.CHARGER_URL}{param}')
             assert response_take_specific_setting.status_code == 200
-            print(f'take_specific_setting response json: {response_take_specific_setting.json()}')
-            print(f'take_specific_setting test config: {self.test_config[f'CHARGER_PROPER_VALUE'][f'{param}']}')
+            print(f"take_specific_setting response json: {response_take_specific_setting.json()}")
+            print(f"take_specific_setting test config: {self.test_config['CHARGER_PROPER_VALUE'][f'{param}']}")
             assert response_take_specific_setting.json() == self.test_config[f'CHARGER_PROPER_VALUE'][f'{param}']
 
     def test_change_param(self):

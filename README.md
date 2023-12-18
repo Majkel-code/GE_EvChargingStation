@@ -1,6 +1,6 @@
 # GE_EvChargingStation
 ## _Green Energy_
-<img width="400" alt="GE_EvChargingStationLOGO" src="https://github.com/Majkel-code/GE_EvChargingStation/assets/13604347/0617e712-5bf6-4836-8762-9cb22fd5d621">
+<img width="400" alt="GE_EvChargingStationLOGO" src="https://github.com/Majkel-code/GE_EvChargingStation/assets/13604347/87375e99-55ee-42f9-8804-9eea7257b730">
 
 
 

@@ -3,3 +3,4 @@ server_logs/*
 .vscode
 .DS_Store
 .idea
+.DS_Store

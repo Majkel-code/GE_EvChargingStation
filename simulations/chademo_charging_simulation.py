@@ -53,13 +53,13 @@ class ChademoVehicle(ChargeSimulation):
                 self.actual_battery_status_in_kwh += self.actual_kw_per_min
                 self.actual_kw_per_min = self.charged_kw_per_minute(Charger.settings["VOLTAGE_DROP"])
                 self.actual_battery_level = self.exchange_kw_to_percent()
+                Vehicle.settings_chademo["BATTERY_LEVEL"] = self.actual_battery_level
                 self.actual_battery_status_in_kwh = self.current_battery_status_kwh()
                 logger_charge_session.info(f"CHADEMO CHARGING ONGOING: {self.actual_battery_level}%")
                 Charger._energy_is_send_loop_chademo_ += 1
                 time.sleep(1)
             else:
                 logger_charge_session.warning("VEHICLE DISCONNECTED CHADEMO CHARGE SESSION ABORD!")
-                Request.get("http://127.0.0.1:5000/vehicle/disconnect")
                 return {
                     "complete": True,
                     "error": f"Vehicle disconnected from CHARGER! \n"

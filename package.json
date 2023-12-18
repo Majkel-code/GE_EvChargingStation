@@ -1,0 +1,14 @@
+{
+  "name": "ge_evchargingstation_gui",
+  "version": "1.0.0",
+  "description": "This is GUI to GE_EvCharging_Station",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron"
+  },
+  "author": "Michal Kotlowski",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^28.0.0"
+  }
+}

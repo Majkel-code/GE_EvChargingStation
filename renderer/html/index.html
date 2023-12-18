@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="../css/styles.css">
+  <link rel="stylesheet" href="../css/charging_page.css">
+  <title>Strona internetowa z dymkami</title>
+</head>
+<body>
+  <div class="container">
+    <!-- <img src="tlo.jpg" alt="Tło strony"> -->
+    <div class="top-left">
+      <button class="btn css left-btn top-left-btn">CSS</button>
+      <button class="btn chademo left-btn bottom-left-btn">CHADEMO</button>
+    </div>
+    <div class="top-right">
+      <button class="btn en right-btn top-right-btn">EN</button>
+      <button class="btn help right-btn bottom-right-btn">?</button>
+      
+    </div>
+    <div class="center">
+      <button class="btn start center-btn">START</button>
+      <!-- <button class="btn custom center-btn">CUSTOM CHARGE</button> -->
+    </div>  
+    <div class="help-display active">
+      <h3 class="help-title">WELCOLME</h3>
+      <div class="help-message">
+         
+        <h4 style="justify-content: center; text-align: center; margin-bottom: 20px;"><img style="max-width: 250px; max-height: 75px;" src="../images/logo_geev.png" alt="GE_Ev_ChargingStation"></h4>
+        <p> Hello, my name is <b style="color: #00ff44dc;">Michal Kotlowski</b>, I created charger and vehicle simulator to improve my coding skills.</p>
+        <p>Also if you don't read README please do it now</p>
+        <p  style="margin-bottom: 10px;">=> https://github.com/Majkel-code ✅</p>
+        <p>After closed this 'WELCOLME' display, please, read 'help' first to have better perspective about this project.</p>
+        <p style="margin-top: 10px;">Thank you for being interested in my project 🔥</p>
+      </div>
+      <div class="top-right">
+        <button class="btn close-page-btn close-help-display">X</button>
+      </div>
+    </div>
+    <div class="info-message">
+      <p></p>
+    </div>
+
+
+
+
+
+    <div class="charging-page">
+      <button class="btn close-page-btn close-charging-display">X</button>
+      <div class="card card-one">
+        <h4>WAITING FOR CONNECT...</h4>
+        <div class="box">
+          <div class="percent percent-ac">
+            <svg class="svg-ac-percent-show">
+              <circle cx="120" cy="120" r="120"></circle>
+              <circle class="svg-ac-percent-show-display" cx="120" cy="120" r="120"></circle>
+            </svg>
+            <div class="num num-ac">
+              <h2>--<span>%</span></h2>
+            </div>
+          </div>
+          <button class="btn charging-page-button connect-page-button-ac">CONNECT AC</button>
+          <button class="btn charging-page-button start-page-button-ac unactive-ac-button">START AC</button>
+          <button class="btn charging-page-button disconnect-page-button-ac unactive-ac-button">DISCONNECT AC</button>
+        </div>
+      </div>
+
+      <div class="card card-two">
+        <h4>WAITING FOR CONNECT...</h4>
+        <div class="box">
+          <div class="percent percent-chademo">
+            <svg class="svg-chademo-percent-show">
+              <circle cx="120" cy="120" r="120"></circle>
+              <circle class="svg-chademo-percent-show-display" cx="120" cy="120" r="120"></circle>
+            </svg>
+            <div class="num num-chademo">
+              <h2>--<span>%</span></h2>
+            </div>
+          </div>
+          <button class="btn charging-page-button connect-page-button-chademo">CONNECT CHADEMO</button>
+          <button class="btn charging-page-button start-page-button-chademo unactive-chademo-button">START CHADEMO</button>
+          <button class="btn charging-page-button disconnect-page-button-chademo unactive-chademo-button">DISCONNECT CHADEMO</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  
+  <script src="../js/renderer.js"></script>
+</body>
+</html>

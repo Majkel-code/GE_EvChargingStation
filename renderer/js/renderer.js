@@ -1,9 +1,7 @@
-// Definicja zmiennych
-// Definicja zmiennych
 const buttons = document.querySelectorAll(".btn");
 const container = document.querySelector(".container");
 
-const cssButton = document.querySelector(".btn.css");
+const cssButton = document.querySelector(".btn.ac");
 const chademoButton = document.querySelector(".btn.chademo");
 
 const enButton = document.querySelector(".btn.en.right-btn");
@@ -37,20 +35,46 @@ closeChargingDisplayBtn.addEventListener("click", function() {
 document.querySelector(".start").addEventListener("click", () =>{
   ChargingPreparationDisplay();
 })
+
+
+// const changeSettingsPage = document.querySelector(".custom-settings-setter-page");
+// const closeChangeSettingsPageBtn = document.querySelector(".close-custom-settings-display");
+
+// function CustomSettingsSetterPage() {
+//   changeSettingsPage.classList.add('active');
+// }
+
+// function closeChangeSettingsPage() {
+//   changeSettingsPage.classList.remove('active');
+// }
+
+// document.querySelector(".custom").addEventListener("click", () =>{
+//   CustomSettingsSetterPage();
+// })
+
+// closeChangeSettingsPageBtn.addEventListener("click", () =>{
+//   closeChangeSettingsPage();
+// })
 // _______________________________
 
 // HELP DISPLAY
 function closeHelpDisplay() {
-  let = helpMessage = document.querySelector(".help-message");
-  helpMessage.textContent = "";
+  let = helpMessage = document.querySelectorAll(".help-message p");
+  helpMessage.forEach(element => {
+    element.textContent = "";
+    element.style.margin = "0px";
+  });
+  
   helpDisplay.classList.remove('active');
 }
 
-function showMessage(title, message) {
+function showMessage(title, first_p_message, second_p_message = null, third_p_message = null) {
   let helpTitle = document.querySelector(".help-title");
-  let = helpMessage = document.querySelector(".help-message");
+  let = helpMessage = document.querySelectorAll(".help-message p");
   helpTitle.textContent = title;
-  helpMessage.textContent = message;
+  helpMessage[0].textContent = first_p_message;
+  helpMessage[1].textContent = second_p_message;
+  helpMessage[2].textContent = third_p_message;
   helpDisplay.classList.add('active');
 }
 
@@ -59,11 +83,13 @@ closeHelpButton.addEventListener("click", function() {
 })
 
 cssButton.addEventListener("click", () => {
-  showMessage("CSS", "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.");
+  showMessage("AC", "From a technical point of view, the process of charging an electric car with this type of charger is less effective than when using a DC station. The key issue is the fact that we do not charge the batteries directly with alternating current, but along the way it must be 'rectified' by the built-in charger. This is one of the main disadvantages of AC charging because converters limit its power.");
 });
 
 chademoButton.addEventListener("click", () => {
-  showMessage("CHADEMO", "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.");
+  let chademo_title = "CHADEMO"
+  let = chademo_message = "CHADEMO is a standard for charging electric cars with direct current - DC. It is used by the so-called fast chargers, characterized by much greater power, which in turn ensures a much shorter charging time for the battery in an electric car."
+  showMessage(chademo_title, chademo_message);
 });
 
 enButton.addEventListener("click", () => {
@@ -71,7 +97,12 @@ enButton.addEventListener("click", () => {
 });
 
 helpButton.addEventListener("click", () => {
-  showMessage("HELP", "GE_EvChargingStation is a lightweight charge station and vehicle simulator where you can check charging flow, connectivity types and base 'know how' it's work.");
+  let help_title = "HELP";
+  let help_first_p_message = "GE_EvChargingStation is a lightweight charge station and vehicle simulator where you can check charging flow, connectivity types and base 'know how' it's work.";
+  let help_second_p_message = "When you click 'START' button on the middle of the screen you will see, new display. Here you can choose charging method between AC and DC or use both at the same time. In this display, vehicle settings will be read by a simulator and prepare charger for simulate charging flow.";
+  let help_third_p_message = "TO DO!!!"
+  showMessage(help_title, help_first_p_message, help_second_p_message, help_third_p_message);
+
 });
 
 // _______________________________
@@ -86,7 +117,7 @@ const disconnectAcVehicleButton = document.querySelector(".disconnect-page-butto
 
 let AcIsConnected = false;
 
-function ChargingComplete(create_remove){
+function ChargingCompleteAc(create_remove){
   const ChargingStatusMessage = document.querySelector(".card-one h4");
   if (create_remove == "complete") {
     ChargingStatusMessage.textContent = "CHARGING COMPLETE"
@@ -104,17 +135,23 @@ function ChargingComplete(create_remove){
 
 
 let AcBatteryLevel = 0
-async function TakeAcBatteryLevel(){
+async function TakeBatteryLevelAc(){
   if (AcIsConnected){
     const request_display_percent = await fetch("http://127.0.0.1:5000/vehicle_ac/BATTERY_LEVEL");
     let data = await request_display_percent.json();
-    AcBatteryLevel = data
-    acPercentNumber.textContent = data;
-    CirclePercentAc.style.strokeDashoffset = Math.floor(760 - (760 * data) / 100);
-    let span = document.createElement("span");
-    acPercentNumber.appendChild(span);
-    span.innerText = "%";
-    return true;
+    if (typeof(data) === "number"){
+      AcBatteryLevel = data
+      acPercentNumber.textContent = data;
+      CirclePercentAc.style.strokeDashoffset = Math.floor(760 - (760 * data) / 100);
+      let span = document.createElement("span");
+      acPercentNumber.appendChild(span);
+      span.innerText = "%";
+      return true;
+    }
+    else {
+
+    }
+
   }
   else {
     return false;
@@ -122,6 +159,13 @@ async function TakeAcBatteryLevel(){
 
 }
 
+function SetConnectAc(){
+  AcIsConnected = true;
+  TakeBatteryLevelAc();
+  connectAcButton.classList.add("unactive-ac-button");
+  startAcChargingButton.classList.remove("unactive-ac-button");
+  ChargingCompleteAc("start");
+}
 
 async function SendAcConncet(){
 
@@ -131,12 +175,20 @@ async function SendAcConncet(){
   };
   const request_connect = await fetch("http://127.0.0.1:5000/vehicle_ac/connect", requestOptions);
   if (request_connect.ok) {
-    AcIsConnected = true;
-    TakeAcBatteryLevel();
-    connectAcButton.classList.add("unactive-ac-button");
-    startAcChargingButton.classList.remove("unactive-ac-button");
-    ChargingComplete("start");
+    SetConnectAc();
   }
+}
+
+function SetDisconnectStatusAc(){
+  connectAcButton.classList.remove("unactive-ac-button");
+  disconnectAcVehicleButton.classList.add("unactive-ac-button");
+  acPercentNumber.textContent = "--";
+  CirclePercentAc.style.strokeDashoffset = null;
+  let span = document.createElement("span");
+  acPercentNumber.appendChild(span);
+  span.innerText = "%"
+  AcIsConnected = false;
+  ChargingCompleteAc("disconnect");
 }
 
 async function SendAcDisconnect(){
@@ -146,19 +198,25 @@ async function SendAcDisconnect(){
   };
   const request_connect = await fetch("http://127.0.0.1:5000/vehicle_ac/disconnect", requestOptions);
   if (request_connect.ok) {
-    // TakeAcBatteryLevel();
-    connectAcButton.classList.remove("unactive-ac-button");
-    disconnectAcVehicleButton.classList.add("unactive-ac-button");
-    acPercentNumber.textContent = "--";
-    CirclePercentAc.style.strokeDashoffset = null;
-    let span = document.createElement("span");
-    acPercentNumber.appendChild(span);
-    span.innerText = "%"
-    AcIsConnected = false;
-    ChargingComplete("disconnect");
+    SetDisconnectStatusAc();
   }
 }
 
+async function CheckChargingAc(){
+  startAcChargingButton.classList.add("unactive-ac-button");
+  disconnectAcVehicleButton.classList.remove("unactive-ac-button");
+  ChargingCompleteAc("ongoing")
+  while (AcBatteryLevel < 100 && AcIsConnected == true){
+    await sleep(2000);
+    TakeBatteryLevelAc();
+  };
+  if (AcIsConnected == true){
+    ChargingCompleteAc("complete");
+  }
+  else {
+    ChargingCompleteAc("disconnect");
+  }
+}
 
 async function SendAcStart(){
   var requestOptions = {
@@ -167,21 +225,8 @@ async function SendAcStart(){
   };
   const request_start = await fetch("http://127.0.0.1:5000/charger/start_ac", requestOptions);
   if (request_start.ok) {
-    startAcChargingButton.classList.add("unactive-ac-button");
-    disconnectAcVehicleButton.classList.remove("unactive-ac-button");
-    ChargingComplete("ongoing")
-    while (AcBatteryLevel < 100 && AcIsConnected == true){
-      await sleep(2000);
-      TakeAcBatteryLevel();
-    };
-    if (AcIsConnected == true){
-      ChargingComplete("complete");
-    }
-    else {
-      ChargingComplete("disconnect");
-    }
+    CheckChargingAc();
   }
-
 }
 
 connectAcButton.addEventListener("click", () => {
@@ -231,13 +276,18 @@ async function TakeBatteryLevelChademo(){
   if (ChademoIsConnected){
     const request_display_percent = await fetch("http://127.0.0.1:5000/vehicle_chademo/BATTERY_LEVEL");
     let data = await request_display_percent.json();
-    ChademoBatteryLevel = data
-    ChademoPercentNumber.textContent = data;
-    CirclePercentChademo.style.strokeDashoffset = Math.floor(760 - (760 * data) / 100);
-    let span = document.createElement("span");
-    ChademoPercentNumber.appendChild(span);
-    span.innerText = "%";
-    return true;
+    if (typeof(data) === "number") {
+      ChademoBatteryLevel = data
+      ChademoPercentNumber.textContent = ChademoBatteryLevel;
+      CirclePercentChademo.style.strokeDashoffset = Math.floor(760 - (760 * data) / 100);
+      let span = document.createElement("span");
+      ChademoPercentNumber.appendChild(span);
+      span.innerText = "%";
+      return true;
+    }
+    else {
+      SetDisconnectStatusChademo();
+    }
   }
   else {
     return false;
@@ -245,6 +295,13 @@ async function TakeBatteryLevelChademo(){
 
 }
 
+function SetConnectChademo(){
+  ChademoIsConnected = true;
+  TakeBatteryLevelChademo();
+  connectChademoButton.classList.add("unactive-chademo-button");
+  startChademoChargingButton.classList.remove("unactive-chademo-button");
+  ChargingCompleteChademo("start");
+}
 
 async function SendConncetChademo(){
 
@@ -254,12 +311,22 @@ async function SendConncetChademo(){
   };
   const request_connect = await fetch("http://127.0.0.1:5000/vehicle_chademo/connect", requestOptions);
   if (request_connect.ok) {
-    ChademoIsConnected = true;
-    TakeBatteryLevelChademo();
-    connectChademoButton.classList.add("unactive-chademo-button");
-    startChademoChargingButton.classList.remove("unactive-chademo-button");
-    ChargingCompleteChademo("start");
+    SetConnectChademo();
   }
+}
+
+function SetDisconnectStatusChademo(){
+  connectChademoButton.classList.remove("unactive-chademo-button");
+  disconnectChademoVehicleButton.classList.add("unactive-chademo-button");
+  startChademoChargingButton.classList.add("unactive-chademo-button");
+  ChademoPercentNumber.textContent = "--";
+  CirclePercentChademo.style.strokeDashoffset = null;
+  let span = document.createElement("span");
+  ChademoPercentNumber.appendChild(span);
+  span.innerText = "%"
+  ChademoIsConnected = false;
+  ChademoBatteryLevel = 0;
+  ChargingCompleteChademo("disconnect");
 }
 
 async function SendDisconnectChademo(){
@@ -269,15 +336,23 @@ async function SendDisconnectChademo(){
   };
   const request_connect = await fetch("http://127.0.0.1:5000/vehicle_chademo/disconnect", requestOptions);
   if (request_connect.ok) {
-    // TakeAcBatteryLevel();
-    connectChademoButton.classList.remove("unactive-chademo-button");
-    disconnectChademoVehicleButton.classList.add("unactive-chademo-button");
-    ChademoPercentNumber.textContent = "--";
-    CirclePercentChademo.style.strokeDashoffset = null;
-    let span = document.createElement("span");
-    ChademoPercentNumber.appendChild(span);
-    span.innerText = "%"
-    ChademoIsConnected = false;
+    SetDisconnectStatusChademo();
+  }
+}
+
+async function CheckChargingChademo(){
+
+  startChademoChargingButton.classList.add("unactive-chademo-button");
+  disconnectChademoVehicleButton.classList.remove("unactive-chademo-button");
+  ChargingCompleteChademo("ongoing")
+  while (ChademoBatteryLevel < 100 && ChademoIsConnected == true){
+    await sleep(1000);
+    TakeBatteryLevelChademo();
+  };
+  if (ChademoIsConnected == true){
+    ChargingCompleteChademo("complete");
+  }
+  else {
     ChargingCompleteChademo("disconnect");
   }
 }
@@ -290,19 +365,8 @@ async function SendStartChademo(){
   };
   const request_start = await fetch("http://127.0.0.1:5000/charger/start_chademo", requestOptions);
   if (request_start.ok) {
-    startChademoChargingButton.classList.add("unactive-chademo-button");
-    disconnectChademoVehicleButton.classList.remove("unactive-chademo-button");
-    ChargingCompleteChademo("ongoing")
-    while (ChademoBatteryLevel < 100 && ChademoIsConnected == true){
-      await sleep(2000);
-      TakeBatteryLevelChademo();
-    };
-    if (ChademoIsConnected == true){
-      ChargingCompleteChademo("complete");
-    }
-    else {
-      ChargingCompleteChademo("disconnect");
-    }
+    CheckChargingChademo();
+
   }
 
 }
@@ -318,4 +382,81 @@ startChademoChargingButton.addEventListener("click", () =>{
 disconnectChademoVehicleButton.addEventListener("click", () =>{
   SendDisconnectChademo();
 })
+
+
+
+// _______________________________
+
+let chademo_is_ongoing = false
+let ac_is_ongoing = false
+
+async function CheckStatus(){
+  const request_status = await fetch("http://127.0.0.1:5000/charger/outlets");
+  let used_outlets = await request_status.json();
+  if (request_status.ok) {
+    if( used_outlets["CHADEMO"] !== "Not used"){
+      if (!ChademoIsConnected){
+        ChargingPreparationDisplay();
+        SetConnectChademo();
+      }
+      else{
+        const request_energy_ongoing_chademo = await fetch("http://127.0.0.1:5000/charger/energy_ongoing_chademo");
+        let request_energy_ongoing_chademo_data = await request_energy_ongoing_chademo.json();
+        if (request_energy_ongoing_chademo.ok){
+          console.log(request_energy_ongoing_chademo_data);
+          if (request_energy_ongoing_chademo_data === true){
+            chademo_is_ongoing = true;
+            CheckChargingChademo();
+          }
+        }
+      }
+    }
+    if(used_outlets["AC"] !== "Not used") {
+      if (!AcIsConnected){
+        ChargingPreparationDisplay();
+        SetConnectAc();
+      }
+      else{
+        const request_energy_ongoing_ac = await fetch("http://127.0.0.1:5000/charger/energy_ongoing_ac");
+        let request_energy_ongoing_ac_data = await request_energy_ongoing_ac.json();
+        if (request_energy_ongoing_ac.ok){
+          console.log(request_energy_ongoing_ac_data);
+          if (request_energy_ongoing_ac_data === true){
+            ac_is_ongoing = true;
+            CheckChargingAc();
+          }
+        }
+      }
+    }
+    if ( used_outlets["CHADEMO"] === "Not used"){
+      SetDisconnectStatusChademo();
+    }
+    if (used_outlets["AC"] === "Not used"){
+      SetDisconnectStatusAc();
+    }
+  }
+}
+const loop = async () => {
+  let sleep_ms = 5000;
+  while (true) {
+    await sleep(sleep_ms);
+    if (ChademoBatteryLevel > 0 || AcBatteryLevel > 0) {
+      sleep_ms = 10000;
+    }
+
+    if (true){
+      CheckStatus();
+    }
+    if (!AcIsConnected){
+      ac_is_ongoing = false;
+    }
+    if (!ChademoIsConnected){
+      chademo_is_ongoing = false;
+    }
+  }
+
+}
+loop()
+
+
 

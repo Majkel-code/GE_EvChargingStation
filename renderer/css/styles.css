@@ -32,15 +32,15 @@ body {
 
 .btn {
   position:relative;
-  width: 150px;
-  height: 50px;
+  width: 170px;
+  height: 75px;
   color:#777;
   background-color: #1b1b1b;
   border: #777 solid 2px;
   border-radius: 5px;
-  margin-top:20px;
+  margin-top: 20px;
   font-weight:700;
-  font-size:18px;
+  font-size:24px;
   letter-spacing:1px;
   text-transform:uppercase;
   transition:0.5s;
@@ -78,9 +78,6 @@ body {
   align-items: left;
 }
 
-.bottom-left-btn {
-  top: -30%;
-}
 
 .top-right {
   grid-area: 1 / 3 / 2 / 4;
@@ -92,16 +89,16 @@ body {
 }
 
 .right-btn {
-  width: 50px;
-  height: 50px;
+  width: 75px;
+  height: 75px;
   top: 10px;
   left: -10px;
   margin-left: 0;
   margin-top: 0;
   justify-self: right;
 }
-.bottom-right-btn {
-  top: -30%;
+.btn.help.bottom-right-btn{
+    font-size: 32px;
 }
 
 .center {
@@ -117,11 +114,26 @@ body {
   align-self: center;
 }
 
+.logo-container {
+  grid-area: 3 / 3 / 4 / 4;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: repeat(1, 1fr);
+  width: 100%;
+  height: 100%;
+  align-items: end;
+  justify-items: end;
+}
+.logo-container .logo-right-bottom {
+  margin: 10px;
+}
+
 .close-page-btn {
   position: absolute;
+  font-size: 36px;
   margin: 0px;
-  width: 40px;
-  height: 40px;
+  width: 75px;
+  height: 75px;
   top: 10px;
   right: 10px;
   z-index: 2;
@@ -182,8 +194,6 @@ body {
 .help-display .close-help-display {
   grid-area: 1 / 3 / 2 / 4;
   position: relative;
-  width: 40px;
-  height: 40px;
   top: 10px;
   right: 10px;
 }
@@ -238,4 +248,28 @@ body {
   color: white;
   font-size: 16px;
   cursor: pointer;
+}
+
+
+
+/* _________ */
+
+.custom-settings-setter-page {
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+  font-family: sans-serif;
+  width: 1024px;
+  height: 600px;
+  font-size: 18px;
+  line-height: 24px;
+  text-align: center;
+  background-color: #222;
+  color: #000;
+  display: none;
+}
+.custom-settings-setter-page.active {
+  display: grid;
+  position: absolute;
 }

@@ -22,6 +22,7 @@ class ChademoVehicle(ChargeSimulation):
         logger.info("VEHICLE SETTING READ PROPERLY...")
         # CHARGER INIT
         self.max_charging_power = self.check_connectivity_and_set_max_power()
+        self.actual_kw_per_min = None
 
     def check_connectivity_and_set_max_power(self):
         if Vehicle.settings_chademo["CHARGING_PORT"] in Charger.settings["CHARGING_OUTLETS"]:
@@ -36,6 +37,16 @@ class ChademoVehicle(ChargeSimulation):
         actual_battery_status_in_kwh = (self.actual_battery_level / 100) * self.max_battery_capacity_in_kwh
         Vehicle.settings_chademo["ACTUAL_BATTERY_STATUS_IN_KWH"] = round(actual_battery_status_in_kwh, 2)
         return actual_battery_status_in_kwh
+    
+    def charged_kw_per_minute(self, charging_after_voltage_drop=None):
+        if type(charging_after_voltage_drop) is int or type(charging_after_voltage_drop) is float:
+            kw_per_minute = self.actual_kw_per_min / charging_after_voltage_drop
+            Charger.settings["CHADEMO_ACTUAL_KW_PER_MIN"] = kw_per_minute
+            return kw_per_minute
+        else:
+            kw_per_minute = self.kw_needed_to_charge_charge / self.estimated_time_to_full_charge_in_min
+            Charger.settings["CHADEMO_ACTUAL_KW_PER_MIN"] = kw_per_minute
+            return kw_per_minute
 
     def charging_to_max_battery_capacity(self, percent):
         Charger._charging_finished_ = False
@@ -49,9 +60,9 @@ class ChademoVehicle(ChargeSimulation):
             if Vehicle._connected_chademo_:
                 if self.actual_battery_status_in_kwh + self.actual_kw_per_min > self.max_battery_capacity_in_kwh:
                     self.actual_kw_per_min = self.max_battery_capacity_in_kwh - self.actual_battery_status_in_kwh
-                    Charger.settings["ACTUAL_KW_PER_MIN"] = self.actual_kw_per_min
+                    Charger.settings["CHADEMO_ACTUAL_KW_PER_MIN"] = self.actual_kw_per_min
                 self.actual_battery_status_in_kwh += self.actual_kw_per_min
-                self.actual_kw_per_min = self.charged_kw_per_minute(Charger.settings["VOLTAGE_DROP"])
+                self.actual_kw_per_min = self.charged_kw_per_minute(Charger.settings["VOLTAGE_DROP_CHADEMO"])
                 self.actual_battery_level = self.exchange_kw_to_percent()
                 Vehicle.settings_chademo["BATTERY_LEVEL"] = self.actual_battery_level
                 self.actual_battery_status_in_kwh = self.current_battery_status_kwh()

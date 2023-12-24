@@ -11,7 +11,6 @@ class ChargeSimulation:
         # CHARGER INIT
         self.effective_charging_cap = Charger.settings["EFFECTIVE_CHARGING_CAP"]
         self.estimated_time_to_full_charge_in_min = None
-        self.actual_kw_per_min = None
         logger.info("CHARGER SETTINGS READ PROPERLY...")
 
     def percent_required_to_charge(self, percent):
@@ -33,15 +32,6 @@ class ChargeSimulation:
         self.calculate_displayed_time(percent=percent, time_in_minutes=time_needed * 60)
         return time_needed * 60
 
-    def charged_kw_per_minute(self, charging_after_voltage_drop=None):
-        if type(charging_after_voltage_drop) is int or type(charging_after_voltage_drop) is float:
-            kw_per_minute = self.actual_kw_per_min / charging_after_voltage_drop
-            Charger.settings["ACTUAL_KW_PER_MIN"] = kw_per_minute
-            return kw_per_minute
-        else:
-            kw_per_minute = self.kw_needed_to_charge_charge / self.estimated_time_to_full_charge_in_min
-            Charger.settings["ACTUAL_KW_PER_MIN"] = kw_per_minute
-            return kw_per_minute
 
     def exchange_kw_to_percent(self):
         actual_percent = round((self.actual_battery_status_in_kwh / self.max_battery_capacity_in_kwh) * 100, 2)

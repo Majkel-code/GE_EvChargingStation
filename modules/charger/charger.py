@@ -32,6 +32,18 @@ async def read_items():
 async def read_item():
     return Charger._outlet_in_use_
 
+@router.get("/energy_ongoing_chademo")
+async def read_item():
+    if Charger._energy_is_send_loop_chademo_ is not 0:
+        return True
+    else: return False
+
+@router.get("/energy_ongoing_ac")
+async def read_item():
+    if Charger._energy_is_send_loop_ac_ is not 0:
+        return True
+    else: return False
+
 
 @router.get("/{item_id}")
 async def read_item(item_id: str):

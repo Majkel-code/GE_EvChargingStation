@@ -1,11 +1,12 @@
-// main.js
+
 
 // Modules to control application life and create native browser window
 const { app, BrowserWindow } = require('electron');
-
-const path = require('node:path')
+const { platform } = require('node:os');
+const os = require("os");
 
 const isDev = process.env.NODE_ENV !== 'development';
+const path = require('node:path');
 
 const createWindow = () => {
   // Create the browser window.
@@ -13,18 +14,30 @@ const createWindow = () => {
     title: 'GE_Ev_ChargingStation',
     width: 1024,
     height: 600,
+    maxHeight: 600,
+    maxWidth: 1024,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js')
-    }
+    },
+    resizable: false,
+    frame: false,
   })
-
+  // and load the index.html of the app.
+  mainWindow.loadFile('renderer/html/index.html');
+  mainWindow.reload(true);
+  
   if (isDev) {
     mainWindow.webContents.openDevTools();
   }
 
-  // and load the index.html of the app.
-  mainWindow.loadFile('renderer/html/index.html');
-  mainWindow.reload(true);
+  if (os.type() === 'Linux'){
+    mainWindow.fullScreen = true;
+
+    // Preven windows to be closed
+    mainWindow.on('close', e => {
+      e.preventDefault();
+    });
+  }
 }
 
 // This method will be called when Electron has finished

@@ -2,7 +2,7 @@ import yaml
 from pathlib import Path
 
 current_path = Path(__file__).absolute().parents[1]
-print(current_path)
+
 def read_charger_settings():
     with open(f"{current_path}/config_files/charger_config.yaml", "r+") as f:
         data = yaml.safe_load(f)

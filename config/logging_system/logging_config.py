@@ -2,10 +2,12 @@ import logging.handlers
 import logging
 import datetime
 import yaml
+from pathlib import Path
 
+current_path = Path(__file__).absolute().parents[2]
 
 class CustomFormatter(logging.Formatter):
-    LOG_DIR = "server_logs/"
+    LOG_DIR = f"{current_path}/server_logs/"
 
     blue = "\x1b[38;5;39m"
     green = "\x1b[1;32m"
@@ -33,7 +35,7 @@ class CustomFormatter(logging.Formatter):
 
 
 class Logger:
-    with open(f"config/config_files/server_config.yaml", "r+") as f:
+    with open(f"{current_path}/config/config_files/server_config.yaml", "r+") as f:
         server_config = yaml.safe_load(f)
     logger = logging.getLogger()
     logger.setLevel(server_config["LOG_LEVEL_CONSOLE"])

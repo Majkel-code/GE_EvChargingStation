@@ -9,9 +9,6 @@ from config.charger_vehicle_config_bridge import IsServerAlive as _main_server
 import modules.vehicle.vehicle_ac_simulator as vehicle_ac_simulator
 import modules.vehicle.vehicle_chademo_simulator as vehicle_chademo_simulator
 
-import os
-import signal
-
 
 logger = Logger.logger
 

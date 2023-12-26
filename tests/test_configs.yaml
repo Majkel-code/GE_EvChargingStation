@@ -14,11 +14,13 @@ CHARGER_CHECK_EVERY_SETTING: [    # KEY'S THAT WILL BE CHECK IN CHARGING_CONFIG 
             "CHARGING_OUTLETS",
             "MAX_CHARGING_POWER_CHADEMO",
             "MAX_CHARGING_POWER_AC",
-            "ACTUAL_KW_PER_MIN",
+            "AC_ACTUAL_KW_PER_MIN",
+            "CHADEMO_ACTUAL_KW_PER_MIN",
             "MAX_CHARGING_AMPERE",
             "VOLT",
             "LOSSES_DURING_CHARGING",
-            "VOLTAGE_DROP",
+            "VOLTAGE_DROP_AC",
+            "VOLTAGE_DROP_CHADEMO",
             "EFFECTIVE_CHARGING_CAP"
         ]
 CHARGER_PROPER_VALUE: {           # PROPER VALUES SHOULD BE THE SAME AS THE VALUE IN CHARGING_CONFIG FILE
@@ -28,11 +30,13 @@ CHARGER_PROPER_VALUE: {           # PROPER VALUES SHOULD BE THE SAME AS THE VALU
           ],
           "MAX_CHARGING_POWER_CHADEMO": 49,
           "MAX_CHARGING_POWER_AC": 6.6,
-          "ACTUAL_KW_PER_MIN": 0,
+          "AC_ACTUAL_KW_PER_MIN": 0,
+          "CHADEMO_ACTUAL_KW_PER_MIN": 0,
           "MAX_CHARGING_AMPERE": 48,
           "VOLT": 400,
           "LOSSES_DURING_CHARGING": 10,
-          "VOLTAGE_DROP": 1.08,
+          "VOLTAGE_DROP_AC": 1.02,
+          "VOLTAGE_DROP_CHADEMO": 1.08,
           "EFFECTIVE_CHARGING_CAP": 90
       }
 #_____________________________________________

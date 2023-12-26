@@ -5,7 +5,7 @@ const { app, BrowserWindow } = require('electron');
 const { platform } = require('node:os');
 const os = require("os");
 
-const isDev = process.env.NODE_ENV !== 'development';
+
 const path = require('node:path');
 
 const createWindow = () => {
@@ -25,10 +25,7 @@ const createWindow = () => {
   // and load the index.html of the app.
   mainWindow.loadFile('renderer/html/index.html');
   mainWindow.reload(true);
-  
-  if (isDev) {
-    mainWindow.webContents.openDevTools();
-  }
+
 
   if (os.type() === 'Linux'){
     mainWindow.fullScreen = true;

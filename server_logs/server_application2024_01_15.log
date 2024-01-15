@@ -1,0 +1,238 @@
+2024-01-15 18:20:10,067 | [38;5;39m   DEBUG [0m| (proactor_events.py:633) | Using proactor: IocpProactor
+2024-01-15 18:20:10,091 | [1;32m    INFO [0m| (server.py:76) | Started server process [19148]
+2024-01-15 18:20:10,091 | [1;32m    INFO [0m| (on.py:46) | Waiting for application startup.
+2024-01-15 18:20:10,092 | [1;32m    INFO [0m| (on.py:60) | Application startup complete.
+2024-01-15 18:20:10,092 | [1;32m    INFO [0m| (server.py:218) | Uvicorn running on http://127.0.0.1:5000 (Press CTRL+C to quit)
+2024-01-15 18:20:17,285 | [1;32m    INFO [0m| (vehicle_ac_simulator.py:28) | VEHICLE SUCCESSFULY CONNECTED: True
+2024-01-15 18:20:17,286 | [1;32m    INFO [0m| (h11_impl.py:478) | 127.0.0.1:54881 - "POST /vehicle_ac/connect HTTP/1.1" 200
+2024-01-15 18:20:20,518 | [1;32m    INFO [0m| (charge_simulation.py:14) | CHARGER SETTINGS READ PROPERLY...
+2024-01-15 18:20:20,518 | [1;32m    INFO [0m| (ac_charge_simulation.py:22) | VEHICLE SETTING READ PROPERLY...
+2024-01-15 18:20:20,518 | [1;32m    INFO [0m| (ac_charge_simulation.py:29) | CHECKING CONNECTIVITY...
+2024-01-15 18:20:22,519 | [1;32m    INFO [0m| (ac_charge_simulation.py:111) | STARTING CHARGING SESSION...
+2024-01-15 18:20:22,519 | [1;32m    INFO [0m| (charger.py:97) | AC SESSION INITIALIZE...
+2024-01-15 18:20:22,519 | [1;32m    INFO [0m| (charge_simulation.py:28) | Estimated charging time to 100% is 0 hours and 55 minutes
+2024-01-15 18:20:22,519 | [1;32m    INFO [0m| (h11_impl.py:478) | 127.0.0.1:54881 - "POST /charger/start_ac HTTP/1.1" 200
+2024-01-15 18:20:22,519 | [1;32m    INFO [0m| (ac_charge_simulation.py:96) | AC CHARGING ONGOING: 80.37%
+2024-01-15 18:20:23,521 | [1;32m    INFO [0m| (ac_charge_simulation.py:96) | AC CHARGING ONGOING: 80.74%
+2024-01-15 18:20:24,521 | [1;32m    INFO [0m| (ac_charge_simulation.py:96) | AC CHARGING ONGOING: 81.11%
+2024-01-15 18:20:25,521 | [1;32m    INFO [0m| (ac_charge_simulation.py:96) | AC CHARGING ONGOING: 81.48%
+2024-01-15 18:20:26,522 | [1;32m    INFO [0m| (ac_charge_simulation.py:96) | AC CHARGING ONGOING: 81.85%
+2024-01-15 18:20:27,523 | [1;32m    INFO [0m| (ac_charge_simulation.py:96) | AC CHARGING ONGOING: 82.22%
+2024-01-15 18:20:28,523 | [1;32m    INFO [0m| (ac_charge_simulation.py:96) | AC CHARGING ONGOING: 82.59%
+2024-01-15 18:20:29,523 | [1;32m    INFO [0m| (ac_charge_simulation.py:96) | AC CHARGING ONGOING: 82.96%
+2024-01-15 18:20:30,524 | [1;32m    INFO [0m| (ac_charge_simulation.py:96) | AC CHARGING ONGOING: 83.33%
+2024-01-15 18:20:31,524 | [1;32m    INFO [0m| (ac_charge_simulation.py:96) | AC CHARGING ONGOING: 83.7%
+2024-01-15 18:20:32,525 | [1;32m    INFO [0m| (ac_charge_simulation.py:96) | AC CHARGING ONGOING: 84.07%
+2024-01-15 18:20:33,526 | [1;32m    INFO [0m| (ac_charge_simulation.py:96) | AC CHARGING ONGOING: 84.44%
+2024-01-15 18:20:34,527 | [1;32m    INFO [0m| (ac_charge_simulation.py:96) | AC CHARGING ONGOING: 84.81%
+2024-01-15 18:20:35,527 | [1;32m    INFO [0m| (ac_charge_simulation.py:96) | AC CHARGING ONGOING: 85.18%
+2024-01-15 18:20:36,528 | [1;32m    INFO [0m| (ac_charge_simulation.py:96) | AC CHARGING ONGOING: 85.55%
+2024-01-15 18:20:37,529 | [1;32m    INFO [0m| (ac_charge_simulation.py:96) | AC CHARGING ONGOING: 85.92%
+2024-01-15 18:20:38,529 | [1;32m    INFO [0m| (ac_charge_simulation.py:96) | AC CHARGING ONGOING: 86.29%
+2024-01-15 18:20:39,530 | [1;32m    INFO [0m| (ac_charge_simulation.py:96) | AC CHARGING ONGOING: 86.66%
+2024-01-15 18:20:40,531 | [1;32m    INFO [0m| (ac_charge_simulation.py:96) | AC CHARGING ONGOING: 87.03%
+2024-01-15 18:20:41,531 | [1;32m    INFO [0m| (ac_charge_simulation.py:96) | AC CHARGING ONGOING: 87.4%
+2024-01-15 18:20:42,532 | [1;32m    INFO [0m| (ac_charge_simulation.py:96) | AC CHARGING ONGOING: 87.77%
+2024-01-15 18:20:43,532 | [1;32m    INFO [0m| (ac_charge_simulation.py:96) | AC CHARGING ONGOING: 88.14%
+2024-01-15 18:20:44,533 | [1;32m    INFO [0m| (ac_charge_simulation.py:96) | AC CHARGING ONGOING: 88.51%
+2024-01-15 18:20:45,533 | [1;32m    INFO [0m| (ac_charge_simulation.py:96) | AC CHARGING ONGOING: 88.88%
+2024-01-15 18:20:46,534 | [1;32m    INFO [0m| (ac_charge_simulation.py:96) | AC CHARGING ONGOING: 89.25%
+2024-01-15 18:20:47,535 | [1;32m    INFO [0m| (ac_charge_simulation.py:96) | AC CHARGING ONGOING: 89.62%
+2024-01-15 18:20:48,535 | [1;32m    INFO [0m| (ac_charge_simulation.py:96) | AC CHARGING ONGOING: 89.99%
+2024-01-15 18:20:49,535 | [1;32m    INFO [0m| (ac_charge_simulation.py:96) | AC CHARGING ONGOING: 90.36%
+2024-01-15 18:20:50,536 | [1;32m    INFO [0m| (ac_charge_simulation.py:89) | 90% OF BATTERY LEVEL ACHIVE...
+2024-01-15 18:20:50,536 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:58) | INFORMATION ABOUT ACTUAL AC CHARGING STATE.... 
+2024-01-15 18:20:50,537 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:59) | actual ac battery status: 27.107999999999997
+2024-01-15 18:20:50,537 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:60) | actual ac kw/min: 0.10989010989010989
+2024-01-15 18:20:50,537 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:61) | _____________________________________________________________
+2024-01-15 18:20:50,537 | [1;32m    INFO [0m| (ac_charge_simulation.py:71) | CHARGING ONGOING: 90.73%
+2024-01-15 18:20:51,537 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:58) | INFORMATION ABOUT ACTUAL AC CHARGING STATE.... 
+2024-01-15 18:20:51,537 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:59) | actual ac battery status: 27.219
+2024-01-15 18:20:51,537 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:60) | actual ac kw/min: 0.1077354018530489
+2024-01-15 18:20:51,537 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:61) | _____________________________________________________________
+2024-01-15 18:20:51,538 | [1;32m    INFO [0m| (ac_charge_simulation.py:71) | CHARGING ONGOING: 91.09%
+2024-01-15 18:20:52,539 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:58) | INFORMATION ABOUT ACTUAL AC CHARGING STATE.... 
+2024-01-15 18:20:52,539 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:59) | actual ac battery status: 27.327
+2024-01-15 18:20:52,539 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:60) | actual ac kw/min: 0.1056229429931852
+2024-01-15 18:20:52,539 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:61) | _____________________________________________________________
+2024-01-15 18:20:52,540 | [1;32m    INFO [0m| (ac_charge_simulation.py:71) | CHARGING ONGOING: 91.44%
+2024-01-15 18:20:53,541 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:58) | INFORMATION ABOUT ACTUAL AC CHARGING STATE.... 
+2024-01-15 18:20:53,541 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:59) | actual ac battery status: 27.432
+2024-01-15 18:20:53,541 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:60) | actual ac kw/min: 0.1035519048952796
+2024-01-15 18:20:53,541 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:61) | _____________________________________________________________
+2024-01-15 18:20:53,542 | [1;32m    INFO [0m| (ac_charge_simulation.py:71) | CHARGING ONGOING: 91.79%
+2024-01-15 18:20:54,542 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:58) | INFORMATION ABOUT ACTUAL AC CHARGING STATE.... 
+2024-01-15 18:20:54,542 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:59) | actual ac battery status: 27.537000000000003
+2024-01-15 18:20:54,542 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:60) | actual ac kw/min: 0.10152147538752902
+2024-01-15 18:20:54,542 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:61) | _____________________________________________________________
+2024-01-15 18:20:54,543 | [1;32m    INFO [0m| (ac_charge_simulation.py:71) | CHARGING ONGOING: 92.13%
+2024-01-15 18:20:55,544 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:58) | INFORMATION ABOUT ACTUAL AC CHARGING STATE.... 
+2024-01-15 18:20:55,544 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:59) | actual ac battery status: 27.639
+2024-01-15 18:20:55,544 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:60) | actual ac kw/min: 0.09953085822306766
+2024-01-15 18:20:55,544 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:61) | _____________________________________________________________
+2024-01-15 18:20:55,545 | [1;32m    INFO [0m| (ac_charge_simulation.py:71) | CHARGING ONGOING: 92.46%
+2024-01-15 18:20:56,545 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:58) | INFORMATION ABOUT ACTUAL AC CHARGING STATE.... 
+2024-01-15 18:20:56,545 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:59) | actual ac battery status: 27.738
+2024-01-15 18:20:56,545 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:60) | actual ac kw/min: 0.09757927276771339
+2024-01-15 18:20:56,545 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:61) | _____________________________________________________________
+2024-01-15 18:20:56,546 | [1;32m    INFO [0m| (ac_charge_simulation.py:71) | CHARGING ONGOING: 92.79%
+2024-01-15 18:20:57,547 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:58) | INFORMATION ABOUT ACTUAL AC CHARGING STATE.... 
+2024-01-15 18:20:57,547 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:59) | actual ac battery status: 27.837000000000003
+2024-01-15 18:20:57,547 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:60) | actual ac kw/min: 0.09566595369383665
+2024-01-15 18:20:57,547 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:61) | _____________________________________________________________
+2024-01-15 18:20:57,547 | [1;32m    INFO [0m| (ac_charge_simulation.py:71) | CHARGING ONGOING: 93.11%
+2024-01-15 18:20:58,548 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:58) | INFORMATION ABOUT ACTUAL AC CHARGING STATE.... 
+2024-01-15 18:20:58,548 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:59) | actual ac battery status: 27.933
+2024-01-15 18:20:58,548 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:60) | actual ac kw/min: 0.09379015068023201
+2024-01-15 18:20:58,548 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:61) | _____________________________________________________________
+2024-01-15 18:20:58,549 | [1;32m    INFO [0m| (ac_charge_simulation.py:71) | CHARGING ONGOING: 93.42%
+2024-01-15 18:20:59,550 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:58) | INFORMATION ABOUT ACTUAL AC CHARGING STATE.... 
+2024-01-15 18:20:59,550 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:59) | actual ac battery status: 28.026
+2024-01-15 18:20:59,550 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:60) | actual ac kw/min: 0.09195112811787452
+2024-01-15 18:20:59,550 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:61) | _____________________________________________________________
+2024-01-15 18:20:59,551 | [1;32m    INFO [0m| (ac_charge_simulation.py:71) | CHARGING ONGOING: 93.73%
+2024-01-15 18:21:00,552 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:58) | INFORMATION ABOUT ACTUAL AC CHARGING STATE.... 
+2024-01-15 18:21:00,552 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:59) | actual ac battery status: 28.119
+2024-01-15 18:21:00,552 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:60) | actual ac kw/min: 0.09014816482144561
+2024-01-15 18:21:00,552 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:61) | _____________________________________________________________
+2024-01-15 18:21:00,553 | [1;32m    INFO [0m| (ac_charge_simulation.py:71) | CHARGING ONGOING: 94.03%
+2024-01-15 18:21:01,553 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:58) | INFORMATION ABOUT ACTUAL AC CHARGING STATE.... 
+2024-01-15 18:21:01,553 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:59) | actual ac battery status: 28.209
+2024-01-15 18:21:01,553 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:60) | actual ac kw/min: 0.0883805537465153
+2024-01-15 18:21:01,553 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:61) | _____________________________________________________________
+2024-01-15 18:21:01,554 | [1;32m    INFO [0m| (ac_charge_simulation.py:71) | CHARGING ONGOING: 94.32%
+2024-01-15 18:21:02,555 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:58) | INFORMATION ABOUT ACTUAL AC CHARGING STATE.... 
+2024-01-15 18:21:02,555 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:59) | actual ac battery status: 28.296
+2024-01-15 18:21:02,555 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:60) | actual ac kw/min: 0.0866476017122699
+2024-01-15 18:21:02,555 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:61) | _____________________________________________________________
+2024-01-15 18:21:02,556 | [1;32m    INFO [0m| (ac_charge_simulation.py:71) | CHARGING ONGOING: 94.61%
+2024-01-15 18:21:03,556 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:58) | INFORMATION ABOUT ACTUAL AC CHARGING STATE.... 
+2024-01-15 18:21:03,557 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:59) | actual ac battery status: 28.383
+2024-01-15 18:21:03,557 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:60) | actual ac kw/min: 0.08494862912967638
+2024-01-15 18:21:03,557 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:61) | _____________________________________________________________
+2024-01-15 18:21:03,557 | [1;32m    INFO [0m| (ac_charge_simulation.py:71) | CHARGING ONGOING: 94.89%
+2024-01-15 18:21:04,558 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:58) | INFORMATION ABOUT ACTUAL AC CHARGING STATE.... 
+2024-01-15 18:21:04,558 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:59) | actual ac battery status: 28.467
+2024-01-15 18:21:04,558 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:60) | actual ac kw/min: 0.08328296973497684
+2024-01-15 18:21:04,558 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:61) | _____________________________________________________________
+2024-01-15 18:21:04,558 | [1;32m    INFO [0m| (ac_charge_simulation.py:71) | CHARGING ONGOING: 95.17%
+2024-01-15 18:21:05,559 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:58) | INFORMATION ABOUT ACTUAL AC CHARGING STATE.... 
+2024-01-15 18:21:05,559 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:59) | actual ac battery status: 28.551
+2024-01-15 18:21:05,559 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:60) | actual ac kw/min: 0.08164997032840866
+2024-01-15 18:21:05,559 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:61) | _____________________________________________________________
+2024-01-15 18:21:05,560 | [1;32m    INFO [0m| (ac_charge_simulation.py:71) | CHARGING ONGOING: 95.44%
+2024-01-15 18:21:06,561 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:58) | INFORMATION ABOUT ACTUAL AC CHARGING STATE.... 
+2024-01-15 18:21:06,561 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:59) | actual ac battery status: 28.632
+2024-01-15 18:21:06,561 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:60) | actual ac kw/min: 0.0800489905180477
+2024-01-15 18:21:06,561 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:61) | _____________________________________________________________
+2024-01-15 18:21:06,562 | [1;32m    INFO [0m| (ac_charge_simulation.py:71) | CHARGING ONGOING: 95.71%
+2024-01-15 18:21:07,562 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:58) | INFORMATION ABOUT ACTUAL AC CHARGING STATE.... 
+2024-01-15 18:21:07,562 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:59) | actual ac battery status: 28.712999999999997
+2024-01-15 18:21:07,562 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:60) | actual ac kw/min: 0.07847940246867421
+2024-01-15 18:21:07,562 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:61) | _____________________________________________________________
+2024-01-15 18:21:07,564 | [1;32m    INFO [0m| (ac_charge_simulation.py:71) | CHARGING ONGOING: 95.97%
+2024-01-15 18:21:08,564 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:58) | INFORMATION ABOUT ACTUAL AC CHARGING STATE.... 
+2024-01-15 18:21:08,564 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:59) | actual ac battery status: 28.791
+2024-01-15 18:21:08,564 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:60) | actual ac kw/min: 0.07694059065556295
+2024-01-15 18:21:08,564 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:61) | _____________________________________________________________
+2024-01-15 18:21:08,565 | [1;32m    INFO [0m| (ac_charge_simulation.py:71) | CHARGING ONGOING: 96.23%
+2024-01-15 18:21:09,565 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:58) | INFORMATION ABOUT ACTUAL AC CHARGING STATE.... 
+2024-01-15 18:21:09,565 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:59) | actual ac battery status: 28.869
+2024-01-15 18:21:09,566 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:60) | actual ac kw/min: 0.07543195162310093
+2024-01-15 18:21:09,566 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:61) | _____________________________________________________________
+2024-01-15 18:21:09,566 | [1;32m    INFO [0m| (ac_charge_simulation.py:71) | CHARGING ONGOING: 96.48%
+2024-01-15 18:21:10,567 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:58) | INFORMATION ABOUT ACTUAL AC CHARGING STATE.... 
+2024-01-15 18:21:10,567 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:59) | actual ac battery status: 28.944
+2024-01-15 18:21:10,567 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:60) | actual ac kw/min: 0.07395289374813817
+2024-01-15 18:21:10,567 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:61) | _____________________________________________________________
+2024-01-15 18:21:10,568 | [1;32m    INFO [0m| (ac_charge_simulation.py:71) | CHARGING ONGOING: 96.73%
+2024-01-15 18:21:11,568 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:58) | INFORMATION ABOUT ACTUAL AC CHARGING STATE.... 
+2024-01-15 18:21:11,568 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:59) | actual ac battery status: 29.019000000000002
+2024-01-15 18:21:11,568 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:60) | actual ac kw/min: 0.07250283700797859
+2024-01-15 18:21:11,568 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:61) | _____________________________________________________________
+2024-01-15 18:21:11,569 | [1;32m    INFO [0m| (ac_charge_simulation.py:71) | CHARGING ONGOING: 96.97%
+2024-01-15 18:21:12,570 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:58) | INFORMATION ABOUT ACTUAL AC CHARGING STATE.... 
+2024-01-15 18:21:12,570 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:59) | actual ac battery status: 29.091
+2024-01-15 18:21:12,570 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:60) | actual ac kw/min: 0.07108121275292019
+2024-01-15 18:21:12,570 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:61) | _____________________________________________________________
+2024-01-15 18:21:12,571 | [1;32m    INFO [0m| (ac_charge_simulation.py:71) | CHARGING ONGOING: 97.21%
+2024-01-15 18:21:13,571 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:58) | INFORMATION ABOUT ACTUAL AC CHARGING STATE.... 
+2024-01-15 18:21:13,571 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:59) | actual ac battery status: 29.163
+2024-01-15 18:21:13,571 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:60) | actual ac kw/min: 0.06968746348325508
+2024-01-15 18:21:13,571 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:61) | _____________________________________________________________
+2024-01-15 18:21:13,572 | [1;32m    INFO [0m| (ac_charge_simulation.py:71) | CHARGING ONGOING: 97.44%
+2024-01-15 18:21:14,573 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:58) | INFORMATION ABOUT ACTUAL AC CHARGING STATE.... 
+2024-01-15 18:21:14,573 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:59) | actual ac battery status: 29.232
+2024-01-15 18:21:14,573 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:60) | actual ac kw/min: 0.06832104263064223
+2024-01-15 18:21:14,573 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:61) | _____________________________________________________________
+2024-01-15 18:21:14,574 | [1;32m    INFO [0m| (ac_charge_simulation.py:71) | CHARGING ONGOING: 97.67%
+2024-01-15 18:21:15,575 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:58) | INFORMATION ABOUT ACTUAL AC CHARGING STATE.... 
+2024-01-15 18:21:15,575 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:59) | actual ac battery status: 29.301000000000002
+2024-01-15 18:21:15,575 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:60) | actual ac kw/min: 0.06698141434376689
+2024-01-15 18:21:15,575 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:61) | _____________________________________________________________
+2024-01-15 18:21:15,576 | [1;32m    INFO [0m| (ac_charge_simulation.py:71) | CHARGING ONGOING: 97.89%
+2024-01-15 18:21:16,576 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:58) | INFORMATION ABOUT ACTUAL AC CHARGING STATE.... 
+2024-01-15 18:21:16,576 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:59) | actual ac battery status: 29.367
+2024-01-15 18:21:16,576 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:60) | actual ac kw/min: 0.06566805327820284
+2024-01-15 18:21:16,576 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:61) | _____________________________________________________________
+2024-01-15 18:21:16,577 | [1;32m    INFO [0m| (ac_charge_simulation.py:71) | CHARGING ONGOING: 98.11%
+2024-01-15 18:21:17,578 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:58) | INFORMATION ABOUT ACTUAL AC CHARGING STATE.... 
+2024-01-15 18:21:17,578 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:59) | actual ac battery status: 29.433
+2024-01-15 18:21:17,578 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:60) | actual ac kw/min: 0.06438044439039493
+2024-01-15 18:21:17,578 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:61) | _____________________________________________________________
+2024-01-15 18:21:17,578 | [1;32m    INFO [0m| (ac_charge_simulation.py:71) | CHARGING ONGOING: 98.32%
+2024-01-15 18:21:18,579 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:58) | INFORMATION ABOUT ACTUAL AC CHARGING STATE.... 
+2024-01-15 18:21:18,580 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:59) | actual ac battery status: 29.496
+2024-01-15 18:21:18,580 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:60) | actual ac kw/min: 0.0631180827356813
+2024-01-15 18:21:18,580 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:61) | _____________________________________________________________
+2024-01-15 18:21:18,580 | [1;32m    INFO [0m| (ac_charge_simulation.py:71) | CHARGING ONGOING: 98.53%
+2024-01-15 18:21:19,581 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:58) | INFORMATION ABOUT ACTUAL AC CHARGING STATE.... 
+2024-01-15 18:21:19,581 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:59) | actual ac battery status: 29.559
+2024-01-15 18:21:19,581 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:60) | actual ac kw/min: 0.061880473270275786
+2024-01-15 18:21:19,581 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:61) | _____________________________________________________________
+2024-01-15 18:21:19,582 | [1;32m    INFO [0m| (ac_charge_simulation.py:71) | CHARGING ONGOING: 98.74%
+2024-01-15 18:21:20,582 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:58) | INFORMATION ABOUT ACTUAL AC CHARGING STATE.... 
+2024-01-15 18:21:20,582 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:59) | actual ac battery status: 29.622
+2024-01-15 18:21:20,582 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:60) | actual ac kw/min: 0.060667130657133125
+2024-01-15 18:21:20,582 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:61) | _____________________________________________________________
+2024-01-15 18:21:20,583 | [1;32m    INFO [0m| (ac_charge_simulation.py:71) | CHARGING ONGOING: 98.94%
+2024-01-15 18:21:21,583 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:58) | INFORMATION ABOUT ACTUAL AC CHARGING STATE.... 
+2024-01-15 18:21:21,583 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:59) | actual ac battery status: 29.682
+2024-01-15 18:21:21,584 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:60) | actual ac kw/min: 0.05947757907562071
+2024-01-15 18:21:21,584 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:61) | _____________________________________________________________
+2024-01-15 18:21:21,584 | [1;32m    INFO [0m| (ac_charge_simulation.py:71) | CHARGING ONGOING: 99.14%
+2024-01-15 18:21:22,585 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:58) | INFORMATION ABOUT ACTUAL AC CHARGING STATE.... 
+2024-01-15 18:21:22,585 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:59) | actual ac battery status: 29.742
+2024-01-15 18:21:22,585 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:60) | actual ac kw/min: 0.05831135203492226
+2024-01-15 18:21:22,585 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:61) | _____________________________________________________________
+2024-01-15 18:21:22,586 | [1;32m    INFO [0m| (ac_charge_simulation.py:71) | CHARGING ONGOING: 99.33%
+2024-01-15 18:21:23,586 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:58) | INFORMATION ABOUT ACTUAL AC CHARGING STATE.... 
+2024-01-15 18:21:23,587 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:59) | actual ac battery status: 29.799
+2024-01-15 18:21:23,587 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:60) | actual ac kw/min: 0.057167992191100254
+2024-01-15 18:21:23,587 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:61) | _____________________________________________________________
+2024-01-15 18:21:23,587 | [1;32m    INFO [0m| (ac_charge_simulation.py:71) | CHARGING ONGOING: 99.52%
+2024-01-15 18:21:24,588 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:58) | INFORMATION ABOUT ACTUAL AC CHARGING STATE.... 
+2024-01-15 18:21:24,588 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:59) | actual ac battery status: 29.855999999999998
+2024-01-15 18:21:24,588 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:60) | actual ac kw/min: 0.056047051167745346
+2024-01-15 18:21:24,588 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:61) | _____________________________________________________________
+2024-01-15 18:21:24,589 | [1;32m    INFO [0m| (ac_charge_simulation.py:71) | CHARGING ONGOING: 99.71%
+2024-01-15 18:21:25,589 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:58) | INFORMATION ABOUT ACTUAL AC CHARGING STATE.... 
+2024-01-15 18:21:25,589 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:59) | actual ac battery status: 29.913
+2024-01-15 18:21:25,589 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:60) | actual ac kw/min: 0.05494808938014249
+2024-01-15 18:21:25,589 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:61) | _____________________________________________________________
+2024-01-15 18:21:25,591 | [1;32m    INFO [0m| (ac_charge_simulation.py:71) | CHARGING ONGOING: 99.89%
+2024-01-15 18:21:26,591 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:58) | INFORMATION ABOUT ACTUAL AC CHARGING STATE.... 
+2024-01-15 18:21:26,591 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:59) | actual ac battery status: 29.967
+2024-01-15 18:21:26,591 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:60) | actual ac kw/min: 0.0538706758628848
+2024-01-15 18:21:26,591 | [38;5;39m   DEBUG [0m| (ac_charge_simulation.py:61) | _____________________________________________________________
+2024-01-15 18:21:26,592 | [1;32m    INFO [0m| (ac_charge_simulation.py:71) | CHARGING ONGOING: 100.0%
+2024-01-15 18:21:27,592 | [1;32m    INFO [0m| (ac_charge_simulation.py:81) | 100% OF BATTERY LEVEL ACHIVE...
+2024-01-15 18:21:27,592 | [1;32m    INFO [0m| (ac_charge_simulation.py:127) | AC SESSION END!
+2024-01-15 18:24:28,961 | [1;32m    INFO [0m| (charger.py:24) | PROPERLY READED SETTINGS
+2024-01-15 18:24:28,961 | [1;32m    INFO [0m| (h11_impl.py:478) | 127.0.0.1:54899 - "GET /charger/all HTTP/1.1" 200
+2024-01-15 18:24:42,000 | [1;32m    INFO [0m| (h11_impl.py:478) | 127.0.0.1:54902 - "GET /vehicle_ac/all HTTP/1.1" 200
+2024-01-15 18:25:17,978 | [1;32m    INFO [0m| (server.py:264) | Shutting down
+2024-01-15 18:25:18,086 | [1;32m    INFO [0m| (on.py:65) | Waiting for application shutdown.
+2024-01-15 18:25:18,086 | [1;32m    INFO [0m| (on.py:76) | Application shutdown complete.
+2024-01-15 18:25:18,086 | [1;32m    INFO [0m| (server.py:86) | Finished server process [19148]
+2024-01-15 18:25:18,087 | [1;32m    INFO [0m| (Server.py:53) | SERVER CLOSED SUCCESSFUL!

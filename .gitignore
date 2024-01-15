@@ -1,5 +1,6 @@
 __pycache__/
-server_logs/*
+CHARGER/server_logs/*
+VEHICLE/veh_logs/*
 .vscode
 .DS_Store
 .idea

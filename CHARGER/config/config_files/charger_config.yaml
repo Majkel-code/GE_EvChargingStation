@@ -8,6 +8,5 @@ VOLT: 400 # max volt output
 LOSSES_DURING_CHARGING: 10 # express value in %
 VOLTAGE_DROP_AC: 1.02 # 'AC_ACTUAL_KW_PER_MIN' will be divided by this value on every iteration after 'EFFECTIVE_CHARGING_CAP' value
 VOLTAGE_DROP_CHADEMO: 1.08 # 'CHADEMO_ACTUAL_KW_PER_MIN' will be divided by this value on every iteration after 'EFFECTIVE_CHARGING_CAP' value
-EFFECTIVE_CHARGING_CAP: 90 # value in % where charging uses full power. After this cap, 'ACTUAL_KW_PER_MIN' will be divided by 'VOLTAGE_DROP'
 
 

@@ -22,7 +22,7 @@ logger = Logger.logger
 async def read_items():
     try:
         logger.info("PROPERLY READED SETTINGS")
-        return Charger.settings
+        return Charger.settings, Vehicle.settings_ac, Vehicle.settings_chademo
     except Exception as e:
         logger.error(e)
         return {"response": False, "error": e}

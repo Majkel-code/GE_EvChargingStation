@@ -4,7 +4,7 @@ from simulations import ac_charge_simulation, chademo_charging_simulation
 from pydantic import BaseModel
 from config.charger_vehicle_config_bridge import VehicleBridge as Vehicle
 from config.charger_vehicle_config_bridge import ChargerBridge as Charger
-from config.logging_system.logging_config import Logger
+from config.logging_system.logging_config import ServerLogger, ACChargeSessionLogger, CHADEMOChargeSessionLogger
 import time
 
 
@@ -15,16 +15,18 @@ class Structure(BaseModel):
 
 router = APIRouter(prefix="/charger")
 
-logger = Logger.logger
+server_logger = ServerLogger.logger_server
+ac_logger = ACChargeSessionLogger.ac_charge_flow_logger
+chademo_logger = CHADEMOChargeSessionLogger.chademo_charge_flow_logger
 
 
 @router.get("/all")
 async def read_items():
     try:
-        logger.info("PROPERLY READED SETTINGS")
+        server_logger.info("PROPERLY READED SETTINGS")
         return Charger.settings
     except Exception as e:
-        logger.error(e)
+        server_logger.error(e)
         return {"response": False, "error": e}
 
 
@@ -48,7 +50,7 @@ async def read_item():
 @router.get("/{item_id}")
 async def read_item(item_id: str):
     if item_id not in Charger.settings:
-        logger.error(f"'{item_id}' CAN'T BE FINDED IN CHARGER!")
+        server_logger.error(f"'{item_id}' CAN'T BE FINDED IN CHARGER!")
         raise HTTPException(status_code=404, detail="REQUEST CAN'T BE FIND!")
     return Charger.settings[item_id]
 
@@ -60,12 +62,12 @@ async def read_items():
             initialize_charge_simulation = chademo_charging_simulation.ChademoVehicle()
             thread = Thread(target=initialize_charge_simulation.prepare_chademo_charging)
             thread.start()
-            logger.info("CHADEMO SESSION INITIALIZE...")
+            chademo_logger.info("CHADEMO SESSION INITIALIZE...")
             return {"response": True, "error": None}
         except Exception as e:
-            logger.error(f"UNABLE TO INITIALIZE SESSION! {e}")
+            chademo_logger.error(f"UNABLE TO INITIALIZE SESSION! {e}")
             return {"response": False, "error": e}
-    logger.warning("TO START SESSION FIRST CONNECT VEHICLE!")
+    chademo_logger.warning("TO START SESSION FIRST CONNECT VEHICLE!")
     raise HTTPException(status_code=404, detail="REQUEST CAN'T BE FIND!")
 
 
@@ -74,16 +76,16 @@ async def read_items(percent: int):
     if Vehicle._connected_chademo_:
         try:
             initialize_charge_simulation = chademo_charging_simulation.ChademoVehicle()
-            logger.info(f"CUSTOM CHARGING LEVEL SET TO: {percent}%")
+            chademo_logger.info(f"CUSTOM CHARGING LEVEL SET TO: {percent}%")
             thread = Thread(target=initialize_charge_simulation.prepare_chademo_charging, args=[percent])
-            logger.info("SESSION INITIALIZE...")
+            chademo_logger.info("SESSION INITIALIZE...")
             thread.start()
             time.sleep(0.2)
             return {"response": True, "error": None}
         except Exception as e:
-            logger.error(f"UNABLE TO INITIALIZE SESSION! {e}")
+            chademo_logger.error(f"UNABLE TO INITIALIZE SESSION! {e}")
             return {"response": False, "error": e}
-    logger.warning("TO START SESSION FIRST CONNECT VEHICLE!")
+    chademo_logger.warning("TO START SESSION FIRST CONNECT VEHICLE!")
     raise HTTPException(status_code=404, detail="REQUEST CAN'T BE FIND!")
 
 
@@ -94,12 +96,12 @@ async def read_items():
             initialize_charge_simulation = ac_charge_simulation.AcVehicle()
             thread = Thread(target=initialize_charge_simulation.prepare_ac_charging)
             thread.start()
-            logger.info("AC SESSION INITIALIZE...")
+            ac_logger.info("AC SESSION INITIALIZE...")
             return {"response": True, "error": None}
         except Exception as e:
-            logger.error(f"UNABLE TO INITIALIZE SESSION! {e}")
+            ac_logger.error(f"UNABLE TO INITIALIZE SESSION! {e}")
             return {"response": False, "error": e}
-    logger.warning("TO START SESSION FIRST CONNECT VEHICLE!")
+    ac_logger.warning("TO START SESSION FIRST CONNECT VEHICLE!")
     raise HTTPException(status_code=404, detail="REQUEST CAN'T BE FIND!")
 
 
@@ -108,16 +110,16 @@ async def read_items(percent: int):
     if Vehicle._connected_ac_:
         try:
             initialize_charge_simulation = ac_charge_simulation.AcVehicle()
-            logger.info(f"CUSTOM CHARGING LEVEL SET TO: {percent}%")
+            ac_logger.info(f"CUSTOM CHARGING LEVEL SET TO: {percent}%")
             thread = Thread(target=initialize_charge_simulation.prepare_ac_charging, args=[percent])
-            logger.info("SESSION INITIALIZE...")
+            ac_logger.info("SESSION INITIALIZE...")
             thread.start()
             time.sleep(0.2)
             return {"response": True, "error": None}
         except Exception as e:
-            logger.error(f"UNABLE TO INITIALIZE SESSION! {e}")
+            ac_logger.error(f"UNABLE TO INITIALIZE SESSION! {e}")
             return {"response": False, "error": e}
-    logger.warning("TO START SESSION FIRST CONNECT VEHICLE!")
+    ac_logger.warning("TO START SESSION FIRST CONNECT VEHICLE!")
     raise HTTPException(status_code=404, detail="REQUEST CAN'T BE FIND!")
 
 
@@ -126,10 +128,10 @@ async def update_item(struc: Structure):
     if struc.key in Charger.settings:
         try:
             Charger.settings[struc.key] = struc.value
-            logger.info(f"{struc.key}={struc.value} SETTING PROLERLY CHANGED...")
+            server_logger.info(f"{struc.key}={struc.value} SETTING PROLERLY CHANGED...")
             return {"response": True, "error": None}
         except Exception as e:
-            logger.error("UNABE TO CHANGE SETTING!")
+            server_logger.error("UNABE TO CHANGE SETTING!")
             return {"response": False, "error": e}
-    logger.error(f"'{struc.key}' NOT EXIST IN CHARGER SETTINGS!")
+    server_logger.error(f"'{struc.key}' NOT EXIST IN CHARGER SETTINGS!")
     raise HTTPException(status_code=404, detail="REQUEST CAN'T BE FIND!")

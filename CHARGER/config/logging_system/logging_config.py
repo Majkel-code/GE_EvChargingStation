@@ -8,7 +8,8 @@ current_path = Path(__file__).absolute().parents[2]
 
 class CustomFormatter(logging.Formatter):
     LOG_DIR = f"{current_path}/charger_logs/server_logs/"
-    LOG_DIR_CHARGING_SESSION = f"{current_path}/charger_logs/charging_logs/"
+    LOG_DIR_AC_CHARGING_SESSION = f"{current_path}/charger_logs/charging_logs/"
+    LOG_DIR_CHADEMO_CHARGING_SESSION = f"{current_path}/charger_logs/charging_logs/"
 
     blue = "\x1b[38;5;39m"
     green = "\x1b[1;32m"
@@ -52,12 +53,13 @@ class CustomFormatterSaveFile(CustomFormatter):
         formatter = logging.Formatter(log_fmt)
         return formatter.format(record)
 
-class Logger:
+class ServerLogger:
     with open(f"{current_path}/config/config_files/charger_server_config.yaml", "r+") as f:
         server_config = yaml.safe_load(f)
-    logger = logging.getLogger()
-    logger.setLevel(server_config["LOG_LEVEL_CONSOLE"])
-    logger.handlers = []
+    logger_server = logging.getLogger()
+    logger_server.propagate = False
+    logger_server.setLevel(server_config["LOG_LEVEL_CONSOLE"])
+    logger_server.handlers = []
 
     # output custom log format in console
     console = logging.StreamHandler()
@@ -73,6 +75,59 @@ class Logger:
     save_in_file.setFormatter(CustomFormatterSaveFile())
 
     # Add both handlers to the logger
-    logger.addHandler(console)
-    logger.addHandler(save_in_file)
+    logger_server.addHandler(console)
+    logger_server.addHandler(save_in_file)
+
+
+
+class ACChargeSessionLogger:
+    with open(f"{current_path}/config/config_files/charger_server_config.yaml", "r+") as f:
+        server_config = yaml.safe_load(f)
+    ac_charge_flow_logger = logging.getLogger("ac_flow")
+    ac_charge_flow_logger.propagate = False
+    ac_charge_flow_logger.setLevel(server_config["LOG_LEVEL_CONSOLE"])
+    ac_charge_flow_logger.handlers = []
+    # charge_flow_logger = logging.getLogger("charge_flow")
+    # output custom log format in console
+    console = logging.StreamHandler()
+    console.setLevel(server_config["LOG_LEVEL_CONSOLE"])
+    console.setFormatter(CustomFormatter())
+
+    # save custom logs format to file
+    today = datetime.date.today()
+    save_in_file = logging.handlers.RotatingFileHandler(
+        CustomFormatterSaveFile.LOG_DIR_AC_CHARGING_SESSION + "ac_flow__{}.log".format(today.strftime("%Y_%m_%d"))
+    )
+    save_in_file.setLevel(server_config["LOG_LEVEL"])
+    save_in_file.setFormatter(CustomFormatterSaveFile())
+
+    # Add both handlers to the logger
+    ac_charge_flow_logger.addHandler(console)
+    ac_charge_flow_logger.addHandler(save_in_file)
+
+
+class CHADEMOChargeSessionLogger:
+    with open(f"{current_path}/config/config_files/charger_server_config.yaml", "r+") as f:
+        server_config = yaml.safe_load(f)
+    chademo_charge_flow_logger = logging.getLogger("chademo_flow")
+    chademo_charge_flow_logger.propagate = False
+    chademo_charge_flow_logger.setLevel(server_config["LOG_LEVEL_CONSOLE"])
+    chademo_charge_flow_logger.handlers = []
+    # charge_flow_logger = logging.getLogger("charge_flow")
+    # output custom log format in console
+    console = logging.StreamHandler()
+    console.setLevel(server_config["LOG_LEVEL_CONSOLE"])
+    console.setFormatter(CustomFormatter())
+
+    # save custom logs format to file
+    today = datetime.date.today()
+    save_in_file = logging.handlers.RotatingFileHandler(
+        CustomFormatterSaveFile.LOG_DIR_CHADEMO_CHARGING_SESSION + "chademo_flow__{}.log".format(today.strftime("%Y_%m_%d"))
+    )
+    save_in_file.setLevel(server_config["LOG_LEVEL"])
+    save_in_file.setFormatter(CustomFormatterSaveFile())
+
+    # Add both handlers to the logger
+    chademo_charge_flow_logger.addHandler(console)
+    chademo_charge_flow_logger.addHandler(save_in_file)
     

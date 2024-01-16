@@ -1,11 +1,10 @@
 from config.charger_vehicle_config_bridge import VehicleBridge as Vehicle
 from config.charger_vehicle_config_bridge import ChargerBridge as Charger
-from config.logging_system.logging_config import Logger
+from config.logging_system.logging_config import ACChargeSessionLogger
 import json
 import requests
 
-logger = Logger.logger
-logger_charge_session = logger
+logger_server = ACChargeSessionLogger.ac_charge_flow_logger
 
 
 class ChargeSimulation:
@@ -21,16 +20,16 @@ class ChargeSimulation:
     def custom_kw_required(self):
         return self.actual_battery_status_in_kwh + self.kw_needed_to_charge_charge
 
-    def calculate_displayed_time(self, percent, time_in_minutes):
-        time_in_minutes = int(round(time_in_minutes, 0))
-        h = time_in_minutes // 60
-        m = time_in_minutes % 60
-        logger.info(f"Estimated charging time to {percent}% is {h} hours and {m} minutes")
+    # def calculate_displayed_time(self, percent, time_in_minutes):
+    #     time_in_minutes = int(round(time_in_minutes, 0))
+    #     h = time_in_minutes // 60
+    #     m = time_in_minutes % 60
+    #     logger_server.info(f"Estimated charging time to {percent}% is {h} hours and {m} minutes")
 
-    def estimated_time_needed_to_full_charge(self, percent):
-        time_needed = round((self.kw_needed_to_charge_charge / self.max_charging_power), 2)
-        self.calculate_displayed_time(percent=percent, time_in_minutes=time_needed * 60)
-        return time_needed * 60
+    # def estimated_time_needed_to_full_charge(self, percent):
+    #     time_needed = round((self.kw_needed_to_charge_charge / self.max_charging_power), 2)
+    #     self.calculate_displayed_time(percent=percent, time_in_minutes=time_needed * 60)
+    #     return time_needed * 60
 
     async def send_kw_per_minute(self,outlet_used, kw_per_min):
         url = f"http://127.0.0.1:5001/vehicle_{str.lower(outlet_used)}/kw_min"

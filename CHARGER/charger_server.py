@@ -3,14 +3,14 @@ import yaml
 from fastapi import FastAPI
 from pathlib import Path
 import modules.charger.charger as charger
-from config.logging_system.logging_config import Logger
+from config.logging_system.logging_config import ServerLogger
 import config.charger_vehicle_config_bridge as charger_vehicle_config_bridge
 from config.charger_vehicle_config_bridge import IsServerAlive as _main_server
 import modules.vehicle.vehicle_ac_connect as vehicle_ac_connect
 import modules.vehicle.vehicle_chademo_connect as vehicle_chademo_connect
 
 
-logger = Logger.logger
+server_logger = ServerLogger.logger_server
 
 
 class InitialiseServer:
@@ -39,7 +39,7 @@ class InitialiseServer:
                 return {"is_alive": _main_server.check_server_is_alive(), "error": None}
 
         except Exception as e:
-            logger.error(e)
+            server_logger.error(e)
 
 
 class Server(InitialiseServer):
@@ -49,10 +49,10 @@ class Server(InitialiseServer):
                 _main_server._is_alive_ = True
                 self.server = self.server(self.config)
                 self.server.run()
-                logger.info("SERVER CLOSED SUCCESSFUL!")
+                server_logger.info("SERVER CLOSED SUCCESSFUL!")
                 _main_server._is_alive_ = False
             except Exception as e:
-                logger.critical("UNABLE TO ESTABLISH SERVER!")
+                server_logger.critical("UNABLE TO ESTABLISH SERVER!")
 
 
 if __name__ == "__main__":

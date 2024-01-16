@@ -25,7 +25,6 @@ class InitialiseServer:
             self.app.include_router(chademo_handshake.router)
             AcVehicleSpecification()
             ChademoVehicleSpecification()
-            # ac_vehicle_spec.preparation_to_calculate()
             self.server = uvicorn.Server
             current_path = Path(__file__).absolute().parent
             with open(f"{current_path}/config/config_files/vehicle_server_config.yaml", "r+") as f:

@@ -40,14 +40,9 @@ class AcVehicle(ChargeSimulation):
             logger.warning("CHECK CONNECTIVITY AND TRY AGAIN!")
             return 0
 
-
     def send_energy(self):
         asyncio.run(self.send_kw_per_minute("AC", self.actual_kw_per_min))
 
-    # def current_battery_status_kwh(self):
-    #     actual_battery_status_in_kwh = (self.actual_battery_level / 100) * self.max_battery_capacity_in_kwh
-    #     Vehicle.settings_ac["ACTUAL_BATTERY_STATUS_IN_KWH"] = round(actual_battery_status_in_kwh, 2)
-    #     return actual_battery_status_in_kwh
     def charged_kw_per_minute(self, charging_after_voltage_drop=None):
         if type(charging_after_voltage_drop) is int or type(charging_after_voltage_drop) is float:
             kw_per_minute = self.actual_kw_per_min / charging_after_voltage_drop
@@ -66,6 +61,8 @@ class AcVehicle(ChargeSimulation):
             and self.actual_battery_level <= percent
         ):
             Vehicle.take_ac_vehicle_specification()
+            self.actual_battery_level = Vehicle.settings_ac["BATTERY_LEVEL"]
+            self.actual_battery_status_in_kwh = Vehicle.settings_ac["ACTUAL_BATTERY_STATUS_IN_KWH"]
             logger_charge_session.debug("INFORMATION ABOUT ACTUAL AC CHARGING STATE.... ")
             logger_charge_session.debug(f"actual ac battery status: {self.actual_battery_status_in_kwh}")
             logger_charge_session.debug(f"actual ac kw/min: {self.actual_kw_per_min}")
@@ -76,8 +73,6 @@ class AcVehicle(ChargeSimulation):
                     Charger.settings["AC_ACTUAL_KW_PER_MIN"] = self.actual_kw_per_min
                 else:
                     self.actual_kw_per_min = self.charged_kw_per_minute(Charger.settings["VOLTAGE_DROP_AC"])
-                self.actual_battery_level = Vehicle.settings_ac["BATTERY_LEVEL"]
-                self.actual_battery_status_in_kwh = Vehicle.settings_ac["ACTUAL_BATTERY_STATUS_IN_KWH"]
                 self.actual_battery_status_in_kwh += self.actual_kw_per_min
                 self.send_energy()
                 logger_charge_session.info(f"AC CHARGING ONGOING: {self.actual_battery_level}%")
@@ -102,9 +97,7 @@ class AcVehicle(ChargeSimulation):
                     logger_charge_session.info(f"{self.effective_charging_cap}% OF BATTERY LEVEL ACHIVE...")
                     return {"complete": True, "error": None}
                 if Vehicle._connected_ac_:
-                    # self.actual_battery_level = self.exchange_kw_to_percent()
                     self.actual_battery_level = Vehicle.settings_ac["BATTERY_LEVEL"]
-                    # Vehicle.settings_ac["BATTERY_LEVEL"] = self.actual_battery_level
                     self.actual_battery_status_in_kwh = Vehicle.settings_ac["ACTUAL_BATTERY_STATUS_IN_KWH"]
                     self.actual_battery_status_in_kwh += self.actual_kw_per_min
                     self.send_energy()

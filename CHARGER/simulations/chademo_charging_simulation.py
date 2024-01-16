@@ -59,18 +59,19 @@ class ChademoVehicle(ChargeSimulation):
             and self.actual_battery_level <= percent
         ):
             Vehicle.take_chademo_vehicle_specification()
+            self.actual_battery_level = Vehicle.settings_chademo["BATTERY_LEVEL"]
+            self.actual_battery_status_in_kwh = Vehicle.settings_chademo["ACTUAL_BATTERY_STATUS_IN_KWH"]
             logger_charge_session.debug("INFORMATION ABOUT ACTUAL CHADEMO CHARGING STATE.... ")
             logger_charge_session.debug(f"chademo actual battery status: {self.actual_battery_status_in_kwh}")
             logger_charge_session.debug(f"chademo actual kw/min: {self.actual_kw_per_min}")
             logger_charge_session.debug("_____________________________________________________________")
             if Vehicle._connected_chademo_:
                 if self.actual_battery_status_in_kwh + self.actual_kw_per_min > self.max_battery_capacity_in_kwh:
+                    print("last tick")
                     self.actual_kw_per_min = self.max_battery_capacity_in_kwh - self.actual_battery_status_in_kwh
                     Charger.settings["CHADEMO_ACTUAL_KW_PER_MIN"] = self.actual_kw_per_min
                 else:
                     self.actual_kw_per_min = self.charged_kw_per_minute(Charger.settings["VOLTAGE_DROP_CHADEMO"])
-                self.actual_battery_level = Vehicle.settings_chademo["BATTERY_LEVEL"]
-                self.actual_battery_status_in_kwh = Vehicle.settings_chademo["ACTUAL_BATTERY_STATUS_IN_KWH"]
                 self.actual_battery_status_in_kwh += self.actual_kw_per_min
                 self.send_energy()
                 logger_charge_session.info(f"CHADEMO CHARGING ONGOING: {self.actual_battery_level}%")
@@ -114,7 +115,6 @@ class ChademoVehicle(ChargeSimulation):
         return {"complete": True, "error": None}
 
     def prepare_chademo_charging(self, percent: int = 100):
-        logger.critical(self.actual_battery_status_in_kwh)
         logger_charge_session.info("STARTING CHARGING SESSION...")
         # VEHICLE INIT
         self.percent_to_charge = self.percent_required_to_charge(percent=percent)

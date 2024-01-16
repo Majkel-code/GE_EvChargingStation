@@ -22,7 +22,6 @@ class InitialiseServer:
             self.app.include_router(vehicle_chademo_connect.router)
             self.server = uvicorn.Server
             charger_vehicle_config_bridge.ChargerBridge()
-            # charger_vehicle_config_bridge.VehicleBridge()
             current_path = Path(__file__).absolute().parent
             with open(f"{current_path}/config/config_files/charger_server_config.yaml", "r+") as f:
                 server_config = yaml.safe_load(f)

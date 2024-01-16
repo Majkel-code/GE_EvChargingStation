@@ -46,7 +46,6 @@ async def update_item(struc: Structure):
             chademo_vehicle_spec_init.actual_battery_status_in_kwh = chademo_vehicle_spec_init.current_battery_status_kwh()
         logger.info(f"'{struc.key} SUCCESSFUL CHNAGED!'")
         return {"response": True, "error": None}
-    # raise HTTPException(status_code=404, detail="REQUEST CAN'T BE FIND!")
     return {"response": False, "error": f"{struc.key}' CAN'T BE FIND!"}
 
 @router.patch("/kw_min")

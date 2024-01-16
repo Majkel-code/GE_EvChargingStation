@@ -21,17 +21,37 @@ class CustomFormatter(logging.Formatter):
     file_and_message = "| (%(filename)s:%(lineno)d) | %(message)s"
 
     FORMATS = {
-        logging.DEBUG: data + blue + level_name + reset + file_and_message,
-        logging.INFO: data + green + level_name + reset + file_and_message,
-        logging.WARNING: data + yellow + level_name + reset + file_and_message,
-        logging.ERROR: data + red + level_name + reset + file_and_message,
-        logging.CRITICAL: data + bold_red + level_name + reset + file_and_message,
+        logging.DEBUG:  blue + level_name + reset + file_and_message,
+        logging.INFO: green + level_name + reset + file_and_message,
+        logging.WARNING: yellow + level_name + reset + file_and_message,
+        logging.ERROR: red + level_name + reset + file_and_message,
+        logging.CRITICAL: bold_red + level_name + reset + file_and_message,
+    }
+
+    FORMATS_save_file = {
+        logging.DEBUG: data + level_name + file_and_message,
+        logging.INFO: data + level_name + file_and_message,
+        logging.WARNING: data + level_name + file_and_message,
+        logging.ERROR: data + level_name + file_and_message,
+        logging.CRITICAL: data + level_name + file_and_message,
     }
 
     def format(self, record):
         log_fmt = self.FORMATS.get(record.levelno)
         formatter = logging.Formatter(log_fmt)
         return formatter.format(record)
+
+
+class CustomFormatterSaveFile(CustomFormatter):
+    def __init__(self) -> None:
+        super().__init__()
+
+    def format(self, record):
+        log_fmt = self.FORMATS_save_file.get(record.levelno)
+        formatter = logging.Formatter(log_fmt)
+        return formatter.format(record)
+    
+
 
 
 class Logger:
@@ -49,10 +69,10 @@ class Logger:
     # save custom logs format to file
     today = datetime.date.today()
     save_in_file = logging.handlers.RotatingFileHandler(
-        CustomFormatter.LOG_DIR + "vehicle_application{}.log".format(today.strftime("%Y_%m_%d"))
+        CustomFormatterSaveFile.LOG_DIR + "vehicle_server__{}.log".format(today.strftime("%Y_%m_%d"))
     )
     save_in_file.setLevel(server_config["LOG_LEVEL"])
-    save_in_file.setFormatter(CustomFormatter())
+    save_in_file.setFormatter(CustomFormatterSaveFile())
 
     # Add both handlers to the logger
     logger.addHandler(console)

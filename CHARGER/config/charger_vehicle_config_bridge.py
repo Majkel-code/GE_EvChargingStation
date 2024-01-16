@@ -35,7 +35,6 @@ class VehicleBridge:
                 }
                 response = requests.put(url, headers=headers, data=payload)
 
-                print(response)
                 if response.ok:
                     VehicleBridge._connected_chademo_ = True
                     ChargerBridge._outlet_in_use_[outlet_used] = key
@@ -52,7 +51,6 @@ class VehicleBridge:
                 }
                 response = requests.put(url, headers=headers, data=payload)
 
-                print(response)
                 if response.ok:
                     VehicleBridge._connected_ac_ = True
                     ChargerBridge._outlet_in_use_[outlet_used] = key
@@ -112,10 +110,6 @@ class VehicleBridge:
     
     def take_chademo_vehicle_specification():
         url = "http://127.0.0.1:5001/vehicle_chademo/all"
-        # payload = json.dumps({
-        # "id":  ChargerBridge._outlet_in_use_[outlet_used],
-        # "end_connection": True
-        # })
         headers = {
         'Content-Type': 'application/json'
         }

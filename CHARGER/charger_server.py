@@ -8,6 +8,7 @@ import config.charger_vehicle_config_bridge as charger_vehicle_config_bridge
 from config.charger_vehicle_config_bridge import IsServerAlive as _main_server
 import modules.vehicle.vehicle_ac_connect as vehicle_ac_connect
 import modules.vehicle.vehicle_chademo_connect as vehicle_chademo_connect
+from modules.display import display_ac, display_chademo
 
 
 server_logger = ServerLogger.logger_server
@@ -20,6 +21,8 @@ class InitialiseServer:
             self.app.include_router(charger.router)
             self.app.include_router(vehicle_ac_connect.router)
             self.app.include_router(vehicle_chademo_connect.router)
+            self.app.include_router(display_ac.router)
+            self.app.include_router(display_chademo.router)
             self.server = uvicorn.Server
             charger_vehicle_config_bridge.ChargerBridge()
             current_path = Path(__file__).absolute().parent

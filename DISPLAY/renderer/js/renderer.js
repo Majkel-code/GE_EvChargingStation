@@ -137,7 +137,7 @@ function ChargingCompleteAc(create_remove){
 let AcBatteryLevel = 0
 async function TakeBatteryLevelAc(){
   if (AcIsConnected){
-    const request_display_percent = await fetch("http://127.0.0.1:5000/vehicle_ac/BATTERY_LEVEL");
+    const request_display_percent = await fetch("http://127.0.0.1:5000/display_ac/BATTERY_LEVEL");
     let data = await request_display_percent.json();
     if (typeof(data) === "number"){
       AcBatteryLevel = data
@@ -274,7 +274,7 @@ function ChargingCompleteChademo(create_remove){
 let ChademoBatteryLevel = 0
 async function TakeBatteryLevelChademo(){
   if (ChademoIsConnected){
-    const request_display_percent = await fetch("http://127.0.0.1:5000/vehicle_chademo/BATTERY_LEVEL");
+    const request_display_percent = await fetch("http://127.0.0.1:5000/display_chademo/BATTERY_LEVEL");
     let data = await request_display_percent.json();
     if (typeof(data) === "number") {
       ChademoBatteryLevel = data

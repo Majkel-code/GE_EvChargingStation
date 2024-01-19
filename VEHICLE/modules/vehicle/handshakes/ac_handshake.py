@@ -1,7 +1,7 @@
-from fastapi import APIRouter, HTTPException
-from pydantic import BaseModel
 from config.charger_vehicle_config_bridge import VehicleBridge as Vehicle
 from config.logging_system.logging_config import Logger
+from fastapi import APIRouter, HTTPException
+from pydantic import BaseModel
 
 
 class Structure_connect(BaseModel):

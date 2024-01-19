@@ -8,10 +8,8 @@ class VehicleBridge:
     settings_ac = read_default_settings.read_vehicle_ac_settings()
 
 
-
 class IsServerAlive:
     _is_alive_ = False
 
     def check_server_is_alive():
         return IsServerAlive._is_alive_
-

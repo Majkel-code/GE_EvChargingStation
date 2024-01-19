@@ -1,11 +1,24 @@
-from threading import Thread
-from fastapi import APIRouter, HTTPException
-from simulations import ac_charge_simulation, chademo_charging_simulation
-from pydantic import BaseModel
-from config.charger_vehicle_config_bridge import VehicleBridge as Vehicle
-from config.charger_vehicle_config_bridge import ChargerBridge as Charger
-from config.logging_system.logging_config import ServerLogger, ACChargeSessionLogger, CHADEMOChargeSessionLogger
 import time
+from threading import Thread
+
+from fastapi import APIRouter, HTTPException
+from pydantic import BaseModel
+
+from CHARGER.config.charger_vehicle_config_bridge import (
+    ChargerBridge as Charger,
+)
+from CHARGER.config.charger_vehicle_config_bridge import (
+    VehicleBridge as Vehicle,
+)
+from CHARGER.config.logging_system.logging_config import (
+    ACChargeSessionLogger,
+    CHADEMOChargeSessionLogger,
+    ServerLogger,
+)
+from CHARGER.simulations import (
+    ac_charge_simulation,
+    chademo_charging_simulation,
+)
 
 
 class Structure(BaseModel):
@@ -34,17 +47,21 @@ async def read_items():
 async def read_item():
     return Charger._outlet_in_use_
 
+
 @router.get("/energy_ongoing_chademo")
 async def read_item():
     if Charger._energy_is_send_loop_chademo_ is not 0:
         return True
-    else: return False
+    else:
+        return False
+
 
 @router.get("/energy_ongoing_ac")
 async def read_item():
     if Charger._energy_is_send_loop_ac_ is not 0:
         return True
-    else: return False
+    else:
+        return False
 
 
 @router.get("/{item_id}")
@@ -59,8 +76,12 @@ async def read_item(item_id: str):
 async def read_items():
     if Vehicle._connected_chademo_:
         try:
-            initialize_charge_simulation = chademo_charging_simulation.ChademoVehicle()
-            thread = Thread(target=initialize_charge_simulation.prepare_chademo_charging)
+            initialize_charge_simulation = (
+                chademo_charging_simulation.ChademoVehicle()
+            )
+            thread = Thread(
+                target=initialize_charge_simulation.prepare_chademo_charging
+            )
             thread.start()
             chademo_logger.info("CHADEMO SESSION INITIALIZE...")
             return {"response": True, "error": None}
@@ -75,9 +96,14 @@ async def read_items():
 async def read_items(percent: int):
     if Vehicle._connected_chademo_:
         try:
-            initialize_charge_simulation = chademo_charging_simulation.ChademoVehicle()
+            initialize_charge_simulation = (
+                chademo_charging_simulation.ChademoVehicle()
+            )
             chademo_logger.info(f"CUSTOM CHARGING LEVEL SET TO: {percent}%")
-            thread = Thread(target=initialize_charge_simulation.prepare_chademo_charging, args=[percent])
+            thread = Thread(
+                target=initialize_charge_simulation.prepare_chademo_charging,
+                args=[percent],
+            )
             chademo_logger.info("SESSION INITIALIZE...")
             thread.start()
             time.sleep(0.2)
@@ -94,7 +120,9 @@ async def read_items():
     if Vehicle._connected_ac_:
         try:
             initialize_charge_simulation = ac_charge_simulation.AcVehicle()
-            thread = Thread(target=initialize_charge_simulation.prepare_ac_charging)
+            thread = Thread(
+                target=initialize_charge_simulation.prepare_ac_charging
+            )
             thread.start()
             ac_logger.info("AC SESSION INITIALIZE...")
             return {"response": True, "error": None}
@@ -111,7 +139,10 @@ async def read_items(percent: int):
         try:
             initialize_charge_simulation = ac_charge_simulation.AcVehicle()
             ac_logger.info(f"CUSTOM CHARGING LEVEL SET TO: {percent}%")
-            thread = Thread(target=initialize_charge_simulation.prepare_ac_charging, args=[percent])
+            thread = Thread(
+                target=initialize_charge_simulation.prepare_ac_charging,
+                args=[percent],
+            )
             ac_logger.info("SESSION INITIALIZE...")
             thread.start()
             time.sleep(0.2)
@@ -128,7 +159,9 @@ async def update_item(struc: Structure):
     if struc.key in Charger.settings:
         try:
             Charger.settings[struc.key] = struc.value
-            server_logger.info(f"{struc.key}={struc.value} SETTING PROLERLY CHANGED...")
+            server_logger.info(
+                f"{struc.key}={struc.value} SETTING PROLERLY CHANGED..."
+            )
             return {"response": True, "error": None}
         except Exception as e:
             server_logger.error("UNABE TO CHANGE SETTING!")

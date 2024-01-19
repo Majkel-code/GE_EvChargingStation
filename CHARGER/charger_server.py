@@ -1,15 +1,15 @@
+from pathlib import Path
+
 import uvicorn
 import yaml
 from fastapi import FastAPI
-from pathlib import Path
-import modules.charger.charger as charger
-from config.logging_system.logging_config import ServerLogger
-import config.charger_vehicle_config_bridge as charger_vehicle_config_bridge
-from config.charger_vehicle_config_bridge import IsServerAlive as _main_server
-import modules.vehicle.vehicle_ac_connect as vehicle_ac_connect
-import modules.vehicle.vehicle_chademo_connect as vehicle_chademo_connect
-from modules.display import display_ac, display_chademo
 
+from .config.charger_vehicle_config_bridge import ChargerBridge
+from .config.charger_vehicle_config_bridge import IsServerAlive as _main_server
+from .config.logging_system.logging_config import ServerLogger
+from .modules.charger.charger import router
+from .modules.display import display_ac, display_chademo
+from .modules.vehicle import vehicle_ac_connect, vehicle_chademo_connect
 
 server_logger = ServerLogger.logger_server
 
@@ -18,15 +18,18 @@ class InitialiseServer:
     def __init__(self) -> None:
         try:
             self.app = FastAPI()
-            self.app.include_router(charger.router)
+            self.app.include_router(router)
             self.app.include_router(vehicle_ac_connect.router)
             self.app.include_router(vehicle_chademo_connect.router)
             self.app.include_router(display_ac.router)
             self.app.include_router(display_chademo.router)
             self.server = uvicorn.Server
-            charger_vehicle_config_bridge.ChargerBridge()
+            ChargerBridge()
             current_path = Path(__file__).absolute().parent
-            with open(f"{current_path}/config/config_files/charger_server_config.yaml", "r+") as f:
+            with open(
+                f"{current_path}/config/config_files/charger_server_config.yaml",
+                "r+",
+            ) as f:
                 server_config = yaml.safe_load(f)
             self.config = uvicorn.Config(
                 app=self.app,
@@ -39,7 +42,10 @@ class InitialiseServer:
 
             @self.app.get("/is_alive")
             async def alive():
-                return {"is_alive": _main_server.check_server_is_alive(), "error": None}
+                return {
+                    "is_alive": _main_server.check_server_is_alive(),
+                    "error": None,
+                }
 
         except Exception as e:
             server_logger.error(e)

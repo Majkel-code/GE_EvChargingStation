@@ -80,8 +80,8 @@ curl http://127.0.0.1:5000/charger/<key> # return specific key
 curl --location --request PUT 'http://127.0.0.1:5000/charger/' \
 --header 'Content-Type: application/json' \
 --data '{
-  "key": "key",
-  "value": value
+  "key": "EFFECTIVE_CHARGING_CAP",
+  "value": 80
 }'
 # change some value | key need to be str | value should be int/float or str but for non numeric value
 # Example:
@@ -166,4 +166,3 @@ curl --location --request PUT 'http://127.0.0.1:5000/vehicle_chademo/' \
 MIT
 
 **Free Software, Hell Yeah!**
-

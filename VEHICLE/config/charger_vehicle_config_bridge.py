@@ -2,11 +2,18 @@ import config.config_reader.read_default_settings as read_default_settings
 
 
 class VehicleBridge:
-    settings_chademo = None
-    settings_ac = None
     settings_chademo = read_default_settings.read_vehicle_chademo_settings()
     settings_ac = read_default_settings.read_vehicle_ac_settings()
 
+    def ac_load_configuration():
+        VehicleBridge.settings_ac = read_default_settings.read_vehicle_ac_settings()
+
+    def chademo_load_configuration():
+        VehicleBridge.settings_chademo = read_default_settings.read_vehicle_chademo_settings()
+
+    def perform_session_saver():
+        print(f"from bridge: {VehicleBridge.ac_veh.charged_kw}")
+        VehicleBridge.ac_veh.perform_charge_saver()
 
 
 class IsServerAlive:
@@ -14,4 +21,3 @@ class IsServerAlive:
 
     def check_server_is_alive():
         return IsServerAlive._is_alive_
-

@@ -41,7 +41,7 @@ async def read_items():
 @router.post("/disconnect")
 async def read_items():
     if Vehicle._connected_chademo_:
-        disconnect = Vehicle.disconnect_vehicle("AC")
+        disconnect = Vehicle.disconnect_vehicle("CHADEMO")
         if disconnect.ok:
             server_logger.info(f"VEHICLE SUCCESSFULY DISCONNECTED: {Vehicle._connected_chademo_}")
             return {"response": True, "error": None}

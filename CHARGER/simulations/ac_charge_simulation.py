@@ -101,7 +101,7 @@ class AcVehicle(ChargeSimulation):
     def first_stage_charging(self, percent):
         if self.actual_battery_level < self.effective_charging_cap:
             Charger._charging_finished_ = False
-            while self.actual_battery_level <= percent:
+            while self.actual_battery_level <= percent and Main_server.check_server_is_alive():
                 Vehicle.take_ac_vehicle_specification()
                 if self.actual_battery_level >= self.effective_charging_cap:
                     ac_logger.info(f"{self.effective_charging_cap}% OF BATTERY LEVEL ACHIVE...")

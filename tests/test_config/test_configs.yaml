@@ -1,5 +1,5 @@
 # SERVER URL AND SERVER ENDPOINTS
-SERVER_URL: "http://127.0.0.1:5000/"
+CHARGER_SERVER_URL: "http://127.0.0.1:5000/"
 SERVER_IS_ALIVE: 'is_alive'
 SERVER_SHUTDOWN: 'server_stop'
 #_____________________________________________
@@ -21,7 +21,6 @@ CHARGER_CHECK_EVERY_SETTING: [    # KEY'S THAT WILL BE CHECK IN CHARGING_CONFIG 
             "LOSSES_DURING_CHARGING",
             "VOLTAGE_DROP_AC",
             "VOLTAGE_DROP_CHADEMO",
-            "EFFECTIVE_CHARGING_CAP"
         ]
 CHARGER_PROPER_VALUE: {           # PROPER VALUES SHOULD BE THE SAME AS THE VALUE IN CHARGING_CONFIG FILE
           "CHARGING_OUTLETS": [
@@ -33,11 +32,10 @@ CHARGER_PROPER_VALUE: {           # PROPER VALUES SHOULD BE THE SAME AS THE VALU
           "AC_ACTUAL_KW_PER_MIN": 0,
           "CHADEMO_ACTUAL_KW_PER_MIN": 0,
           "MAX_CHARGING_AMPERE": 48,
-          "VOLT": 400,
+          "VOLT": 300,
           "LOSSES_DURING_CHARGING": 10,
           "VOLTAGE_DROP_AC": 1.02,
           "VOLTAGE_DROP_CHADEMO": 1.08,
-          "EFFECTIVE_CHARGING_CAP": 90
       }
 #_____________________________________________
 # VEHICLE URL AND VEHICLE ENDPOINTS CHADEMO

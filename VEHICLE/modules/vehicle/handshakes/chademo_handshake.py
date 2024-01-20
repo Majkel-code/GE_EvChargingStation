@@ -2,12 +2,11 @@ from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 from config.charger_vehicle_config_bridge import VehicleBridge as Vehicle
 from config.logging_system.logging_config import Logger
+from modules.vehicle.vehicle_battery_bridge import VehicleBatteryBridge
 
 
 class Structure_connect(BaseModel):
     id: str
-    # value: str | int | float
-
 
 class Structure_disconnect(BaseModel):
     id: str
@@ -35,4 +34,7 @@ async def take_connect_info(struc: Structure_connect):
 @router.put("/disconnect")
 async def take_disconnect_request(struc: Structure_disconnect):
     if struc.id == Vehicle.settings_chademo["SESSION_ID"] and struc.end_connection:
-        Vehicle.settings_chademo["SESSION_ID"] = None
+        try:
+            VehicleBatteryBridge.perform_charge_saver("CHADEMO")
+        except Exception as e:
+            logger.error(e)

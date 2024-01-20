@@ -10,6 +10,7 @@ import modules.vehicle.handshakes.ac_handshake as ac_handshake
 import modules.vehicle.handshakes.chademo_handshake as chademo_handshake
 from modules.battery.AC.ac_battery import AcVehicleSpecification
 from modules.battery.CHADEMO.chademo_battery import ChademoVehicleSpecification
+from config.charger_vehicle_config_bridge import VehicleBridge
 
 
 logger = Logger.logger
@@ -19,6 +20,8 @@ class InitialiseServer:
     def __init__(self) -> None:
         try:
             self.app = FastAPI()
+            VehicleBridge.ac_load_configuration()
+            VehicleBridge.chademo_load_configuration()
             self.app.include_router(vehicle_ac_simulator.router)
             self.app.include_router(vehicle_chademo_simulator.router)
             self.app.include_router(ac_handshake.router)

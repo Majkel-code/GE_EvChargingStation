@@ -1,9 +1,7 @@
+from config.charger_vehicle_config_bridge import VehicleBridge as Vehicle
+from config.logging_system.logging_config import ServerLogger
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
-from config.charger_vehicle_config_bridge import VehicleBridge as Vehicle
-# from config.charger_vehicle_config_bridge import ChargerBridge as Charger
-import config.charger_vehicle_config_bridge as Bridge
-from config.logging_system.logging_config import ServerLogger
 
 
 class Structure(BaseModel):
@@ -16,6 +14,7 @@ router = APIRouter(
 )
 
 server_logger = ServerLogger.logger_server
+
 
 @router.get("/{item_id}")
 async def read_item(item_id: str):

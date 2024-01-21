@@ -64,7 +64,7 @@ function closeHelpDisplay() {
     element.textContent = "";
     element.style.margin = "0px";
   });
-  
+
   helpDisplay.classList.remove('active');
 }
 
@@ -457,6 +457,3 @@ const loop = async () => {
 
 }
 loop()
-
-
-

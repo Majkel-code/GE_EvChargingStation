@@ -1,11 +1,16 @@
-from threading import Thread
-from fastapi import APIRouter, HTTPException
-from simulations import ac_charge_simulation, chademo_charging_simulation
-from pydantic import BaseModel
-from config.charger_vehicle_config_bridge import VehicleBridge as Vehicle
-from config.charger_vehicle_config_bridge import ChargerBridge as Charger
-from config.logging_system.logging_config import ServerLogger, ACChargeSessionLogger, CHADEMOChargeSessionLogger
 import time
+from threading import Thread
+
+from config.charger_vehicle_config_bridge import ChargerBridge as Charger
+from config.charger_vehicle_config_bridge import VehicleBridge as Vehicle
+from config.logging_system.logging_config import (
+    ACChargeSessionLogger,
+    CHADEMOChargeSessionLogger,
+    ServerLogger,
+)
+from fastapi import APIRouter, HTTPException
+from pydantic import BaseModel
+from simulations import ac_charge_simulation, chademo_charging_simulation
 
 
 class Structure(BaseModel):
@@ -31,20 +36,24 @@ async def read_items():
 
 
 @router.get("/outlets")
-async def read_item():
+async def read_outlets():
     return Charger._outlet_in_use_
 
+
 @router.get("/energy_ongoing_chademo")
-async def read_item():
-    if Charger._energy_is_send_loop_chademo_ is not 0:
+async def is_energy_ongoing_chademo():
+    if Charger._energy_is_send_loop_chademo_ != 0:
         return True
-    else: return False
+    else:
+        return False
+
 
 @router.get("/energy_ongoing_ac")
-async def read_item():
-    if Charger._energy_is_send_loop_ac_ is not 0:
+async def is_energy_ongoing_ac():
+    if Charger._energy_is_send_loop_ac_ != 0:
         return True
-    else: return False
+    else:
+        return False
 
 
 @router.get("/{item_id}")
@@ -56,7 +65,7 @@ async def read_item(item_id: str):
 
 
 @router.post("/start_chademo")
-async def read_items():
+async def start_chademo():
     if Vehicle._connected_chademo_:
         try:
             initialize_charge_simulation = chademo_charging_simulation.ChademoVehicle()
@@ -72,12 +81,15 @@ async def read_items():
 
 
 @router.post("/start_chademo_{percent}")
-async def read_items(percent: int):
+async def start_chademo_custom(percent: int):
     if Vehicle._connected_chademo_:
         try:
             initialize_charge_simulation = chademo_charging_simulation.ChademoVehicle()
             chademo_logger.info(f"CUSTOM CHARGING LEVEL SET TO: {percent}%")
-            thread = Thread(target=initialize_charge_simulation.prepare_chademo_charging, args=[percent])
+            thread = Thread(
+                target=initialize_charge_simulation.prepare_chademo_charging,
+                args=[percent],
+            )
             chademo_logger.info("SESSION INITIALIZE...")
             thread.start()
             time.sleep(0.2)
@@ -90,7 +102,7 @@ async def read_items(percent: int):
 
 
 @router.post("/start_ac")
-async def read_items():
+async def start_ac():
     if Vehicle._connected_ac_:
         try:
             initialize_charge_simulation = ac_charge_simulation.AcVehicle()
@@ -106,12 +118,15 @@ async def read_items():
 
 
 @router.post("/start_ac_{percent}")
-async def read_items(percent: int):
+async def start_ac_custom(percent: int):
     if Vehicle._connected_ac_:
         try:
             initialize_charge_simulation = ac_charge_simulation.AcVehicle()
             ac_logger.info(f"CUSTOM CHARGING LEVEL SET TO: {percent}%")
-            thread = Thread(target=initialize_charge_simulation.prepare_ac_charging, args=[percent])
+            thread = Thread(
+                target=initialize_charge_simulation.prepare_ac_charging,
+                args=[percent],
+            )
             ac_logger.info("SESSION INITIALIZE...")
             thread.start()
             time.sleep(0.2)

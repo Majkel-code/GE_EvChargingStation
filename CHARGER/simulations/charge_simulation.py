@@ -1,14 +1,12 @@
-from config.charger_vehicle_config_bridge import VehicleBridge as Vehicle
-from config.charger_vehicle_config_bridge import ChargerBridge as Charger
-from config.logging_system.logging_config import ACChargeSessionLogger
 import json
+
 import requests
+from config.logging_system.logging_config import ACChargeSessionLogger
 
 logger_server = ACChargeSessionLogger.ac_charge_flow_logger
 
 
 class ChargeSimulation:
-
     def percent_required_to_charge(self, percent):
         percent_needed = percent - self.actual_battery_level
         return percent_needed
@@ -16,7 +14,7 @@ class ChargeSimulation:
     def kw_required_to_charge(self):
         kwh_needed = self.percent_to_charge / 100 * self.max_battery_capacity_in_kwh
         return kwh_needed
-    
+
     def custom_kw_required(self):
         return self.actual_battery_status_in_kwh + self.kw_needed_to_charge_charge
 
@@ -31,11 +29,9 @@ class ChargeSimulation:
     #     self.calculate_displayed_time(percent=percent, time_in_minutes=time_needed * 60)
     #     return time_needed * 60
 
-    async def send_kw_per_minute(self,outlet_used, kw_per_min):
+    async def send_kw_per_minute(self, outlet_used, kw_per_min):
         url = f"http://127.0.0.1:5001/vehicle_{str.lower(outlet_used)}/kw_min"
         payload = {"key": kw_per_min}
-        headers = {
-        'Content-Type': 'application/json'
-        }
+        headers = {"Content-Type": "application/json"}
         response = requests.patch(url, headers=headers, data=json.dumps(payload))
         return response

@@ -1,10 +1,12 @@
-import logging.handlers
-import logging
 import datetime
-import yaml
+import logging
+import logging.handlers
 from pathlib import Path
 
+import yaml
+
 current_path = Path(__file__).absolute().parents[2]
+
 
 class CustomFormatter(logging.Formatter):
     LOG_DIR = f"{current_path}/veh_logs/vehicle_server/"
@@ -21,7 +23,7 @@ class CustomFormatter(logging.Formatter):
     file_and_message = "| (%(filename)s:%(lineno)d) | %(message)s"
 
     FORMATS = {
-        logging.DEBUG:  blue + level_name + reset + file_and_message,
+        logging.DEBUG: blue + level_name + reset + file_and_message,
         logging.INFO: green + level_name + reset + file_and_message,
         logging.WARNING: yellow + level_name + reset + file_and_message,
         logging.ERROR: red + level_name + reset + file_and_message,
@@ -50,8 +52,6 @@ class CustomFormatterSaveFile(CustomFormatter):
         log_fmt = self.FORMATS_save_file.get(record.levelno)
         formatter = logging.Formatter(log_fmt)
         return formatter.format(record)
-    
-
 
 
 class Logger:
@@ -69,7 +69,8 @@ class Logger:
     # save custom logs format to file
     today = datetime.date.today()
     save_in_file = logging.handlers.RotatingFileHandler(
-        CustomFormatterSaveFile.LOG_DIR + "vehicle_server__{}.log".format(today.strftime("%Y_%m_%d"))
+        CustomFormatterSaveFile.LOG_DIR
+        + "vehicle_server__{}.log".format(today.strftime("%Y_%m_%d"))
     )
     save_in_file.setLevel(server_config["LOG_LEVEL"])
     save_in_file.setFormatter(CustomFormatterSaveFile())

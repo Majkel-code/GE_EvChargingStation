@@ -1,17 +1,17 @@
-import uvicorn
-import yaml
-from fastapi import FastAPI
 from pathlib import Path
-from config.logging_system.logging_config import Logger
-from config.charger_vehicle_config_bridge import IsServerAlive as _main_server
-import modules.vehicle.vehicle_ac_simulator as vehicle_ac_simulator
-import modules.vehicle.vehicle_chademo_simulator as vehicle_chademo_simulator
+
 import modules.vehicle.handshakes.ac_handshake as ac_handshake
 import modules.vehicle.handshakes.chademo_handshake as chademo_handshake
+import modules.vehicle.vehicle_ac_simulator as vehicle_ac_simulator
+import modules.vehicle.vehicle_chademo_simulator as vehicle_chademo_simulator
+import uvicorn
+import yaml
+from config.charger_vehicle_config_bridge import IsServerAlive as _main_server
+from config.charger_vehicle_config_bridge import VehicleBridge
+from config.logging_system.logging_config import Logger
+from fastapi import FastAPI
 from modules.battery.AC.ac_battery import AcVehicleSpecification
 from modules.battery.CHADEMO.chademo_battery import ChademoVehicleSpecification
-from config.charger_vehicle_config_bridge import VehicleBridge
-
 
 logger = Logger.logger
 
@@ -30,7 +30,10 @@ class InitialiseServer:
             ChademoVehicleSpecification()
             self.server = uvicorn.Server
             current_path = Path(__file__).absolute().parent
-            with open(f"{current_path}/config/config_files/vehicle_server_config.yaml", "r+") as f:
+            with open(
+                f"{current_path}/config/config_files/vehicle_server_config.yaml",
+                "r+",
+            ) as f:
                 server_config = yaml.safe_load(f)
             self.config = uvicorn.Config(
                 app=self.app,
@@ -56,7 +59,7 @@ class Server(InitialiseServer):
                 _main_server._is_alive_ = False
             except Exception as e:
                 _main_server._is_alive_ = False
-                logger.critical("UNABLE TO ESTABLISH SERVER!")
+                logger.critical(f"UNABLE TO ESTABLISH SERVER! {e}")
 
 
 if __name__ == "__main__":

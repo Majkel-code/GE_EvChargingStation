@@ -1,8 +1,8 @@
 import datetime
+import json
+import os
 import os.path
 from pathlib import Path
-import os
-import json
 
 current_path = Path(__file__).absolute().parents[2]
 today = datetime.date.today()

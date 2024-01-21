@@ -1,10 +1,12 @@
-import logging.handlers
-import logging
 import datetime
-import yaml
+import logging
+import logging.handlers
 from pathlib import Path
 
+import yaml
+
 current_path = Path(__file__).absolute().parents[2]
+
 
 class CustomFormatter(logging.Formatter):
     LOG_DIR = f"{current_path}/charger_logs/server_logs/"
@@ -23,7 +25,7 @@ class CustomFormatter(logging.Formatter):
     file_and_message = "| (%(filename)s:%(lineno)d) | %(message)s"
 
     FORMATS = {
-        logging.DEBUG:  blue + level_name + reset + file_and_message,
+        logging.DEBUG: blue + level_name + reset + file_and_message,
         logging.INFO: green + level_name + reset + file_and_message,
         logging.WARNING: yellow + level_name + reset + file_and_message,
         logging.ERROR: red + level_name + reset + file_and_message,
@@ -53,6 +55,7 @@ class CustomFormatterSaveFile(CustomFormatter):
         formatter = logging.Formatter(log_fmt)
         return formatter.format(record)
 
+
 class ServerLogger:
     with open(f"{current_path}/config/config_files/charger_server_config.yaml", "r+") as f:
         server_config = yaml.safe_load(f)
@@ -69,7 +72,8 @@ class ServerLogger:
     # save custom logs format to file
     today = datetime.date.today()
     save_in_file = logging.handlers.RotatingFileHandler(
-        CustomFormatterSaveFile.LOG_DIR + "charger_server__{}.log".format(today.strftime("%Y_%m_%d"))
+        CustomFormatterSaveFile.LOG_DIR
+        + "charger_server__{}.log".format(today.strftime("%Y_%m_%d"))
     )
     save_in_file.setLevel(server_config["LOG_LEVEL"])
     save_in_file.setFormatter(CustomFormatterSaveFile())
@@ -77,7 +81,6 @@ class ServerLogger:
     # Add both handlers to the logger
     logger_server.addHandler(console)
     logger_server.addHandler(save_in_file)
-
 
 
 class ACChargeSessionLogger:
@@ -96,7 +99,8 @@ class ACChargeSessionLogger:
     # save custom logs format to file
     today = datetime.date.today()
     save_in_file = logging.handlers.RotatingFileHandler(
-        CustomFormatterSaveFile.LOG_DIR_AC_CHARGING_SESSION + "ac_flow__{}.log".format(today.strftime("%Y_%m_%d"))
+        CustomFormatterSaveFile.LOG_DIR_AC_CHARGING_SESSION
+        + "ac_flow__{}.log".format(today.strftime("%Y_%m_%d"))
     )
     save_in_file.setLevel(server_config["LOG_LEVEL"])
     save_in_file.setFormatter(CustomFormatterSaveFile())
@@ -122,7 +126,8 @@ class CHADEMOChargeSessionLogger:
     # save custom logs format to file
     today = datetime.date.today()
     save_in_file = logging.handlers.RotatingFileHandler(
-        CustomFormatterSaveFile.LOG_DIR_CHADEMO_CHARGING_SESSION + "chademo_flow__{}.log".format(today.strftime("%Y_%m_%d"))
+        CustomFormatterSaveFile.LOG_DIR_CHADEMO_CHARGING_SESSION
+        + "chademo_flow__{}.log".format(today.strftime("%Y_%m_%d"))
     )
     save_in_file.setLevel(server_config["LOG_LEVEL"])
     save_in_file.setFormatter(CustomFormatterSaveFile())
@@ -130,4 +135,3 @@ class CHADEMOChargeSessionLogger:
     # Add both handlers to the logger
     chademo_charge_flow_logger.addHandler(console)
     chademo_charge_flow_logger.addHandler(save_in_file)
-    

@@ -11,11 +11,16 @@ class AcVehicleSpecification:
         self.charged_kw = 0
 
     def exchange_kw_to_percent(self):
-        actual_percent = round((self.actual_battery_status_in_kwh / self.max_battery_capacity_in_kwh) * 100, 2)
+        actual_percent = round(
+            (self.actual_battery_status_in_kwh / self.max_battery_capacity_in_kwh) * 100,
+            2,
+        )
         return actual_percent
 
     def current_battery_status_kwh(self):
-        actual_battery_status_in_kwh = (self.actual_battery_level / 100) * self.max_battery_capacity_in_kwh
+        actual_battery_status_in_kwh = (
+            self.actual_battery_level / 100
+        ) * self.max_battery_capacity_in_kwh
         Vehicle.settings_ac["ACTUAL_BATTERY_STATUS_IN_KWH"] = round(actual_battery_status_in_kwh, 2)
         return actual_battery_status_in_kwh
 

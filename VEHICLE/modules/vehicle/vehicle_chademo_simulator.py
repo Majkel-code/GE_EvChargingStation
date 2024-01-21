@@ -1,8 +1,8 @@
+from config.charger_vehicle_config_bridge import VehicleBridge as Vehicle
+from config.logging_system.logging_config import Logger
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
-from config.charger_vehicle_config_bridge import VehicleBridge as Vehicle
-import config.charger_vehicle_config_bridge as Bridge
-from config.logging_system.logging_config import Logger
+
 from .vehicle_battery_bridge import VehicleBatteryBridge
 
 
@@ -43,7 +43,10 @@ async def update_item(struc: Structure):
     if struc.key in Vehicle.settings_chademo:
         if struc.key == "BATTERY_LEVEL":
             if struc.value > 100:
-                return {"response": False, "error": "BATTERY LEVEL CAN'T BE >100%"}
+                return {
+                    "response": False,
+                    "error": "BATTERY LEVEL CAN'T BE >100%",
+                }
             Vehicle.settings_chademo[struc.key] = struc.value
             VehicleBatteryBridge.reload_vehicle_specification(outlet="CHADEMO")
         Vehicle.settings_chademo[struc.key] = struc.value

@@ -1,4 +1,4 @@
-import config.config_reader.read_default_settings as read_default_settings
+import veh_config.config_reader.read_default_settings as read_default_settings
 
 
 class VehicleBridge:

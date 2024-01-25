@@ -1,6 +1,6 @@
-from config.charger_vehicle_config_bridge import VehicleBridge as Vehicle
-from modules.battery.AC.ac_battery import AcVehicleSpecification
-from modules.battery.CHADEMO.chademo_battery import ChademoVehicleSpecification
+from veh_config.vehicle_config_bridge import VehicleBridge as Vehicle
+from veh_modules.battery.AC.ac_battery import AcVehicleSpecification
+from veh_modules.battery.CHADEMO.chademo_battery import ChademoVehicleSpecification
 
 
 class VehicleBatteryBridge:

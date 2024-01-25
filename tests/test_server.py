@@ -1,75 +1,6 @@
-import unittest
-import threading
-import yaml
 import requests
-import time
-from Server import Server
-import config.config_reader.read_default_settings as read_default_settings
-from config import charger_vehicle_config_bridge
 
-
-def read_tests_settings():
-    with open("tests/test_configs.yaml", "r+") as f:
-        test_config = yaml.safe_load(f)
-    return test_config
-
-
-class TestConfigureServer(unittest.TestCase):
-    @classmethod
-    def setUpClass(self):
-        print("load data config")
-        unittest.TestLoader.sortTestMethodsUsing = None
-        self.test_config = read_tests_settings()
-        self.SERVER_URL = self.test_config["SERVER_URL"]
-        if charger_vehicle_config_bridge.IsServerAlive._is_alive_ == False:
-            print("START FASTAPI SERVER!")
-            start = Server()
-            self.thread = threading.Thread(target=start.start, args=(), daemon=True)
-            self.thread.start()
-            time.sleep(1)
-        else:
-            pass
-
-    def read_vehicle_chademo_settings(self):
-        charger_vehicle_config_bridge.VehicleBridge.settings_chademo = (
-            read_default_settings.read_vehicle_chademo_settings()
-        )
-
-    def read_vehicle_ac_settings(self):
-        charger_vehicle_config_bridge.VehicleBridge.settings_ac = read_default_settings.read_vehicle_ac_settings()
-
-    def read_charger_settings(self):
-        charger_vehicle_config_bridge.ChargerBridge.settings = read_default_settings.read_charger_settings()
-
-    def custom_timeout_chademo(self):
-        timeout_iteration = 0
-        first_check = charger_vehicle_config_bridge.ChargerBridge._energy_is_send_loop_chademo_
-        while timeout_iteration < 30:
-            time.sleep(1)
-            if first_check < charger_vehicle_config_bridge.ChargerBridge._energy_is_send_loop_chademo_:
-                return False
-            elif charger_vehicle_config_bridge.ChargerBridge._charging_finished_chademo_:
-                return True
-            else:
-                timeout_iteration += 1
-        return True
-
-    def custom_timeout_ac(self):
-        timeout_iteration = 0
-        first_check = charger_vehicle_config_bridge.ChargerBridge._energy_is_send_loop_chademo_
-        while timeout_iteration < 30:
-            time.sleep(1)
-            if first_check < charger_vehicle_config_bridge.ChargerBridge._energy_is_send_loop_chademo_:
-                return False
-            elif charger_vehicle_config_bridge.ChargerBridge._charging_finished_chademo_:
-                return True
-            else:
-                timeout_iteration += 1
-        return True
-
-    @classmethod
-    def tearDownClass(self):
-        print("FUNCTION THAT SHOULD CHECK SHUTDOWN ENDPOINT // COMING SOON!")
+from tests.test_configuration import TestConfigureServer
 
 
 class TestServer(TestConfigureServer):
@@ -78,9 +9,15 @@ class TestServer(TestConfigureServer):
         super().setUpClass()
         print("server test")
 
-    def test_server_is_alive(self):
+    def test_charger_is_alive(self):
         print("TEST SERVER IS ALIVE!")
-        request = requests.get(f'{self.SERVER_URL}{self.test_config["SERVER_IS_ALIVE"]}')
+        request = requests.get(f'{self.CHARGER_SERVER_URL}{self.test_config["SERVER_IS_ALIVE"]}')
+        assert request.status_code == 200
+        assert request.json() == {"is_alive": True, "error": None}
+
+    def test_vehicle_is_alive(self):
+        print("TEST SERVER IS ALIVE!")
+        request = requests.get(f'{self.VEHICLE_SERVER_URL}{self.test_config["SERVER_IS_ALIVE"]}')
         assert request.status_code == 200
         assert request.json() == {"is_alive": True, "error": None}
 

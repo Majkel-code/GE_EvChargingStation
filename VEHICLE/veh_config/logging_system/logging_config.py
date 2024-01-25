@@ -55,7 +55,7 @@ class CustomFormatterSaveFile(CustomFormatter):
 
 
 class Logger:
-    with open(f"{current_path}/config/config_files/vehicle_server_config.yaml", "r+") as f:
+    with open(f"{current_path}/veh_config/config_files/vehicle_server_config.yaml", "r+") as f:
         server_config = yaml.safe_load(f)
     logger = logging.getLogger()
     logger.setLevel(server_config["LOG_LEVEL_CONSOLE"])

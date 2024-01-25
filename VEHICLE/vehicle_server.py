@@ -1,17 +1,17 @@
 from pathlib import Path
 
-import modules.vehicle.handshakes.ac_handshake as ac_handshake
-import modules.vehicle.handshakes.chademo_handshake as chademo_handshake
-import modules.vehicle.vehicle_ac_simulator as vehicle_ac_simulator
-import modules.vehicle.vehicle_chademo_simulator as vehicle_chademo_simulator
 import uvicorn
+import veh_modules.vehicle.handshakes.ac_handshake as ac_handshake
+import veh_modules.vehicle.handshakes.chademo_handshake as chademo_handshake
+import veh_modules.vehicle.vehicle_ac_simulator as vehicle_ac_simulator
+import veh_modules.vehicle.vehicle_chademo_simulator as vehicle_chademo_simulator
 import yaml
-from config.charger_vehicle_config_bridge import IsServerAlive as _main_server
-from config.charger_vehicle_config_bridge import VehicleBridge
-from config.logging_system.logging_config import Logger
 from fastapi import FastAPI
-from modules.battery.AC.ac_battery import AcVehicleSpecification
-from modules.battery.CHADEMO.chademo_battery import ChademoVehicleSpecification
+from veh_config.logging_system.logging_config import Logger
+from veh_config.vehicle_config_bridge import IsServerAlive as _main_server
+from veh_config.vehicle_config_bridge import VehicleBridge
+from veh_modules.battery.AC.ac_battery import AcVehicleSpecification
+from veh_modules.battery.CHADEMO.chademo_battery import ChademoVehicleSpecification
 
 logger = Logger.logger
 
@@ -31,7 +31,7 @@ class InitialiseServer:
             self.server = uvicorn.Server
             current_path = Path(__file__).absolute().parent
             with open(
-                f"{current_path}/config/config_files/vehicle_server_config.yaml",
+                f"{current_path}/veh_config/config_files/vehicle_server_config.yaml",
                 "r+",
             ) as f:
                 server_config = yaml.safe_load(f)
@@ -43,6 +43,13 @@ class InitialiseServer:
                 host=server_config["HOST_IP"],
                 reload=server_config["RELOAD"],
             )
+
+            @self.app.get("/is_alive")
+            async def alive():
+                return {
+                    "is_alive": _main_server.check_server_is_alive(),
+                    "error": None,
+                }
 
         except Exception as e:
             logger.error(e)

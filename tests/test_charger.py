@@ -1,6 +1,6 @@
 import requests
 
-from tests.test_server import TestConfigureServer
+from tests.test_configuration import TestConfigureServer
 
 
 class TestChargerEndpoints(TestConfigureServer):
@@ -22,7 +22,6 @@ class TestChargerEndpoints(TestConfigureServer):
         assert self.CHARGER_EVERY_SETTING == check_data
 
     def test_check_specific_value(self):
-        self.read_charger_settings()
         for param in self.CHARGER_EVERY_SETTING:
             response_take_specific_setting = requests.get(f"{self.CHARGER_URL}{param}")
             assert response_take_specific_setting.status_code == 200

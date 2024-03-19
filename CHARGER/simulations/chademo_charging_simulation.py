@@ -168,6 +168,7 @@ class ChademoVehicle(ChargeSimulation):
         chademo_logger.info("CHADEMO SESSION END!")
         chademo_logger.info("PLEASE DISCONNECT YOUR VEHICLE..")
         chademo_logger.info("CHARGER STATE: IDLE")
+        Charger.settings["CHADEMO_ACTUAL_KW_PER_MIN"] = 0
         Charger._charging_finished_chademo_ = True
         Charger._energy_is_send_loop_chademo_ = 0
         return constant_power_level_charging

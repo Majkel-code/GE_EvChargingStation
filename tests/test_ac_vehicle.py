@@ -12,10 +12,10 @@ class TestAcVehicleEndpoints(TestConfigureServer):
         self.VEHICLE_EVERY_SETTING = self.test_config["VEHICLE_CHECK_EVERY_SETTINGS_AC"]
 
     def setUp(self) -> None:
-        if not self.AC_CONNECTED:
-            response = requests.post(f"{self.CONNECT_AC}{self.test_config['VEHICLE_CONNECT_AC']}")
-            if response.ok:
-                self.AC_CONNECTED = True
+        if not self.check_charger_data(
+            url_charger=self.CHARGER_SERVER_URL, key_word="ac_connect"
+        ).json()["ac_connect"]:
+            requests.post(f"{self.CONNECT_AC}{self.test_config['VEHICLE_CONNECT_AC']}")
         else:
             pass
 
@@ -30,7 +30,8 @@ class TestAcVehicleEndpoints(TestConfigureServer):
         assert self.VEHICLE_EVERY_SETTING == check_data
 
     def test_check_specific_value(self):
-        self.read_vehicle_ac_settings()
+        self.check_vehicle_data(url_vehicle=self.VEHICLE_SERVER_URL, key_word="reload_ac")
+        self.check_charger_data(url_charger=self.CHARGER_SERVER_URL, key_word="reload_settings_ac")
         print("SEND ENDPOINT FOR EVERY VEHICLE SETTINGS ONE BY ONE")
         for param in self.VEHICLE_EVERY_SETTING:
             response_take_specific_setting = requests.get(f"{self.VEHICLE_URL_AC}{param}")
@@ -68,6 +69,7 @@ class TestAcVehicleEndpoints(TestConfigureServer):
 
     def tearDown(self) -> None:
         print("SEND DISCONNECT VEHICLE!")
-        response = requests.post(f"{self.CONNECT_AC}{self.test_config['VEHICLE_DISCONNECT_AC']}")
-        if response.ok:
-            self.AC_CONNECTED = False
+        if self.check_charger_data(
+            url_charger=self.CHARGER_SERVER_URL, key_word="ac_connect"
+        ).json()["ac_connect"]:
+            requests.post(f"{self.CONNECT_AC}{self.test_config['VEHICLE_DISCONNECT_AC']}")

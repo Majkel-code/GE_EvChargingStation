@@ -44,12 +44,24 @@ class InitialiseServer:
                 reload=server_config["RELOAD"],
             )
 
-            @self.app.get("/is_alive")
-            async def alive():
-                return {
-                    "is_alive": _main_server.check_server_is_alive(),
-                    "error": None,
-                }
+            @self.app.get("/{name}")
+            async def veh_check(name: str):
+                data_to_return = None
+
+                if name == "is_alive":
+                    data_to_return = _main_server.check_server_is_alive()
+
+                if name == "reload_ac":
+                    VehicleBridge.ac_load_configuration()
+                    AcVehicleSpecification()
+                    data_to_return = True
+
+                if name == "reload_chademo":
+                    VehicleBridge.chademo_load_configuration()
+                    ChademoVehicleSpecification()
+                    data_to_return = True
+
+                return {f"{name}": data_to_return}
 
         except Exception as e:
             logger.error(e)

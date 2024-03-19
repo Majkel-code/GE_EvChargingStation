@@ -1,7 +1,6 @@
 import requests
-from config import charger_vehicle_config_bridge
 
-from tests.test_server import TestConfigureServer
+from tests.test_configuration import TestConfigureServer
 
 
 class TestChademoVehicleEndpoints(TestConfigureServer):
@@ -9,15 +8,14 @@ class TestChademoVehicleEndpoints(TestConfigureServer):
     def setUpClass(self) -> None:
         super().setUpClass()
         self.VEHICLE_URL_CHADEMO = self.test_config["VEHICLE_URL_CHADEMO"]
+        self.CONNECT_CHADEMO = self.test_config["CONNECT_CHADEMO"]
         self.VEHICLE_EVERY_SETTING = self.test_config["VEHICLE_CHECK_EVERY_SETTINGS_CHADEMO"]
 
     def setUp(self) -> None:
-        if not charger_vehicle_config_bridge.VehicleBridge._connected_chademo_:
-            requests.post(
-                f"{self.VEHICLE_URL_CHADEMO}{self.test_config['VEHICLE_CONNECT_CHADEMO']}"
-            )
-        else:
-            pass
+        if not self.check_charger_data(
+            url_charger=self.CHARGER_SERVER_URL, key_word="chademo_connect"
+        ).json()["chademo_connect"]:
+            requests.post(f"{self.CONNECT_CHADEMO}{self.test_config['VEHICLE_CONNECT_CHADEMO']}")
 
     def test_check_vehicle_settings(self):
         print("TEST PROPERLY TAKE VEHICLE SETTINGS!")
@@ -30,7 +28,10 @@ class TestChademoVehicleEndpoints(TestConfigureServer):
         assert self.VEHICLE_EVERY_SETTING == check_data
 
     def test_check_specific_value(self):
-        self.read_vehicle_chademo_settings()
+        self.check_vehicle_data(url_vehicle=self.VEHICLE_SERVER_URL, key_word="reload_chademo")
+        self.check_charger_data(
+            url_charger=self.CHARGER_SERVER_URL, key_word="reload_settings_chademo"
+        )
         print("SEND ENDPOINT FOR EVERY VEHICLE SETTINGS ONE BY ONE")
         for param in self.VEHICLE_EVERY_SETTING:
             response_take_specific_setting = requests.get(f"{self.VEHICLE_URL_CHADEMO}{param}")
@@ -79,10 +80,9 @@ class TestChademoVehicleEndpoints(TestConfigureServer):
 
     def tearDown(self) -> None:
         print("SEND DISCONNECT VEHICLE!")
-        if charger_vehicle_config_bridge.VehicleBridge._connected_chademo_:
-            print("in teardown vehicle")
+        if self.check_charger_data(
+            url_charger=self.CHARGER_SERVER_URL, key_word="chademo_connect"
+        ).json()["chademo_connect"]:
             requests.post(
                 f"{self.VEHICLE_URL_CHADEMO}{self.test_config['VEHICLE_DISCONNECT_CHADEMO']}"
             )
-        else:
-            pass

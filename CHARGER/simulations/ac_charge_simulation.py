@@ -160,6 +160,7 @@ class AcVehicle(ChargeSimulation):
         ac_logger.info("AC SESSION END!")
         ac_logger.info("PLEASE DISCONNECT YOUR VEHICLE..")
         ac_logger.info("CHARGER STATE: IDLE")
+        Charger.settings["AC_ACTUAL_KW_PER_MIN"] = 0
         Charger._charging_finished_ac_ = True
         Charger._energy_is_send_loop_ac_ = 0
         return constant_power_level_charging

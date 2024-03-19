@@ -1,5 +1,4 @@
 import requests
-from config import charger_vehicle_config_bridge
 
 from tests.test_chademo_vehicle import TestChademoVehicleEndpoints
 
@@ -9,23 +8,18 @@ class TestChademoChargingSession(TestChademoVehicleEndpoints):
     def setUpClass(self) -> None:
         super().setUpClass()
         print("charging session")
-        # VEHICLE and CHARGER SETTINGS FOR NOW
         self.CHARGER_URL = self.test_config["CHARGER_URL"]
-        # self.VEHICLE_URL = self.test_config['VEHICLE_URL']
-        # self.VEHICLE_EVERY_SETTING = self.test_config['VEHICLE_CHECK_EVERY_SETTINGS']
 
     def setUp(self) -> None:
-        if not charger_vehicle_config_bridge.VehicleBridge._connected_chademo_:
-            requests.post(
-                f"{self.VEHICLE_URL_CHADEMO}{self.test_config['VEHICLE_CONNECT_CHADEMO']}"
-            )
-        else:
-            pass
+        if not self.check_charger_data(
+            url_charger=self.CHARGER_SERVER_URL, key_word="chademo_connect"
+        ).json()["chademo_connect"]:
+            requests.post(f"{self.CONNECT_CHADEMO}{self.test_config['VEHICLE_CONNECT_CHADEMO']}")
 
     def test_reconfigure_parameter(self):
         print("SEND ENDPOINT TO CHANGE SOME VALUE IN SETTINGS")
         response_edit_param = requests.put(
-            self.VEHICLE_URL_CHADEMO,
+            f"{self.VEHICLE_URL_CHADEMO}edit",
             json=self.test_config["VEHICLE_CHANGE_VALUE_CHADEMO"],
         )
         assert response_edit_param.status_code == 200
@@ -33,10 +27,11 @@ class TestChademoChargingSession(TestChademoVehicleEndpoints):
         assert response_edit_param.json() == {"response": True, "error": None}
 
     def test_session_start(self):
-        self.read_vehicle_chademo_settings()
-        self.read_charger_settings()
+        self.check_charger_data(
+            url_charger=self.CHARGER_SERVER_URL, key_word="reload_settings_chademo"
+        )
         requests.put(
-            self.VEHICLE_URL_CHADEMO,
+            f"{self.VEHICLE_URL_CHADEMO}edit",
             json=self.test_config["VEHICLE_START_BATTERY_LEVEL_CHADEMO"],
         )
         print("CHECK SESSION FLOW AND PROPERLY COMPLETE")
@@ -46,13 +41,17 @@ class TestChademoChargingSession(TestChademoVehicleEndpoints):
             start_session_url = (
                 f"{self.CHARGER_URL}{self.test_config['START_SESSION_CHADEMO']}_chademo"
             )
+
         response_session = requests.post(start_session_url)
         assert response_session.status_code == 200
         assert response_session.json() == {"response": True, "error": None}
         while True:
-            if self.custom_timeout_chademo():
+            if self.custom_timeout_chademo() is True:
                 assert (
-                    charger_vehicle_config_bridge.ChargerBridge._charging_finished_chademo_ is True
+                    self.check_charger_data(
+                        url_charger=self.CHARGER_SERVER_URL, key_word="chademo_finished"
+                    ).json()["chademo_finished"]
+                    is True
                 )
                 break
 
@@ -69,9 +68,9 @@ class TestChademoChargingSession(TestChademoVehicleEndpoints):
         )
 
     def tearDown(self) -> None:
-        if charger_vehicle_config_bridge.VehicleBridge._connected_chademo_:
+        if self.check_charger_data(
+            url_charger=self.CHARGER_SERVER_URL, key_word="chademo_connect"
+        ).json()["chademo_connect"]:
             requests.post(
                 f"{self.VEHICLE_URL_CHADEMO}{self.test_config['VEHICLE_DISCONNECT_CHADEMO']}"
             )
-        else:
-            pass

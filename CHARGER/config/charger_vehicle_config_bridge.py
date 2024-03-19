@@ -15,12 +15,30 @@ class ChargerBridge:
     for outlet in settings["CHARGING_OUTLETS"]:
         _outlet_in_use_[outlet] = "Not used"
 
+    def energy_ongoing(outlet):
+        if outlet == "AC":
+            return ChargerBridge._energy_is_send_loop_ac_
+        if outlet == "CHADEMO":
+            return ChargerBridge._energy_is_send_loop_chademo_
+
+    def session_finished(outlet):
+        if outlet == "AC":
+            return ChargerBridge._charging_finished_ac_
+        if outlet == "CHADEMO":
+            return ChargerBridge._charging_finished_chademo_
+
 
 class VehicleBridge:
     _connected_chademo_ = False
     _connected_ac_ = False
     settings_chademo = None
     settings_ac = None
+
+    def check_connection(outlet):
+        if outlet == "AC":
+            return VehicleBridge._connected_ac_
+        if outlet == "CHADEMO":
+            return VehicleBridge._connected_chademo_
 
     def connect_vehicle(outlet_used):
         try:

@@ -41,12 +41,54 @@ class InitialiseServer:
                 reload=server_config["RELOAD"],
             )
 
-            @self.app.get("/is_alive")
-            async def alive():
-                return {
-                    "is_alive": _main_server.check_server_is_alive(),
-                    "error": None,
-                }
+            @self.app.get("/{name}")
+            async def check(name: str):
+                data_to_return = None
+
+                if name == "is_alive":
+                    data_to_return = _main_server.check_server_is_alive()
+
+                elif name == "ac_connect":
+                    data_to_return = charger_vehicle_config_bridge.VehicleBridge.check_connection(
+                        "AC"
+                    )
+
+                elif name == "chademo_connect":
+                    data_to_return = charger_vehicle_config_bridge.VehicleBridge.check_connection(
+                        "CHADEMO"
+                    )
+
+                elif name == "ac_charging_ongoing":
+                    data_to_return = charger_vehicle_config_bridge.ChargerBridge.energy_ongoing(
+                        "AC"
+                    )
+
+                elif name == "chademo_charging_ongoing":
+                    data_to_return = charger_vehicle_config_bridge.ChargerBridge.energy_ongoing(
+                        "CHADEMO"
+                    )
+
+                elif name == "ac_finished":
+                    data_to_return = charger_vehicle_config_bridge.ChargerBridge.session_finished(
+                        "AC"
+                    )
+
+                elif name == "chademo_finished":
+                    data_to_return = charger_vehicle_config_bridge.ChargerBridge.session_finished(
+                        "CHADEMO"
+                    )
+
+                elif name == "reload_settings_ac":
+                    data_to_return = (
+                        charger_vehicle_config_bridge.VehicleBridge.take_ac_vehicle_specification().ok
+                    )
+
+                elif name == "reload_settings_chademo":
+                    data_to_return = (
+                        charger_vehicle_config_bridge.VehicleBridge.take_chademo_vehicle_specification().ok
+                    )
+
+                return {f"{name}": data_to_return}
 
         except Exception as e:
             server_logger.error(e)

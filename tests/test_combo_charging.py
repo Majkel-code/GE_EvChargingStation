@@ -1,28 +1,32 @@
 import requests
-from config import charger_vehicle_config_bridge
 
-from tests.test_server import TestConfigureServer
+from tests.test_configuration import TestConfigureServer
 
 
-class TestAcVehicleEndpoints(TestConfigureServer):
+class TestComboChargingSession(TestConfigureServer):
     @classmethod
     def setUpClass(self) -> None:
         super().setUpClass()
         self.CHARGER_URL = self.test_config["CHARGER_URL"]
+        self.CONNECT_AC = self.test_config["CONNECT_AC"]
+        self.CONNECT_CHADEMO = self.test_config["CONNECT_CHADEMO"]
         self.VEHICLE_URL_AC = self.test_config["VEHICLE_URL_AC"]
-        self.VEHICLE_EVERY_SETTING = self.test_config["VEHICLE_CHECK_EVERY_SETTINGS_AC"]
         self.VEHICLE_URL_CHADEMO = self.test_config["VEHICLE_URL_CHADEMO"]
-        self.VEHICLE_EVERY_SETTING = self.test_config["VEHICLE_CHECK_EVERY_SETTINGS_CHADEMO"]
-        print("vehicle")
 
     def setUp(self) -> None:
-        if not charger_vehicle_config_bridge.VehicleBridge._connected_ac_:
-            requests.post(f"{self.VEHICLE_URL_AC}{self.test_config['VEHICLE_CONNECT_AC']}")
+        if not self.check_charger_data(
+            url_charger=self.CHARGER_SERVER_URL, key_word="ac_connect"
+        ).json()["ac_connect"]:
+            requests.post(f"{self.CONNECT_AC}{self.test_config['VEHICLE_CONNECT_AC']}")
         else:
             pass
-        if not charger_vehicle_config_bridge.VehicleBridge._connected_chademo_:
+        if not self.check_charger_data(
+            url_charger=self.CHARGER_SERVER_URL, key_word="chademo_connect"
+        ).json()["chademo_connect"]:
             requests.post(
-                f"{self.VEHICLE_URL_CHADEMO}{self.test_config['VEHICLE_CONNECT_CHADEMO']}"
+                requests.post(
+                    f"{self.CONNECT_CHADEMO}{self.test_config['VEHICLE_CONNECT_CHADEMO']}"
+                )
             )
         else:
             pass
@@ -31,7 +35,7 @@ class TestAcVehicleEndpoints(TestConfigureServer):
         print("SEND ENDPOINT TO CHANGE SOME VALUE IN SETTINGS")
         # chademo
         response_edit_param_chademo = requests.put(
-            self.VEHICLE_URL_CHADEMO,
+            f"{self.VEHICLE_URL_CHADEMO}edit",
             json=self.test_config["VEHICLE_CHANGE_VALUE_CHADEMO"],
         )
         assert response_edit_param_chademo.status_code == 200
@@ -42,7 +46,7 @@ class TestAcVehicleEndpoints(TestConfigureServer):
         }
         # ac
         response_edit_param_ac = requests.put(
-            self.VEHICLE_URL_AC,
+            f"{self.VEHICLE_URL_AC}edit",
             json=self.test_config["VEHICLE_CHANGE_VALUE_AC"],
         )
         assert response_edit_param_ac.status_code == 200
@@ -53,13 +57,16 @@ class TestAcVehicleEndpoints(TestConfigureServer):
         }
 
     def test_session_start(self):
-        self.read_vehicle_chademo_settings()
+        self.check_charger_data(url_charger=self.CHARGER_SERVER_URL, key_word="reload_settings_ac")
+        self.check_charger_data(
+            url_charger=self.CHARGER_SERVER_URL, key_word="reload_settings_chademo"
+        )
         requests.put(
-            self.VEHICLE_URL_CHADEMO,
+            f"{self.VEHICLE_URL_CHADEMO}edit",
             json=self.test_config["VEHICLE_START_BATTERY_LEVEL_CHADEMO"],
         )
         requests.put(
-            self.VEHICLE_URL_AC,
+            f"{self.VEHICLE_URL_AC}edit",
             json=self.test_config["VEHICLE_START_BATTERY_LEVEL_AC"],
         )
         print("CHECK COMBO SESSIONS FLOW AND PROPERLY COMPLETE")
@@ -84,9 +91,18 @@ class TestAcVehicleEndpoints(TestConfigureServer):
         assert response_session_ac.status_code == 200
         assert response_session_ac.json() == {"response": True, "error": None}
         while True:
-            if self.custom_timeout_chademo() and self.custom_timeout_ac():
+            if self.custom_timeout_chademo() is True and self.custom_timeout_ac() is True:
                 assert (
-                    charger_vehicle_config_bridge.ChargerBridge._charging_finished_chademo_ is True
+                    self.check_charger_data(
+                        url_charger=self.CHARGER_SERVER_URL, key_word="ac_finished"
+                    ).json()["ac_finished"]
+                    is True
+                )
+                assert (
+                    self.check_charger_data(
+                        url_charger=self.CHARGER_SERVER_URL, key_word="chademo_finished"
+                    ).json()["chademo_finished"]
+                    is True
                 )
                 break
 
@@ -108,13 +124,17 @@ class TestAcVehicleEndpoints(TestConfigureServer):
         assert response_check_setting.json() > self.test_config["VEHICLE_CHANGE_VALUE_AC"]["value"]
 
     def tearDown(self) -> None:
-        if charger_vehicle_config_bridge.VehicleBridge._connected_chademo_:
+        if self.check_charger_data(
+            url_charger=self.CHARGER_SERVER_URL, key_word="chademo_connect"
+        ).json()["chademo_connect"]:
             requests.post(
                 f"{self.VEHICLE_URL_CHADEMO}{self.test_config['VEHICLE_DISCONNECT_CHADEMO']}"
             )
         else:
             pass
-        if charger_vehicle_config_bridge.VehicleBridge._connected_ac_:
+        if self.check_charger_data(
+            url_charger=self.CHARGER_SERVER_URL, key_word="ac_connect"
+        ).json()["ac_connect"]:
             requests.post(f"{self.VEHICLE_URL_AC}{self.test_config['VEHICLE_CONNECT_AC']}")
         else:
             pass

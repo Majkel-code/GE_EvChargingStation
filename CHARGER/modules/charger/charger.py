@@ -56,7 +56,7 @@ async def is_energy_ongoing_ac():
         return False
 
 
-@router.get("/{item_id}")
+@router.get("/get/{item_id}")
 async def read_item(item_id: str):
     if item_id not in Charger.settings:
         server_logger.error(f"'{item_id}' CAN'T BE FINDED IN CHARGER!")
@@ -136,6 +136,20 @@ async def start_ac_custom(percent: int):
             return {"response": False, "error": e}
     ac_logger.warning("TO START SESSION FIRST CONNECT VEHICLE!")
     raise HTTPException(status_code=404, detail="REQUEST CAN'T BE FIND!")
+
+
+@router.get("/vehicle_disconnected_{outlet}")
+async def vehicle_disconnected(outlet: str):
+    print(f"first {outlet}")
+    if outlet == "AC":
+        print(f"{outlet}")
+        Charger._outlet_in_use_[outlet] = "Not used"
+        Vehicle._connected_ac_ = False
+        Vehicle.settings_ac = None
+    if outlet == "CHADEMO":
+        Charger._outlet_in_use_[outlet] = "Not used"
+        Vehicle._connected_chademo_ = False
+        Vehicle.settings_chademo = None        
 
 
 @router.put("/")

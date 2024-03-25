@@ -12,6 +12,7 @@ from veh_config.vehicle_config_bridge import IsServerAlive as _main_server
 from veh_config.vehicle_config_bridge import VehicleBridge
 from veh_modules.battery.AC.ac_battery import AcVehicleSpecification
 from veh_modules.battery.CHADEMO.chademo_battery import ChademoVehicleSpecification
+from veh_modules.vehicle.vehicle_battery_bridge import VehicleBatteryBridge 
 
 logger = Logger.logger
 
@@ -74,6 +75,7 @@ class Server(InitialiseServer):
                 _main_server._is_alive_ = True
                 self.server = self.server(self.config)
                 self.server.run()
+                VehicleBatteryBridge.save_after_server_shutdown()
                 logger.info("SERVER CLOSED SUCCESSFUL!")
                 _main_server._is_alive_ = False
             except Exception as e:

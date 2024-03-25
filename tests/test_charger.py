@@ -29,7 +29,7 @@ class TestChargerEndpoints(TestConfigureServer):
 
     def test_check_specific_value(self):
         for param in self.CHARGER_EVERY_SETTING:
-            response_take_specific_setting = requests.get(f"{self.CHARGER_URL}{param}")
+            response_take_specific_setting = requests.get(f"{self.CHARGER_URL}get/{param}")
             assert response_take_specific_setting.status_code == 200
             assert (
                 response_take_specific_setting.json()

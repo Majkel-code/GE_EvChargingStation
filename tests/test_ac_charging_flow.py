@@ -1,14 +1,16 @@
 import requests
 
-from tests.test_ac_vehicle import TestAcVehicleEndpoints
+from tests.test_configuration import TestConfigureServer
 
 
-class TestAcChargingSession(TestAcVehicleEndpoints):
+class TestAcChargingSession(TestConfigureServer):
     @classmethod
     def setUpClass(self) -> None:
         super().setUpClass()
         print("charging session")
         self.CHARGER_URL = self.test_config["CHARGER_URL"]
+        self.VEHICLE_URL_AC = self.test_config["VEHICLE_URL_AC"]
+        self.CONNECT_AC = self.test_config["CONNECT_AC"]
 
     def setUp(self) -> None:
         if not self.check_charger_data(

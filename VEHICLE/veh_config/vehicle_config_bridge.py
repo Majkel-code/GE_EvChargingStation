@@ -12,7 +12,6 @@ class VehicleBridge:
         VehicleBridge.settings_chademo = read_default_settings.read_vehicle_chademo_settings()
 
     def perform_session_saver():
-        print(f"from bridge: {VehicleBridge.ac_veh.charged_kw}")
         VehicleBridge.ac_veh.perform_charge_saver()
 
 

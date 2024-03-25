@@ -1,13 +1,15 @@
 import requests
 
-from tests.test_chademo_vehicle import TestChademoVehicleEndpoints
+from tests.test_configuration import TestConfigureServer
 
 
-class TestChademoChargingSession(TestChademoVehicleEndpoints):
+class TestChademoChargingSession(TestConfigureServer):
     @classmethod
     def setUpClass(self) -> None:
         super().setUpClass()
         print("charging session")
+        self.VEHICLE_URL_CHADEMO = self.test_config["VEHICLE_URL_CHADEMO"]
+        self.CONNECT_CHADEMO = self.test_config["CONNECT_CHADEMO"]
         self.CHARGER_URL = self.test_config["CHARGER_URL"]
 
     def setUp(self) -> None:

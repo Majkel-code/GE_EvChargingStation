@@ -1,4 +1,5 @@
 import requests
+import time
 
 from tests.test_configuration import TestConfigureServer
 
@@ -7,9 +8,14 @@ class TestChargerEndpoints(TestConfigureServer):
     @classmethod
     def setUpClass(self) -> None:
         super().setUpClass()
+        time.sleep(2)
         self.CHARGER_URL = self.test_config["CHARGER_URL"]
         self.CHARGER_EVERY_SETTING = self.test_config["CHARGER_CHECK_EVERY_SETTING"]
         print("charger")
+
+
+    def setUp(self) -> None:
+        return super().setUp()
 
     def test_check_charger_settings(self):
         print("TEST PROPERLY TAKE CHARGER SETTINGS!")

@@ -18,39 +18,29 @@ class TestComboChargingSession(TestConfigureServer):
             url_charger=self.CHARGER_SERVER_URL, key_word="ac_connect"
         ).json()["ac_connect"]:
             requests.post(f"{self.CONNECT_AC}{self.test_config['VEHICLE_CONNECT_AC']}")
-        else:
-            pass
         if not self.check_charger_data(
             url_charger=self.CHARGER_SERVER_URL, key_word="chademo_connect"
         ).json()["chademo_connect"]:
-            requests.post(
-                requests.post(
-                    f"{self.CONNECT_CHADEMO}{self.test_config['VEHICLE_CONNECT_CHADEMO']}"
-                )
-            )
-        else:
-            pass
+            requests.post(f"{self.CONNECT_CHADEMO}{self.test_config['VEHICLE_CONNECT_CHADEMO']}")
 
     def test_reconfigure_parameter(self):
         print("SEND ENDPOINT TO CHANGE SOME VALUE IN SETTINGS")
         # chademo
         response_edit_param_chademo = requests.put(
-            f"{self.VEHICLE_URL_CHADEMO}edit",
+            url=f"{self.VEHICLE_URL_CHADEMO}edit",
             json=self.test_config["VEHICLE_CHANGE_VALUE_CHADEMO"],
         )
         assert response_edit_param_chademo.status_code == 200
-        print(response_edit_param_chademo.json())
         assert response_edit_param_chademo.json() == {
             "response": True,
             "error": None,
         }
         # ac
         response_edit_param_ac = requests.put(
-            f"{self.VEHICLE_URL_AC}edit",
+            url=f"{self.VEHICLE_URL_AC}edit",
             json=self.test_config["VEHICLE_CHANGE_VALUE_AC"],
         )
         assert response_edit_param_ac.status_code == 200
-        print(response_edit_param_ac.json())
         assert response_edit_param_ac.json() == {
             "response": True,
             "error": None,

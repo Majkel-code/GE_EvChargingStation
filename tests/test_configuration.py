@@ -1,18 +1,26 @@
+import asyncio
+import fastapi
 import threading
+import subprocess
 import time
 import unittest
+from pathlib import Path
 
 import requests
 import yaml
 
-from CHARGER.charger_server import Server as ChargerServer
-from VEHICLE.vehicle_server import Server as VehicleServer
+# from CHARGER.charger_server import Server as ChargerServer
+# from VEHICLE.vehicle_server import Server as VehicleServer
 
 
 def read_tests_settings():
     with open("tests/test_config/test_configs.yaml", "r+") as f:
         test_config = yaml.safe_load(f)
     return test_config
+
+
+def charger_thread(server_name):
+    subprocess.run("python", server_name)
 
 
 class TestConfigureServer(unittest.TestCase):
@@ -23,30 +31,19 @@ class TestConfigureServer(unittest.TestCase):
         self.CHARGER_SERVER_URL = self.test_config["CHARGER_SERVER_URL"]
         self.VEHICLE_SERVER_URL = self.test_config["VEHICLE_SERVER_URL"]
 
-        charger_is_alive = self.check_charger_data(
-            self, url_charger=self.CHARGER_SERVER_URL, key_word=self.test_config["SERVER_IS_ALIVE"]
-        )
-        if charger_is_alive == None:
-            print("START CHARGER SERVER!")
-            init_charger = ChargerServer()
-            self.thread = threading.Thread(target=init_charger.start, args=(), daemon=True)
-            self.thread.start()
-            time.sleep(1)
-        else:
-            pass
-        vehicle_is_alive = self.check_vehicle_data(
-            self, url_vehicle=self.VEHICLE_SERVER_URL, key_word=self.test_config["SERVER_IS_ALIVE"]
-        )
-        if vehicle_is_alive == None:
-            print("START VEHICLE SERVER!")
-            init_vehicle = VehicleServer()
-            self.thread = threading.Thread(target=init_vehicle.start, args=(), daemon=True)
-            self.thread.start()
-            time.sleep(1)
-        else:
-            pass
+        current_path = Path(__file__).absolute().parents[1]
+        charger_path = f"{current_path}/CHARGER/charger_server.py"
+        vehicle_path = f"{current_path}/VEHICLE/vehicle_server.py"
+        self.procs = []
+        if self.CHARGER_SERVER_URL == "http://127.0.0.1:5000/":
+            self.procs.append(subprocess.Popen(["python3", f"{charger_path}"]))
+        if self.VEHICLE_SERVER_URL == "http://127.0.0.1:5001/":
+            self.procs.append(subprocess.Popen(["python3", f"{vehicle_path}"]))
+
+
 
     def check_charger_data(self, url_charger, key_word):
+        time.sleep(1)
         url = f"{url_charger}{key_word}"
         headers = {"Content-Type": "application/json"}
         response = requests.get(url, headers=headers)
@@ -54,6 +51,7 @@ class TestConfigureServer(unittest.TestCase):
             return response
 
     def check_vehicle_data(self, url_vehicle, key_word):
+        time.sleep(1)
         url = f"{url_vehicle}{key_word}"
         headers = {"Content-Type": "application/json"}
         response = requests.get(url, headers=headers)
@@ -70,14 +68,11 @@ class TestConfigureServer(unittest.TestCase):
             check_flow = self.check_charger_data(
                 url_charger=self.CHARGER_SERVER_URL, key_word="chademo_charging_ongoing"
             ).json()
-            if (
-                first_check_flow["chademo_charging_ongoing"]
-                < check_flow["chademo_charging_ongoing"]
-            ):
+            if first_check_flow["chademo_charging_ongoing"] < check_flow["chademo_charging_ongoing"]:
                 return False
-            elif self.check_charger_data(
-                url_charger=self.CHARGER_SERVER_URL, key_word="chademo_finished"
-            ).json()["chademo_finished"]:
+            elif self.check_charger_data(url_charger=self.CHARGER_SERVER_URL, key_word="chademo_finished").json()[
+                "chademo_finished"
+            ]:
                 timeout_iteration = 0
                 return True
             else:
@@ -96,9 +91,9 @@ class TestConfigureServer(unittest.TestCase):
             ).json()
             if first_check_flow["ac_charging_ongoing"] < check_flow["ac_charging_ongoing"]:
                 return False
-            elif self.check_charger_data(
-                url_charger=self.CHARGER_SERVER_URL, key_word="ac_finished"
-            ).json()["ac_finished"]:
+            elif self.check_charger_data(url_charger=self.CHARGER_SERVER_URL, key_word="ac_finished").json()[
+                "ac_finished"
+            ]:
                 timeout_iteration = 0
                 return True
             else:
@@ -108,3 +103,8 @@ class TestConfigureServer(unittest.TestCase):
     @classmethod
     def tearDownClass(self):
         print("FUNCTION THAT SHOULD CHECK SHUTDOWN ENDPOINT // COMING SOON!")
+        for p in self.procs:
+            p.terminate()
+            p.wait()
+        
+            

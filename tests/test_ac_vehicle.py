@@ -1,5 +1,6 @@
 import requests
-
+import asyncio
+import time
 from tests.test_configuration import TestConfigureServer
 
 
@@ -16,8 +17,6 @@ class TestAcVehicleEndpoints(TestConfigureServer):
             url_charger=self.CHARGER_SERVER_URL, key_word="ac_connect"
         ).json()["ac_connect"]:
             requests.post(f"{self.CONNECT_AC}{self.test_config['VEHICLE_CONNECT_AC']}")
-        else:
-            pass
 
     def test_check_vehicle_settings(self):
         print("TEST PROPERLY TAKE VEHICLE SETTINGS!")
@@ -69,7 +68,14 @@ class TestAcVehicleEndpoints(TestConfigureServer):
 
     def tearDown(self) -> None:
         print("SEND DISCONNECT VEHICLE!")
+        # check = self.check_charger_data(url_charger=self.CHARGER_SERVER_URL, key_word="ac_connect").json()
+        # print("from disconnect")
+        # print(check["ac_connect"])
+        # if check["ac_connect"]:
+        #     requests.post(f"{self.CONNECT_AC}{self.test_config['VEHICLE_DISCONNECT_AC']}")
+        #     time.sleep(1)
         if self.check_charger_data(
             url_charger=self.CHARGER_SERVER_URL, key_word="ac_connect"
         ).json()["ac_connect"]:
             requests.post(f"{self.CONNECT_AC}{self.test_config['VEHICLE_DISCONNECT_AC']}")
+

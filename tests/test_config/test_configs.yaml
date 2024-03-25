@@ -1,3 +1,14 @@
+# DEVELOPER CHARGER/VEHICLE PATH
+# ----> please verify path to your CHARGER/VEHICLE module <----
+# ---> It should look similat to this: 
+# ---> <YOUR_PATH>/CHARGER/charger_server.py
+# ---> <YOUR_PATH>/VEHICLE/vehicle_server.py
+
+# EXTERNAL DEVICE SERVER
+# ----> when you wolud use automation tests and CHARGER/VEHICLE are on external machine
+# ----> please check this machine IP adress and check every localhost IP to external IP
+
+
 # SERVER URL AND SERVER ENDPOINTS
 CHARGER_SERVER_URL: "http://127.0.0.1:5000/"
 VEHICLE_SERVER_URL: "http://127.0.0.1:5001/"

@@ -40,3 +40,6 @@ class VehicleBatteryBridge:
             VehicleBatteryBridge.ac_vehicle_spec = AcVehicleSpecification()
         elif outlet == "CHADEMO":
             VehicleBatteryBridge.chademo_vehicle_spec = ChademoVehicleSpecification()
+
+    def read_charge_history(outlet):
+        return AcVehicleSpecification.open_session_history(outlet=outlet)

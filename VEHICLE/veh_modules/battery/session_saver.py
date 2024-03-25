@@ -48,6 +48,14 @@ class SessionSaver:
             with open(self.chademo_path, "a") as f:
                 f.write(json.dumps(self.chademo_history_file))
 
+    def open_session_history(self, outlet):
+        if outlet == "AC":
+            with open(self.ac_path, "r") as f:
+                return json.load(f)
+        elif outlet == "CHADEMO":
+            with open(self.chademo_path, "r") as f:
+                return json.load(f)
+
     def save_session(self, outlet, session_id, battery, charged_kw, time):
         if outlet == "AC":
             self.ac_history[f"{today}"]["SESSION_ID"] = session_id

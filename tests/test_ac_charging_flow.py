@@ -1,7 +1,8 @@
 import requests
+import datetime
 
 from tests.test_configuration import TestConfigureServer
-
+today = datetime.date.today()
 
 class TestAcChargingSession(TestConfigureServer):
     @classmethod
@@ -62,6 +63,13 @@ class TestAcChargingSession(TestConfigureServer):
         )
         assert response_check_setting.status_code == 200
         assert response_check_setting.json() > self.test_config["VEHICLE_CHANGE_VALUE_AC"]["value"]
+
+    def test_charge_session_history_saved(self):
+        self.test_session_start()
+        print("CHECK CHARGING HISTORY IS CREATED AND SESSION IS SAVED CORRECTLY")
+        session_history = self.check_vehicle_data(self.VEHICLE_SERVER_URL, key_word="ac_history").json()
+        for key in self.test_config["VEHICLE_HISTORY_KEYS"]:
+            assert key in session_history["AC"][0][f"{today}"]
 
     def tearDown(self) -> None:
         if self.check_charger_data(

@@ -43,3 +43,6 @@ class AcVehicleSpecification:
             charged_kw=self.charged_kw,
             time=0,
         )
+
+    def read_charge_history(self, outlet):
+        return SessionSaver().open_session_history(outlet=outlet)

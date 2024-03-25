@@ -62,6 +62,11 @@ class InitialiseServer:
                     ChademoVehicleSpecification()
                     data_to_return = True
 
+                if name == "ac_history":
+                    return AcVehicleSpecification.read_charge_history(AcVehicleSpecification, outlet="AC")
+                if name == "chademo_history":
+                    return ChademoVehicleSpecification.read_charge_history(ChademoVehicleSpecification, outlet="CHADEMO")
+
                 return {f"{name}": data_to_return}
 
         except Exception as e:

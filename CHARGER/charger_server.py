@@ -8,8 +8,9 @@ import uvicorn
 import yaml
 from config.charger_vehicle_config_bridge import IsServerAlive as _main_server
 from config.logging_system.logging_config import ServerLogger
-from fastapi import FastAPI
+from fastapi import FastAPI, Header
 from modules.display import display_ac, display_chademo
+from config.config_reader.generate_auth_key import AuthorizationSystem
 
 server_logger = ServerLogger.logger_server
 
@@ -32,6 +33,7 @@ class InitialiseServer:
                 "r+",
             ) as f:
                 server_config = yaml.safe_load(f)
+            self.auth = AuthorizationSystem(server_config["AUTHORIZATION_KEY_SAVE_PATH"])
             self.config = uvicorn.Config(
                 app=self.app,
                 port=server_config["PORT"],
@@ -41,52 +43,39 @@ class InitialiseServer:
                 reload=server_config["RELOAD"],
             )
 
-            @self.app.get("/{name}")
-            async def check(name: str):
+            @self.app.get("/{name}/{key}")
+            async def check(name: str, key: str):
                 data_to_return = None
+                if self.auth.read_local_key() == key:
+                    
+                    if name == "is_alive":
+                        data_to_return = _main_server.check_server_is_alive()
 
-                if name == "is_alive":
-                    data_to_return = _main_server.check_server_is_alive()
+                    elif name == "ac_connect":
+                        data_to_return = charger_vehicle_config_bridge.VehicleBridge.check_connection("AC")
 
-                elif name == "ac_connect":
-                    data_to_return = charger_vehicle_config_bridge.VehicleBridge.check_connection(
-                        "AC"
-                    )
+                    elif name == "chademo_connect":
+                        data_to_return = charger_vehicle_config_bridge.VehicleBridge.check_connection("CHADEMO")
 
-                elif name == "chademo_connect":
-                    data_to_return = charger_vehicle_config_bridge.VehicleBridge.check_connection(
-                        "CHADEMO"
-                    )
+                    elif name == "ac_charging_ongoing":
+                        data_to_return = charger_vehicle_config_bridge.ChargerBridge.energy_ongoing("AC")
 
-                elif name == "ac_charging_ongoing":
-                    data_to_return = charger_vehicle_config_bridge.ChargerBridge.energy_ongoing(
-                        "AC"
-                    )
+                    elif name == "chademo_charging_ongoing":
+                        data_to_return = charger_vehicle_config_bridge.ChargerBridge.energy_ongoing("CHADEMO")
 
-                elif name == "chademo_charging_ongoing":
-                    data_to_return = charger_vehicle_config_bridge.ChargerBridge.energy_ongoing(
-                        "CHADEMO"
-                    )
+                    elif name == "ac_finished":
+                        data_to_return = charger_vehicle_config_bridge.ChargerBridge.session_finished("AC")
 
-                elif name == "ac_finished":
-                    data_to_return = charger_vehicle_config_bridge.ChargerBridge.session_finished(
-                        "AC"
-                    )
+                    elif name == "chademo_finished":
+                        data_to_return = charger_vehicle_config_bridge.ChargerBridge.session_finished("CHADEMO")
 
-                elif name == "chademo_finished":
-                    data_to_return = charger_vehicle_config_bridge.ChargerBridge.session_finished(
-                        "CHADEMO"
-                    )
+                    elif name == "reload_settings_ac":
+                        data_to_return = charger_vehicle_config_bridge.VehicleBridge.take_ac_vehicle_specification().ok
 
-                elif name == "reload_settings_ac":
-                    data_to_return = (
-                        charger_vehicle_config_bridge.VehicleBridge.take_ac_vehicle_specification().ok
-                    )
-
-                elif name == "reload_settings_chademo":
-                    data_to_return = (
-                        charger_vehicle_config_bridge.VehicleBridge.take_chademo_vehicle_specification().ok
-                    )
+                    elif name == "reload_settings_chademo":
+                        data_to_return = charger_vehicle_config_bridge.VehicleBridge.take_chademo_vehicle_specification().ok
+                else:
+                    server_logger.error("UNABLE TO AUTHORIZE REQUEST!")
 
                 return {f"{name}": data_to_return}
 

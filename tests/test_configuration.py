@@ -5,6 +5,8 @@ import subprocess
 import time
 import unittest
 from pathlib import Path
+import os
+import json
 
 import requests
 import yaml
@@ -19,8 +21,13 @@ def read_tests_settings():
     return test_config
 
 
-def charger_thread(server_name):
-    subprocess.run("python", server_name)
+current_path = Path(__file__).absolute().parents[1]
+
+
+def read_local_key(key_path):
+    if os.path.exists(key_path):
+        with open(key_path, "r") as f:
+            return f.read()
 
 
 class TestConfigureServer(unittest.TestCase):
@@ -30,6 +37,7 @@ class TestConfigureServer(unittest.TestCase):
         self.test_config = read_tests_settings()
         self.CHARGER_SERVER_URL = self.test_config["CHARGER_SERVER_URL"]
         self.VEHICLE_SERVER_URL = self.test_config["VEHICLE_SERVER_URL"]
+        self.AUTH_KEY_PATH = self.test_config["AUTHORIZATION_KEY_SAVE_PATH"]
 
         current_path = Path(__file__).absolute().parents[1]
         charger_path = f"{current_path}/CHARGER/charger_server.py"
@@ -39,12 +47,15 @@ class TestConfigureServer(unittest.TestCase):
             self.procs.append(subprocess.Popen(["python3", f"{charger_path}"]))
         if self.VEHICLE_SERVER_URL == "http://127.0.0.1:5001/":
             self.procs.append(subprocess.Popen(["python3", f"{vehicle_path}"]))
-
+ 
+        self.AUTH_KEY = read_local_key(self.AUTH_KEY_PATH)
+        print(self.AUTH_KEY_PATH)
+        print(self.AUTH_KEY)
 
 
     def check_charger_data(self, url_charger, key_word):
         time.sleep(1)
-        url = f"{url_charger}{key_word}"
+        url = f"{url_charger}{key_word}/{self.AUTH_KEY}"
         headers = {"Content-Type": "application/json"}
         response = requests.get(url, headers=headers)
         if response.ok:

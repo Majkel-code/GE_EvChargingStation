@@ -18,21 +18,15 @@ class VehicleBatteryBridge:
     def save_after_server_shutdown():
         if Vehicle.settings_ac["SESSION_ID"] is not None:
             VehicleBatteryBridge.perform_charge_saver("AC")
-            url = "http://127.0.0.1:5000/charger/vehicle_disconnected_AC"
-            headers = {"Content-Type": "application/json"}
-            response = requests.get(url, headers=headers)
         if Vehicle.settings_chademo["SESSION_ID"] is not None:
             VehicleBatteryBridge.perform_charge_saver("CHADEMO")
 
     def perform_charge_saver(outlet):
         if outlet == "AC":
-            print("IN AC SAVER")
             VehicleBatteryBridge.ac_vehicle_spec.perform_charge_saver()
-            Vehicle.ac_load_configuration()
             VehicleBatteryBridge.ac_vehicle_spec = AcVehicleSpecification()
         elif outlet == "CHADEMO":
             VehicleBatteryBridge.chademo_vehicle_spec.perform_charge_saver()
-            Vehicle.chademo_load_configuration()
             VehicleBatteryBridge.chademo_vehicle_spec = ChademoVehicleSpecification()
 
     def reload_vehicle_specification(outlet):

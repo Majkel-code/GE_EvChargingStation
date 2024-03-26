@@ -163,4 +163,5 @@ class AcVehicle(ChargeSimulation):
         Charger.settings["AC_ACTUAL_KW_PER_MIN"] = 0
         Charger._charging_finished_ac_ = True
         Charger._energy_is_send_loop_ac_ = 0
+        Vehicle.session_complete_ac()
         return constant_power_level_charging

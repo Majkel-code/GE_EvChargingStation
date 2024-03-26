@@ -104,10 +104,6 @@ class VehicleBridge:
 
     def take_ac_vehicle_specification():
         url = "http://127.0.0.1:5001/vehicle_ac/all"
-        # payload = json.dumps({
-        # "id":  ChargerBridge._outlet_in_use_[outlet_used],
-        # "end_connection": True
-        # })
         headers = {"Content-Type": "application/json"}
         response = requests.get(url, headers=headers)
         if response.ok:
@@ -121,6 +117,20 @@ class VehicleBridge:
         if response.ok:
             VehicleBridge.settings_chademo = response.json()
         return response
+    
+    def session_complete_chademo():
+            url = "http://127.0.0.1:5001/vehicle_chademo/chademo_complete"
+            payload ={"complete": ChargerBridge._charging_finished_chademo_}
+            headers = {"Content-Type": "application/json"}
+            response = requests.patch(url, headers=headers, data=json.dumps(payload))
+
+    
+    def session_complete_ac():
+            url = "http://127.0.0.1:5001/vehicle_ac/ac_complete"
+            payload ={"complete": ChargerBridge._charging_finished_ac_}
+            headers = {"Content-Type": "application/json"}
+            response = requests.patch(url, headers=headers, data=json.dumps(payload))
+                      
 
 
 class IsServerAlive:

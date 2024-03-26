@@ -70,7 +70,7 @@ class TestChademoChargingSession(TestConfigureServer):
             > self.test_config["VEHICLE_CHANGE_VALUE_CHADEMO"]["value"]
         )
 
-    def test_charge_session_history_saved(self):
+    def test_chademo_charge_session_history_saved(self):
         self.test_session_start()
         print("CHECK CHARGING HISTORY IS CREATED AND SESSION IS SAVED CORRECTLY")
         session_history = self.check_vehicle_data(self.VEHICLE_SERVER_URL, key_word="chademo_history").json()

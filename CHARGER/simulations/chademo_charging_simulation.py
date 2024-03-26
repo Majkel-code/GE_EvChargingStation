@@ -171,4 +171,5 @@ class ChademoVehicle(ChargeSimulation):
         Charger.settings["CHADEMO_ACTUAL_KW_PER_MIN"] = 0
         Charger._charging_finished_chademo_ = True
         Charger._energy_is_send_loop_chademo_ = 0
+        Vehicle.session_complete_chademo()
         return constant_power_level_charging

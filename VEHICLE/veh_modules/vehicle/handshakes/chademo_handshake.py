@@ -37,5 +37,6 @@ async def take_disconnect_request(struc: Structure_disconnect):
     if struc.id == Vehicle.settings_chademo["SESSION_ID"] and struc.end_connection:
         try:
             VehicleBatteryBridge.perform_charge_saver("CHADEMO")
+            Vehicle.chademo_load_configuration()
         except Exception as e:
             logger.error(e)

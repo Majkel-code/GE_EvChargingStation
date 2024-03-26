@@ -14,6 +14,8 @@ class Structure(BaseModel):
 class Take(BaseModel):
     key: float
 
+class Complete(BaseModel):
+    complete: bool
 
 router = APIRouter(
     prefix="/vehicle_chademo",
@@ -61,3 +63,9 @@ async def take_kw_per_min(take: Take):
         VehicleBatteryBridge.send_kw_to_battery(outlet="CHADEMO", kw_min=take.key)
     except Exception as e:
         logger.error(f"ERROR OCCURED: {e}")
+
+
+@router.patch("/chademo_complete")
+async def chademo_complete(complete: Complete):
+    if complete.complete:
+        VehicleBatteryBridge.perform_charge_saver("CHADEMO")

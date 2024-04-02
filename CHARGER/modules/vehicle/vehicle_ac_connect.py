@@ -23,7 +23,7 @@ async def read_items():
         return {"response": False, "error": "VEHICLE ACTUALLY CONNECTED!"}
     else:
         handshake = Vehicle.connect_vehicle("AC")
-        if handshake.ok:
+        if handshake["handshake_ac"]:
             vehicle_specification = Vehicle.take_ac_vehicle_specification()
             if vehicle_specification.ok:
                 server_logger.info("VEHICLE SUCCESSFULY CONNECTED AND SPECIFICATION READED")

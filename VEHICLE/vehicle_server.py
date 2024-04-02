@@ -27,8 +27,8 @@ class InitialiseServer:
             self.app.include_router(vehicle_chademo_simulator.router)
             self.app.include_router(ac_handshake.router)
             self.app.include_router(chademo_handshake.router)
-            AcVehicleSpecification()
-            ChademoVehicleSpecification()
+            VehicleBatteryBridge.ac_vehicle_spec = AcVehicleSpecification()
+            VehicleBatteryBridge.chademo_vehicle_spec = ChademoVehicleSpecification()
             self.server = uvicorn.Server
             current_path = Path(__file__).absolute().parent
             with open(

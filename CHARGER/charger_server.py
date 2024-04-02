@@ -4,11 +4,12 @@ import config.charger_vehicle_config_bridge as charger_vehicle_config_bridge
 import modules.charger.charger as charger
 import modules.vehicle.vehicle_ac_connect as vehicle_ac_connect
 import modules.vehicle.vehicle_chademo_connect as vehicle_chademo_connect
+import requests
 import uvicorn
 import yaml
 from config.charger_vehicle_config_bridge import IsServerAlive as _main_server
 from config.logging_system.logging_config import ServerLogger
-from fastapi import FastAPI, Header
+from fastapi import FastAPI, Request
 from modules.display import display_ac, display_chademo
 from config.config_reader.generate_auth_key import AuthorizationSystem
 
@@ -43,9 +44,10 @@ class InitialiseServer:
                 reload=server_config["RELOAD"],
             )
 
-            @self.app.get("/{name}/{key}")
-            async def check(name: str, key: str):
+            @self.app.get("/{name}")
+            async def check(name: str, request: Request):
                 data_to_return = None
+                key = request.headers.get("AUTHORIZATION")
                 if self.auth.read_local_key() == key:
                     
                     if name == "is_alive":

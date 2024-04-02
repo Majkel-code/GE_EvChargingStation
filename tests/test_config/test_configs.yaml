@@ -52,6 +52,8 @@ CHARGER_PROPER_VALUE: {           # PROPER VALUES SHOULD BE THE SAME AS THE VALU
           "VOLTAGE_DROP_AC": 1.02,
           "VOLTAGE_DROP_CHADEMO": 1.08,
       }
+SECIURE_ENDPOINT: "is_alive"
+FAKE_SECIURE_CODE: "sjkdbff2f48hwh3f298fh2983fh2o3hfo238r28rh47tg2o8fgh2o3"
 #_____________________________________________
 # VEHICLE URL AND VEHICLE ENDPOINTS CHADEMO
 VEHICLE_URL_CHADEMO: "http://127.0.0.1:5001/vehicle_chademo/"

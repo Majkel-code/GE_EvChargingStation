@@ -1,18 +1,11 @@
-import asyncio
-import fastapi
-import threading
 import subprocess
 import time
 import unittest
 from pathlib import Path
 import os
-import json
 
 import requests
 import yaml
-
-# from CHARGER.charger_server import Server as ChargerServer
-# from VEHICLE.vehicle_server import Server as VehicleServer
 
 
 def read_tests_settings():
@@ -49,14 +42,11 @@ class TestConfigureServer(unittest.TestCase):
             self.procs.append(subprocess.Popen(["python3", f"{vehicle_path}"]))
  
         self.AUTH_KEY = read_local_key(self.AUTH_KEY_PATH)
-        print(self.AUTH_KEY_PATH)
-        print(self.AUTH_KEY)
-
 
     def check_charger_data(self, url_charger, key_word):
         time.sleep(1)
-        url = f"{url_charger}{key_word}/{self.AUTH_KEY}"
-        headers = {"Content-Type": "application/json"}
+        url = f"{url_charger}{key_word}"
+        headers = {"Content-Type": "application/json", "AUTHORIZATION": self.AUTH_KEY}
         response = requests.get(url, headers=headers)
         if response.ok:
             return response

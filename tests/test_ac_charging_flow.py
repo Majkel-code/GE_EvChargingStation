@@ -71,6 +71,28 @@ class TestAcChargingSession(TestConfigureServer):
         for key in self.test_config["VEHICLE_HISTORY_KEYS"]:
             assert key in session_history["AC"][0][f"{today}"]
 
+    def test_ac_session_fillup(self):
+        self.test_session_start()
+        print("TEST AC SESSION FILL UP")
+        session_history = self.check_vehicle_data(self.VEHICLE_SERVER_URL, key_word="ac_history").json()
+        first_session_id = session_history["AC"][0][f"{today}"]["SESSION_ID"]
+        start_session_url = f"{self.CHARGER_URL}{self.test_config['START_SESSION_AC']}_ac"
+        response_session = requests.post(start_session_url)
+        assert response_session.status_code == 200
+        assert response_session.json() == {"response": True, "error": None}
+        while True:
+            if self.custom_timeout_ac() is True:
+                assert (
+                    self.check_charger_data(
+                        url_charger=self.CHARGER_SERVER_URL, key_word="ac_finished"
+                    ).json()["ac_finished"]
+                    is True
+                )
+                break
+        session_history = self.check_vehicle_data(self.VEHICLE_SERVER_URL, key_word="ac_history").json()
+        fillup_session_id = session_history["AC"][0][f"{today}"]["SESSION_ID"]
+        assert fillup_session_id == first_session_id
+        
     def tearDown(self) -> None:
         if self.check_charger_data(
             url_charger=self.CHARGER_SERVER_URL, key_word="ac_connect"

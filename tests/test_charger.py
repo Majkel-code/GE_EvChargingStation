@@ -11,6 +11,7 @@ class TestChargerEndpoints(TestConfigureServer):
         time.sleep(2)
         self.CHARGER_URL = self.test_config["CHARGER_URL"]
         self.CHARGER_EVERY_SETTING = self.test_config["CHARGER_CHECK_EVERY_SETTING"]
+        self.FAKE_SECIURE_CODE = self.test_config["FAKE_SECIURE_CODE"]
         print("charger")
 
 
@@ -43,6 +44,14 @@ class TestChargerEndpoints(TestConfigureServer):
         )
         assert response_edit_param.status_code == 200
         assert response_edit_param.json() == {"response": True, "error": None}
+
+    def test_seciure_endpoint(self):
+        print("TEST SECIURE CHARGER ENDPOINT")
+        url = f"{self.CHARGER_SERVER_URL}{self.test_config['SECIURE_ENDPOINT']}"
+        headers = {"Content-Type": "application/json", "AUTHORIZATION": self.FAKE_SECIURE_CODE}
+        response = requests.get(url=url, headers=headers)
+        assert response.status_code == 200
+        assert response.json() == {self.test_config["SECIURE_ENDPOINT"]: None}
 
     @classmethod
     def tearDownClass(self) -> None:

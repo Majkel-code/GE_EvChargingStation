@@ -15,7 +15,5 @@ max-line-length = 200
 pythonpath = [
   "CHARGER", "VEHICLE"
 ]
-[tool.unittest.ini_options]
-pythonpath = [
-  "CHARGER", "VEHICLE"
-]
+
+

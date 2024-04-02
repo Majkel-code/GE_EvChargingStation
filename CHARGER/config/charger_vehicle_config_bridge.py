@@ -43,28 +43,32 @@ class VehicleBridge:
     def connect_vehicle(outlet_used):
         try:
             if outlet_used == "CHADEMO":
-                url = "http://127.0.0.1:5001/handshake_chademo/connect"
-                key = take_vehicle_key()
-                payload = json.dumps({"id": key})
-                headers = {"Content-Type": "application/json"}
-                response = requests.put(url, headers=headers, data=payload)
-
-                if response.ok:
-                    VehicleBridge._connected_chademo_ = True
-                    ChargerBridge._outlet_in_use_[outlet_used] = key
-                return response
+                try:
+                    url = "http://127.0.0.1:5001/handshake_chademo/connect"
+                    key = take_vehicle_key()
+                    payload = json.dumps({"id": key})
+                    headers = {"Content-Type": "application/json"}
+                    response = requests.put(url, headers=headers, data=payload)
+                    if response.ok:
+                        VehicleBridge._connected_chademo_ = True
+                        ChargerBridge._outlet_in_use_[outlet_used] = key
+                        return {"handshake_chademo": True}
+                except:
+                    return {"handshake_chademo": False}
 
             elif outlet_used == "AC":
-                url = "http://127.0.0.1:5001/handshake_ac/connect"
-                key = take_vehicle_key()
-                payload = json.dumps({"id": key})
-                headers = {"Content-Type": "application/json"}
-                response = requests.put(url, headers=headers, data=payload)
-
-                if response.ok:
-                    VehicleBridge._connected_ac_ = True
-                    ChargerBridge._outlet_in_use_[outlet_used] = key
-                return response
+                try:
+                    url = "http://127.0.0.1:5001/handshake_ac/connect"
+                    key = take_vehicle_key()
+                    payload = json.dumps({"id": key})
+                    headers = {"Content-Type": "application/json"}
+                    response = requests.put(url, headers=headers, data=payload)
+                    if response.ok:
+                        VehicleBridge._connected_ac_ = True
+                        ChargerBridge._outlet_in_use_[outlet_used] = key
+                        return {"handshake_ac": True}
+                except:
+                    return {"handshake_ac": False}
 
         except Exception as e:
             return e

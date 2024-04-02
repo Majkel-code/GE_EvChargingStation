@@ -1,7 +1,7 @@
 from veh_config.vehicle_config_bridge import VehicleBridge as Vehicle
 from veh_modules.battery.AC.ac_battery import AcVehicleSpecification
 from veh_modules.battery.CHADEMO.chademo_battery import ChademoVehicleSpecification
-import requests
+
 
 class VehicleBatteryBridge:
     ac_vehicle_spec = AcVehicleSpecification()
@@ -24,10 +24,8 @@ class VehicleBatteryBridge:
     def perform_charge_saver(outlet):
         if outlet == "AC":
             VehicleBatteryBridge.ac_vehicle_spec.perform_charge_saver()
-            VehicleBatteryBridge.ac_vehicle_spec = AcVehicleSpecification()
         elif outlet == "CHADEMO":
             VehicleBatteryBridge.chademo_vehicle_spec.perform_charge_saver()
-            VehicleBatteryBridge.chademo_vehicle_spec = ChademoVehicleSpecification()
 
     def reload_vehicle_specification(outlet):
         if outlet == "AC":

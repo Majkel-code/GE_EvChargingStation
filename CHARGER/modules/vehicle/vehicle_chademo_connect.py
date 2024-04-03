@@ -47,7 +47,7 @@ async def read_items():
 async def disconnect():
     if Vehicle._connected_chademo_:
         disconnect = Vehicle.disconnect_vehicle("CHADEMO")
-        if disconnect.ok:
+        if disconnect["disconnect_chademo"]:
             server_logger.info(f"VEHICLE SUCCESSFULY DISCONNECTED: {Vehicle._connected_chademo_}")
             return {"response": True, "error": None}
     else:

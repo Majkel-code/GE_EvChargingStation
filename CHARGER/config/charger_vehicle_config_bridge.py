@@ -75,36 +75,42 @@ class VehicleBridge:
 
     def disconnect_vehicle(outlet_used):
         if outlet_used == "CHADEMO":
-            url = "http://127.0.0.1:5001/handshake_chademo/disconnect"
-            payload = json.dumps(
-                {
-                    "id": ChargerBridge._outlet_in_use_[outlet_used],
-                    "end_connection": True,
-                }
-            )
-            headers = {"Content-Type": "application/json"}
-            response = requests.put(url, headers=headers, data=payload)
-            if response.ok:
-                ChargerBridge._outlet_in_use_[outlet_used] = "Not used"
-                VehicleBridge._connected_chademo_ = False
-                VehicleBridge.settings_chademo = None
-            return response
+            try:
+                url = "http://127.0.0.1:5001/handshake_chademo/disconnect"
+                payload = json.dumps(
+                    {
+                        "id": ChargerBridge._outlet_in_use_[outlet_used],
+                        "end_connection": True,
+                    }
+                )
+                headers = {"Content-Type": "application/json"}
+                response = requests.put(url, headers=headers, data=payload)
+                if response.ok:
+                    ChargerBridge._outlet_in_use_[outlet_used] = "Not used"
+                    VehicleBridge._connected_chademo_ = False
+                    VehicleBridge.settings_chademo = None
+                    return {"disconnect_chademo": True}
+            except:
+                return {"disconnect_chademo": False}
 
         elif outlet_used == "AC":
-            url = "http://127.0.0.1:5001/handshake_ac/disconnect"
-            payload = json.dumps(
-                {
-                    "id": ChargerBridge._outlet_in_use_[outlet_used],
-                    "end_connection": True,
-                }
-            )
-            headers = {"Content-Type": "application/json"}
-            response = requests.put(url, headers=headers, data=payload)
-            if response.ok:
-                ChargerBridge._outlet_in_use_[outlet_used] = "Not used"
-                VehicleBridge._connected_ac_ = False
-                VehicleBridge.settings_ac = None
-            return response
+            try:
+                url = "http://127.0.0.1:5001/handshake_ac/disconnect"
+                payload = json.dumps(
+                    {
+                        "id": ChargerBridge._outlet_in_use_[outlet_used],
+                        "end_connection": True,
+                    }
+                )
+                headers = {"Content-Type": "application/json"}
+                response = requests.put(url, headers=headers, data=payload)
+                if response.ok:
+                    ChargerBridge._outlet_in_use_[outlet_used] = "Not used"
+                    VehicleBridge._connected_ac_ = False
+                    VehicleBridge.settings_ac = None
+                    return {"disconnect_ac": True}
+            except:
+                return {"disconnect_ac": False}
 
     def take_ac_vehicle_specification():
         url = "http://127.0.0.1:5001/vehicle_ac/all"

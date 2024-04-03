@@ -110,7 +110,7 @@ class ChademoVehicle(ChargeSimulation):
                     "error": f"Vehicle disconnected from CHARGER! \n"
                     f" Last battery status: {self.actual_battery_level}",
                 }
-        chademo_logger.info(f"{percent}% OF BATTERY LEVEL ACHIVE...")
+        chademo_logger.info(f"{self.actual_battery_level}% OF BATTERY LEVEL ACHIVE...")
         return {"complete": True, "error": None}
 
     def first_stage_charging(self, percent):
@@ -120,7 +120,7 @@ class ChademoVehicle(ChargeSimulation):
             self.actual_battery_level = Vehicle.settings_chademo["BATTERY_LEVEL"]
             if self.actual_battery_level < self.effective_charging_cap and self.actual_battery_level < percent:
                 Charger._charging_finished_chademo_ = False
-                while self.actual_battery_level <= percent and Main_server.check_server_is_alive():
+                while self.actual_battery_level <= percent and Main_server.check_server_is_alive() and Vehicle._connected_chademo_:
                     Vehicle.take_chademo_vehicle_specification()
                     self.actual_battery_level = Vehicle.settings_chademo["BATTERY_LEVEL"]
                     if self.actual_battery_level >= self.effective_charging_cap:
@@ -147,7 +147,7 @@ class ChademoVehicle(ChargeSimulation):
                             "error": f"Vehicle disconnected from CHARGER! \n"
                             f" Last battery status: {self.actual_battery_level}",
                         }  
-                chademo_logger.info(f"{percent}% OF BATTERY LEVEL ACHIVE...")
+                chademo_logger.info(f"{self.actual_battery_level}% OF BATTERY LEVEL ACHIVE...")
                 return {"complete": True, "error": None}
             return {"complete": True, "error": None}
         

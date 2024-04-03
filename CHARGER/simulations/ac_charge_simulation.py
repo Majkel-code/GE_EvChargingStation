@@ -104,17 +104,16 @@ class AcVehicle(ChargeSimulation):
                     "error": f"Vehicle disconnected from CHARGER! \n"
                     f" Last battery status: {self.actual_battery_level}",
                 }
-        ac_logger.info(f"{percent}% OF BATTERY LEVEL ACHIVE...")
+        ac_logger.info(f"{self.actual_battery_level}% OF BATTERY LEVEL ACHIVE...")
         return {"complete": True, "error": None}
 
     def first_stage_charging(self, percent):
         if Vehicle._connected_ac_:
             Vehicle.take_ac_vehicle_specification()
-            print("IN first IF")
             self.actual_battery_level = Vehicle.settings_ac["BATTERY_LEVEL"]
             if self.actual_battery_level < self.effective_charging_cap and self.actual_battery_level < percent:
                 Charger._charging_finished_ac_ = False
-                while self.actual_battery_level <= percent and Main_server.check_server_is_alive():
+                while self.actual_battery_level <= percent and Main_server.check_server_is_alive() and Vehicle._connected_ac_:
                     Vehicle.take_ac_vehicle_specification()
                     self.actual_battery_level = Vehicle.settings_ac["BATTERY_LEVEL"]
                     if self.actual_battery_level >= self.effective_charging_cap:
@@ -141,7 +140,7 @@ class AcVehicle(ChargeSimulation):
                             "error": f"Vehicle disconnected from CHARGER! \n"
                             f" Last battery status: {self.actual_battery_level}",
                         }  
-                ac_logger.info(f"{percent}% OF BATTERY LEVEL ACHIVE...")
+                ac_logger.info(f"{self.actual_battery_level}% OF BATTERY LEVEL ACHIVE...")
                 return {"complete": True, "error": None}
             return {"complete": True, "error": None}
          

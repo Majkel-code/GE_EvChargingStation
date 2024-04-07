@@ -34,6 +34,7 @@
   width:100%;
   background:linear-gradient(0deg,#1b1b1b,#222,#1b1b1b);
   display:flex;
+  flex-direction: column;
   justify-content:center;
   align-items:center;
   border-radius:4px;
@@ -45,23 +46,12 @@
     grid-area: 1 / 2 / 3 / 2;
 }
 .charging-page .card h4 {
-    position: absolute;
-    top: 50px;
+    /* position: absolute; */
+    margin-top: 50px;
     color: #fff;
+    margin-bottom: 40px;
 }
 
-/* .container .card:before
-{
-  content:'';
-  position:absolute;
-  top:0;
-  left:-50%;
-  width:100%;
-  height:100%;
-  background:rgba(255,255,255,.03);
-  pointer-events:none;
-  z-index:1;
-} */
 .percent
 {
   position:relative;
@@ -70,7 +60,7 @@
   border-radius:50%;
   box-shadow: inset 0 0 50px #000;
   background:#222;
-  z-index:1000;
+  /* z-index:1000; */
 }
 .percent .num
 {
@@ -111,6 +101,51 @@
   height: 80px;
 }
 
+.div-start-ac {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.start-custom-page-button-ac {
+  width: 80px;
+  height: 80px;
+  margin-left: 95px;
+}
+.custom-charging-setting {
+  height: 75px;
+  width: 75px;
+}
+.custom-charging-setting path {
+  height: 100%;
+  width: 100%;
+  stroke: #777;
+  transition: stroke 0.5s;
+}
+
+.custom-charging-setting:hover path{
+  stroke: #fff;
+
+}
+
+.start-page-button-ac {
+  left: 87px;
+}
+
+.div-start-chademo {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: row-reverse;
+}
+
+.start-custom-page-button-chademo {
+  width: 80px;
+  height: 80px;
+  margin-right: 95px;
+}
+.start-page-button-chademo {
+  right: 87px;
+}
 .card:hover .charging-page-button{
   color:#fff;
 }
@@ -123,11 +158,21 @@
   display: none;
 }
 
+.card-one .box, .card-two .box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  justify-self: center;
+  text-align: center;
+}
+
 svg{
   position:relative;
   width:250px;
   height:250px;
-  z-index:1000;
+  /* z-index:1000; */
 }
 svg circle
 {

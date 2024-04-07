@@ -93,6 +93,7 @@ class AcVehicle(ChargeSimulation):
                         Charger.settings["VOLTAGE_DROP_AC"]
                     )
                 self.actual_battery_status_in_kwh += self.actual_kw_per_min
+                Vehicle._charged_ac_kw += self.actual_kw_per_min
                 self.send_energy()
                 ac_logger.info(f"AC CHARGING ONGOING: {self.actual_battery_level}%")
                 Charger._energy_is_send_loop_ac_ += 1
@@ -121,6 +122,7 @@ class AcVehicle(ChargeSimulation):
                         return {"complete": True, "error": None}
                     elif self.actual_battery_level < self.effective_charging_cap:
                         self.actual_battery_status_in_kwh += self.actual_kw_per_min
+                        Vehicle._charged_ac_kw += self.actual_kw_per_min
                         self.send_energy()
                         Vehicle.take_ac_vehicle_specification()
                         self.actual_battery_status_in_kwh = Vehicle.settings_ac[

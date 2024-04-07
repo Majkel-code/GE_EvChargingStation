@@ -34,6 +34,9 @@ class VehicleBridge:
     settings_chademo = None
     settings_ac = None
 
+    _charged_ac_kw = 0
+    _charged_chademo_kw = 0
+
     def check_connection(outlet):
         if outlet == "AC":
             return VehicleBridge._connected_ac_
@@ -89,6 +92,7 @@ class VehicleBridge:
                     ChargerBridge._outlet_in_use_[outlet_used] = "Not used"
                     VehicleBridge._connected_chademo_ = False
                     VehicleBridge.settings_chademo = None
+                    VehicleBridge._charged_chademo_kw = 0
                     return {"disconnect_chademo": True}
             except:
                 return {"disconnect_chademo": False}
@@ -108,6 +112,7 @@ class VehicleBridge:
                     ChargerBridge._outlet_in_use_[outlet_used] = "Not used"
                     VehicleBridge._connected_ac_ = False
                     VehicleBridge.settings_ac = None
+                    VehicleBridge._charged_ac_kw = 0
                     return {"disconnect_ac": True}
             except:
                 return {"disconnect_ac": False}

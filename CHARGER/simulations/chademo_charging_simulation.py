@@ -99,6 +99,7 @@ class ChademoVehicle(ChargeSimulation):
                         Charger.settings["VOLTAGE_DROP_CHADEMO"]
                     )
                 self.actual_battery_status_in_kwh += self.actual_kw_per_min
+                Vehicle._charged_chademo_kw += self.actual_kw_per_min
                 self.send_energy()
                 chademo_logger.info(f"CHADEMO CHARGING ONGOING: {self.actual_battery_level}%")
                 Charger._energy_is_send_loop_chademo_ += 1
@@ -128,6 +129,7 @@ class ChademoVehicle(ChargeSimulation):
                         return {"complete": True, "error": None}
                     elif self.actual_battery_level < self.effective_charging_cap:
                         self.actual_battery_status_in_kwh += self.actual_kw_per_min
+                        Vehicle._charged_chademo_kw += self.actual_kw_per_min
                         self.send_energy()
                         Vehicle.take_chademo_vehicle_specification()
                         self.actual_battery_status_in_kwh = Vehicle.settings_chademo[

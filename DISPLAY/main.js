@@ -35,6 +35,11 @@ const createWindow = () => {
       e.preventDefault();
     });
   }
+  else{
+    console.log(os.type())
+    mainWindow.webContents.openDevTools()
+  }
+
 }
 
 // This method will be called when Electron has finished

@@ -7,17 +7,22 @@ const deleteButton = document.querySelector(".delete");
 numberButtons.forEach((button) => {
   button.addEventListener("click", () => {
     if (numberInput.value.length < 3) {
-      const phoneNumber = numberInput.value + button.dataset.number;
-      numberInput.value = phoneNumber;
+      if (Number(numberInput.value + button.dataset.number) > 100){
+        return
+      }
+      else {
+        const percentNumber = numberInput.value + button.dataset.number;
+        numberInput.value = percentNumber;
+      }
     }
   });
 });
 
 
 deleteButton.addEventListener("click", () => {
-  const phoneNumber = numberInput.value.slice(0, -1);
+  const percentNumber = numberInput.value.slice(0, -1);
   numberInput.value = "";
-  numberInput.value = phoneNumber;
+  numberInput.value = percentNumber;
   confirmSessionButton.classList.remove("show");
 });
 

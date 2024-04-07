@@ -83,20 +83,24 @@ async def start_chademo():
 @router.post("/start_chademo_{percent}")
 async def start_chademo_custom(percent: int):
     if Vehicle._connected_chademo_:
-        try:
-            initialize_charge_simulation = chademo_charging_simulation.ChademoVehicle()
-            chademo_logger.info(f"CUSTOM CHARGING LEVEL SET TO: {percent}%")
-            thread = Thread(
-                target=initialize_charge_simulation.prepare_chademo_charging,
-                args=[percent],
-            )
-            chademo_logger.info("SESSION INITIALIZE...")
-            thread.start()
-            time.sleep(0.2)
-            return {"response": True, "error": None}
-        except Exception as e:
-            chademo_logger.error(f"UNABLE TO INITIALIZE SESSION! {e}")
-            return {"response": False, "error": e}
+        if percent > 100:
+            ac_logger.error("PERCENT SHOULD BE 100 OR LOWER!")
+            raise HTTPException(status_code=404, detail="UNABLE TO PERFORM CHARGE SESSION")     
+        else:       
+            try:
+                initialize_charge_simulation = chademo_charging_simulation.ChademoVehicle()
+                chademo_logger.info(f"CUSTOM CHARGING LEVEL SET TO: {percent}%")
+                thread = Thread(
+                    target=initialize_charge_simulation.prepare_chademo_charging,
+                    args=[percent],
+                )
+                chademo_logger.info("SESSION INITIALIZE...")
+                thread.start()
+                time.sleep(0.2)
+                return {"response": True, "error": None}
+            except Exception as e:
+                chademo_logger.error(f"UNABLE TO INITIALIZE SESSION! {e}")
+                return {"response": False, "error": e}
     chademo_logger.warning("TO START SESSION FIRST CONNECT VEHICLE!")
     raise HTTPException(status_code=404, detail="REQUEST CAN'T BE FIND!")
 
@@ -120,20 +124,24 @@ async def start_ac():
 @router.post("/start_ac_{percent}")
 async def start_ac_custom(percent: int):
     if Vehicle._connected_ac_:
-        try:
-            initialize_charge_simulation = ac_charge_simulation.AcVehicle()
-            ac_logger.info(f"CUSTOM CHARGING LEVEL SET TO: {percent}%")
-            thread = Thread(
-                target=initialize_charge_simulation.prepare_ac_charging,
-                args=[percent],
-            )
-            ac_logger.info("SESSION INITIALIZE...")
-            thread.start()
-            time.sleep(0.2)
-            return {"response": True, "error": None}
-        except Exception as e:
-            ac_logger.error(f"UNABLE TO INITIALIZE SESSION! {e}")
-            return {"response": False, "error": e}
+        if percent > 100:
+            ac_logger.error("PERCENT SHOULD BE 100 OR LOWER!")
+            raise HTTPException(status_code=404, detail="UNABLE TO PERFORM CHARGE SESSION")
+        else:
+            try:
+                initialize_charge_simulation = ac_charge_simulation.AcVehicle()
+                ac_logger.info(f"CUSTOM CHARGING LEVEL SET TO: {percent}%")
+                thread = Thread(
+                    target=initialize_charge_simulation.prepare_ac_charging,
+                    args=[percent],
+                )
+                ac_logger.info("SESSION INITIALIZE...")
+                thread.start()
+                time.sleep(0.2)
+                return {"response": True, "error": None}
+            except Exception as e:
+                ac_logger.error(f"UNABLE TO INITIALIZE SESSION! {e}")
+                return {"response": False, "error": e}
     ac_logger.warning("TO START SESSION FIRST CONNECT VEHICLE!")
     raise HTTPException(status_code=404, detail="REQUEST CAN'T BE FIND!")
 

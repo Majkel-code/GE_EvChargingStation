@@ -1,0 +1,227 @@
+.charging-page {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+    font-family: sans-serif;
+    width: 1024px;
+    height: 600px;
+    font-size: 18px;
+    line-height: 24px;
+    text-align: center;
+    color: #000;
+    display: none;
+}
+
+.charging-page.active {
+    display: grid;
+    position: absolute;
+    /* display: block; */
+}
+
+.close-charging-display {
+    grid-area: 1 / 3 / 2 / 4;
+    position: absolute;
+    margin: 0px;
+    top: 10px;
+    right: 10px;
+    z-index: 2;
+}
+
+.charging-page .card{
+  position:relative;
+  grid-area: 1 / 1 / 3 / 2;
+  width:100%;
+  background:linear-gradient(0deg,#1b1b1b,#222,#1b1b1b);
+  display:flex;
+  flex-direction: column;
+  justify-content:center;
+  align-items:center;
+  border-radius:4px;
+  text-align:center;
+  overflow:hidden;
+  transition:0.5s;
+}
+.charging-page .card-two {
+    grid-area: 1 / 2 / 3 / 2;
+}
+.charging-page .card h4 {
+    /* position: absolute; */
+    margin-top: 50px;
+    color: #fff;
+    margin-bottom: 40px;
+}
+
+.percent
+{
+  position:relative;
+  width:250px;
+  height:250px;
+  border-radius:50%;
+  box-shadow: inset 0 0 50px #000;
+  background:#222;
+}
+
+.percent .num.num-ac.more_ac_info{
+  flex-direction: column;
+}
+.percent .num.num-ac.more_ac_info h3{
+  display: flex;
+  flex-direction: column;
+  margin-top: 5px;
+  color: #777;
+}
+.percent .num.num-ac.more_ac_info.unactive_info_ac{
+  display: none;
+}
+.percent .num.num-ac.regular-info-ac.unactive_info_ac{
+  display: none;
+}
+
+
+.percent .num.num-chademo.more_chademo_info{
+  flex-direction: column;
+}
+.percent .num.num-chademo.more_chademo_info h3{
+  display: flex;
+  flex-direction: column;
+  margin-top: 5px;
+  color: #777;
+}
+.percent .num.num-chademo.more_chademo_info.unactive_info_chademo{
+  display: none;
+}
+.percent .num.num-chademo.regular-info-chademo.unactive_info_chademo{
+  display: none;
+}
+
+.percent .num
+{
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  border-radius:50%;
+}
+.percent .num h2
+{
+  color:#777;
+  font-weight:700;
+  font-size:30px;
+  transition:0.5s;
+}
+.card:hover .percent .num h2
+{
+  color:#fff;
+  font-size:50px;
+}
+.percent .num h2 span
+{
+  color:#777;
+  font-size:24px;
+  transition:0.5s;
+}
+.card:hover .percent .num h2 span
+{
+  color:#fff;
+}
+.charging-page-button {
+  width: 190px;
+  height: 80px;
+}
+
+.div-start-ac {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.start-custom-page-button-ac {
+  width: 80px;
+  height: 80px;
+  margin-left: 95px;
+}
+.custom-charging-setting {
+  height: 75px;
+  width: 75px;
+}
+.custom-charging-setting path {
+  height: 100%;
+  width: 100%;
+  stroke: #777;
+  transition: stroke 0.5s;
+}
+
+.custom-charging-setting:hover path{
+  stroke: #fff;
+
+}
+
+.start-page-button-ac {
+  left: 87px;
+}
+
+.div-start-chademo {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: row-reverse;
+}
+
+.start-custom-page-button-chademo {
+  width: 80px;
+  height: 80px;
+  margin-right: 95px;
+}
+.start-page-button-chademo {
+  right: 87px;
+}
+.card:hover .charging-page-button{
+  color:#fff;
+}
+
+.unactive-ac-button{
+    display: none;
+}
+
+.unactive-chademo-button{
+  display: none;
+}
+
+.card-one .box, .card-two .box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  justify-self: center;
+  text-align: center;
+}
+
+svg{
+  position:relative;
+  width:250px;
+  height:250px;
+  /* z-index:1000; */
+}
+svg circle
+{
+  width:100%;
+  height:100%;
+  fill:none;
+  stroke:#191919;
+  stroke-width:10;
+  stroke-linecap:round;
+  transform:translate(5px,5px);
+}
+svg circle:nth-child(2){
+  stroke-dasharray:760;
+  stroke-dashoffset:760;
+}
+
+.percent:nth-child(1) svg circle:nth-child(2){
+  stroke:#00ff43;
+}

@@ -1,0 +1,140 @@
+# DEVELOPER CHARGER/VEHICLE PATH
+# ----> please verify path to your CHARGER/VEHICLE module <----
+# ---> It should look similat to this:
+# ---> <YOUR_PATH>/CHARGER/charger_server.py
+# ---> <YOUR_PATH>/VEHICLE/vehicle_server.py
+
+# EXTERNAL DEVICE SERVER
+# ----> when you wolud use automation tests and CHARGER/VEHICLE are on external machine
+# ----> please check this machine IP adress and check every localhost IP to external IP
+
+
+# SERVER URL AND SERVER ENDPOINTS
+AUTHORIZATION_KEY_SAVE_PATH: "/Users/majkel/Developer/GE_EvChargingStation/AUTHORIZATION_KEY/host_key.txt"
+CHARGER_SERVER_URL: "http://127.0.0.1:5000/"
+VEHICLE_SERVER_URL: "http://127.0.0.1:5001/"
+SERVER_IS_ALIVE: 'is_alive'
+
+#_____________________________________________
+# CHARGER URL AND CHARGER ENDPOINTS
+CHARGER_URL: "http://127.0.0.1:5000/charger/"
+CONNECT_AC: "http://127.0.0.1:5000/vehicle_ac/"
+CONNECT_CHADEMO: "http://127.0.0.1:5000/vehicle_chademo/"
+CHARGER_TAKE_ALL: 'all'
+CHARGER_CHANGE_VALUE: {           # THIS KEY:VALUE WILL BE CHNAGE IN CHARGER SETTINGS
+            "key": "VOLT",
+            "value": 300
+          }
+CHARGER_CHECK_EVERY_SETTING: [    # KEY'S THAT WILL BE CHECK IN CHARGING_CONFIG FILE IF THEY EXIST
+            "CHARGING_OUTLETS",
+            "MAX_CHARGING_POWER_CHADEMO",
+            "MAX_CHARGING_POWER_AC",
+            "AC_ACTUAL_KW_PER_MIN",
+            "CHADEMO_ACTUAL_KW_PER_MIN",
+            "MAX_CHARGING_AMPERE",
+            "VOLT",
+            "LOSSES_DURING_CHARGING",
+            "VOLTAGE_DROP_AC",
+            "VOLTAGE_DROP_CHADEMO",
+        ]
+CHARGER_PROPER_VALUE: {           # PROPER VALUES SHOULD BE THE SAME AS THE VALUE IN CHARGING_CONFIG FILE
+          "CHARGING_OUTLETS": [
+            "CHADEMO",
+            "AC"
+          ],
+          "MAX_CHARGING_POWER_CHADEMO": 49,
+          "MAX_CHARGING_POWER_AC": 6.6,
+          "AC_ACTUAL_KW_PER_MIN": 0,
+          "CHADEMO_ACTUAL_KW_PER_MIN": 0,
+          "MAX_CHARGING_AMPERE": 48,
+          "VOLT": 300,
+          "LOSSES_DURING_CHARGING": 10,
+          "VOLTAGE_DROP_AC": 1.02,
+          "VOLTAGE_DROP_CHADEMO": 1.08,
+      }
+SECIURE_ENDPOINT: "is_alive"
+FAKE_SECIURE_CODE: "sjkdbff2f48hwh3f298fh2983fh2o3hfo238r28rh47tg2o8fgh2o3"
+#_____________________________________________
+# VEHICLE URL AND VEHICLE ENDPOINTS CHADEMO
+VEHICLE_URL_CHADEMO: "http://127.0.0.1:5001/vehicle_chademo/"
+VEHICLE_CONNECT_CHADEMO: 'connect'
+VEHICLE_DISCONNECT_CHADEMO: 'disconnect'
+VEHICLE_TAKE_ALL_CHADEMO: 'all'
+VEHICLE_CHANGE_VALUE_CHADEMO: {               # IN VEHICLE TEST THIS KEY:VALUE WILL BE CHNAGE AND CHECK OUTPUT
+            "key": "BATTERY_LEVEL",
+            "value": 50
+          }
+VEHICLE_INCORRECT_CHANGE_VALUE_CHADEMO: {     # INCORRECT KEY WILL BE SEND IN TEST AND CHECK NEGATIVE OUTPUT
+            "key": "BATTERY_PERCENT",
+            "value": 70
+          }
+VEHICLE_TAKE_SPECIFIC_KEY_CHADEMO: 'BATTERY_LEVEL'
+VEHICLE_CHECK_EVERY_SETTINGS_CHADEMO: [       # KEY'S THAT WILL BE CHECK IN VEHICLE_CONFIG FILE IF THEY EXIST
+            "BATTERY_LEVEL",
+            "CHARGING_PORT",
+            "MAX_BATTERY_CAPACITY_IN_KWH",
+            "ACTUAL_BATTERY_STATUS_IN_KWH",
+            "BATTERY_VOLTAGE",
+            "COOLING_SYSTEM",
+        ]
+VEHICLE_PROPER_VALUE_CHADEMO: {               # PROPER VALUES SHOULD BE THE SAME AS THE VALUE IN VEHICLE_CONFIG FILE
+        "BATTERY_LEVEL": 5,
+        "CHARGING_PORT": "CHADEMO",
+        "MAX_BATTERY_CAPACITY_IN_KWH": 64,
+        "ACTUAL_BATTERY_STATUS_IN_KWH": 3.2,
+        "BATTERY_VOLTAGE": 356,
+        "COOLING_SYSTEM": "PASSIVE",
+    }
+VEHICLE_HISTORY_KEYS: [
+  "SESSION_ID",
+  "BATTERY_LEVEL",
+  "CHARGED_KW",
+  "CHARGE_TIME",
+]
+#_______________________________________________
+# CHARGE SESSION CONFIG CHADEMO
+START_SESSION_CHADEMO: "start"
+START_SESSION_CUSTOM_PERCENT_CHADEMO: 70    #Custom charging cap value || IF EMPTY THE DEFAULT CHARGING SESSION WILL BE PREPARE
+VEHICLE_START_BATTERY_LEVEL_CHADEMO: {
+            "key": "BATTERY_LEVEL",
+            "value": 50             # VALUE THAT WILL BE START POINT FOR CHARGING SESSION
+          }
+#_______________________________________________
+# VEHICLE URL AND VEHICLE ENDPOINTS AC
+VEHICLE_URL_AC: "http://127.0.0.1:5001/vehicle_ac/"
+VEHICLE_CONNECT_AC: 'connect'
+VEHICLE_DISCONNECT_AC: 'disconnect'
+VEHICLE_TAKE_ALL_AC: 'all'
+VEHICLE_CHANGE_VALUE_AC: {               # IN VEHICLE TEST THIS KEY:VALUE WILL BE CHNAGE AND CHECK OUTPUT
+            "key": "BATTERY_LEVEL",
+            "value": 60
+          }
+VEHICLE_INCORRECT_CHANGE_VALUE_AC: {     # INCORRECT KEY WILL BE SEND IN TEST AND CHECK NEGATIVE OUTPUT
+            "key": "BATTERY_PERCENT",
+            "value": 70
+          }
+VEHICLE_TAKE_SPECIFIC_KEY_AC: 'BATTERY_LEVEL'
+VEHICLE_CHECK_EVERY_SETTINGS_AC: [       # KEY'S THAT WILL BE CHECK IN VEHICLE_CONFIG FILE IF THEY EXIST
+            "BATTERY_LEVEL",
+            "CHARGING_PORT",
+            "MAX_BATTERY_CAPACITY_IN_KWH",
+            "ACTUAL_BATTERY_STATUS_IN_KWH",
+            "BATTERY_VOLTAGE",
+            "COOLING_SYSTEM",
+        ]
+VEHICLE_PROPER_VALUE_AC: {               # PROPER VALUES SHOULD BE THE SAME AS THE VALUE IN VEHICLE_CONFIG FILE
+        "BATTERY_LEVEL": 80,
+        "CHARGING_PORT": "AC",
+        "MAX_BATTERY_CAPACITY_IN_KWH": 30,
+        "ACTUAL_BATTERY_STATUS_IN_KWH": 24,
+        "BATTERY_VOLTAGE": 356,
+        "COOLING_SYSTEM": "PASSIVE",
+    }
+#_______________________________________________
+# CHARGE SESSION CONFIG AC
+START_SESSION_AC: "start"
+START_SESSION_CUSTOM_PERCENT_AC: 70    #Custom charging cap value || IF EMPTY THE DEFAULT CHARGING SESSION WILL BE PREPARE
+VEHICLE_START_BATTERY_LEVEL_AC: {
+            "key": "BATTERY_LEVEL",
+            "value": 60             # VALUE THAT WILL BE START POINT FOR CHARGING SESSION
+          }

@@ -1,0 +1,307 @@
+{
+	"info": {
+		"_postman_id": "38972557-bc1b-451a-9f19-434bdf4f1891",
+		"name": "CHARGER",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29635343"
+	},
+	"item": [
+		{
+			"name": "GET_ALL",
+			"protocolProfileBehavior": {
+				"followAuthorizationHeader": false
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/charger/all",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"charger",
+						"all"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET_SPECIFIC_KEY",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/charger/CHARGING_OUTLETS",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"charger",
+						"CHARGING_OUTLETS"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "EDIT_KEY_CHARGER",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"key\": \"CHARGING_OUTLETS\",\r\n  \"value\": [\"CHADEMO\", \"CA\"]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/charger/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"charger",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "START_CHARGING CHADEMO",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/charger/start_chademo",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"charger",
+						"start_chademo"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "START_CHARGING AC",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/charger/start_ac",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"charger",
+						"start_ac"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "START_CHARGING CHADEMO custom%",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/charger/start_chademo_80",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"charger",
+						"start_chademo_80"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "START_CHARGING AC custom%",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/charger/start_ac_200",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"charger",
+						"start_ac_200"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "USED_OUTLETS",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/charger/outlets",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"charger",
+						"outlets"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CONNECT_VEHICLE_AC",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/vehicle_ac/connect",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"vehicle_ac",
+						"connect"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DISCONNECT_VEHICLE_AC",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/vehicle_ac/disconnect",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"vehicle_ac",
+						"disconnect"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CONNECT_VEHICLE_CHADEMO",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/vehicle_chademo/connect",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"vehicle_chademo",
+						"connect"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DISCONNECT_VEHICLE_CHADEMO",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/vehicle_chademo/disconnect",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"vehicle_chademo",
+						"disconnect"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

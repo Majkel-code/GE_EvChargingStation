@@ -1,4 +1,8 @@
 __pycache__/
-server_logs/*
+CHARGER/server_logs/*
 .vscode
 .DS_Store
+.idea
+.DS_Store
+node_modules
+renderer/.DS_Store

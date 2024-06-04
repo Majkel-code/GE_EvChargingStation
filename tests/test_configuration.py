@@ -1,8 +1,8 @@
+import os
 import subprocess
 import time
 import unittest
 from pathlib import Path
-import os
 
 import requests
 import yaml
@@ -40,7 +40,7 @@ class TestConfigureServer(unittest.TestCase):
             self.procs.append(subprocess.Popen(["python3", f"{charger_path}"]))
         if self.VEHICLE_SERVER_URL == "http://127.0.0.1:5001/":
             self.procs.append(subprocess.Popen(["python3", f"{vehicle_path}"]))
- 
+
         self.AUTH_KEY = read_local_key(self.AUTH_KEY_PATH)
 
     def check_charger_data(self, url_charger, key_word):
@@ -69,11 +69,14 @@ class TestConfigureServer(unittest.TestCase):
             check_flow = self.check_charger_data(
                 url_charger=self.CHARGER_SERVER_URL, key_word="chademo_charging_ongoing"
             ).json()
-            if first_check_flow["chademo_charging_ongoing"] < check_flow["chademo_charging_ongoing"]:
+            if (
+                first_check_flow["chademo_charging_ongoing"]
+                < check_flow["chademo_charging_ongoing"]
+            ):
                 return False
-            elif self.check_charger_data(url_charger=self.CHARGER_SERVER_URL, key_word="chademo_finished").json()[
-                "chademo_finished"
-            ]:
+            elif self.check_charger_data(
+                url_charger=self.CHARGER_SERVER_URL, key_word="chademo_finished"
+            ).json()["chademo_finished"]:
                 timeout_iteration = 0
                 return True
             else:
@@ -92,9 +95,9 @@ class TestConfigureServer(unittest.TestCase):
             ).json()
             if first_check_flow["ac_charging_ongoing"] < check_flow["ac_charging_ongoing"]:
                 return False
-            elif self.check_charger_data(url_charger=self.CHARGER_SERVER_URL, key_word="ac_finished").json()[
-                "ac_finished"
-            ]:
+            elif self.check_charger_data(
+                url_charger=self.CHARGER_SERVER_URL, key_word="ac_finished"
+            ).json()["ac_finished"]:
                 timeout_iteration = 0
                 return True
             else:
@@ -107,5 +110,3 @@ class TestConfigureServer(unittest.TestCase):
         for p in self.procs:
             p.terminate()
             p.wait()
-        
-            

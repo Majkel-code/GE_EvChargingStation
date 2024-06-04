@@ -12,7 +12,7 @@ from veh_config.vehicle_config_bridge import IsServerAlive as _main_server
 from veh_config.vehicle_config_bridge import VehicleBridge
 from veh_modules.battery.AC.ac_battery import AcVehicleSpecification
 from veh_modules.battery.CHADEMO.chademo_battery import ChademoVehicleSpecification
-from veh_modules.vehicle.vehicle_battery_bridge import VehicleBatteryBridge 
+from veh_modules.vehicle.vehicle_battery_bridge import VehicleBatteryBridge
 
 logger = Logger.logger
 
@@ -63,9 +63,13 @@ class InitialiseServer:
                     data_to_return = True
 
                 if name == "ac_history":
-                    return AcVehicleSpecification.read_charge_history(AcVehicleSpecification, outlet="AC")
+                    return AcVehicleSpecification.read_charge_history(
+                        AcVehicleSpecification, outlet="AC"
+                    )
                 if name == "chademo_history":
-                    return ChademoVehicleSpecification.read_charge_history(ChademoVehicleSpecification, outlet="CHADEMO")
+                    return ChademoVehicleSpecification.read_charge_history(
+                        ChademoVehicleSpecification, outlet="CHADEMO"
+                    )
 
                 return {f"{name}": data_to_return}
 

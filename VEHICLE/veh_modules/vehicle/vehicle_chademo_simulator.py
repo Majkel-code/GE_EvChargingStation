@@ -14,8 +14,10 @@ class Structure(BaseModel):
 class Take(BaseModel):
     key: float
 
+
 class Complete(BaseModel):
     complete: bool
+
 
 router = APIRouter(
     prefix="/vehicle_chademo",

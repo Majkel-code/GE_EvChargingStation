@@ -85,8 +85,8 @@ async def start_chademo_custom(percent: int):
     if Vehicle._connected_chademo_:
         if percent > 100:
             ac_logger.error("PERCENT SHOULD BE 100 OR LOWER!")
-            raise HTTPException(status_code=404, detail="UNABLE TO PERFORM CHARGE SESSION")     
-        else:       
+            raise HTTPException(status_code=404, detail="UNABLE TO PERFORM CHARGE SESSION")
+        else:
             try:
                 initialize_charge_simulation = chademo_charging_simulation.ChademoVehicle()
                 chademo_logger.info(f"CUSTOM CHARGING LEVEL SET TO: {percent}%")
@@ -157,7 +157,7 @@ async def vehicle_disconnected(outlet: str):
     if outlet == "CHADEMO":
         Charger._outlet_in_use_[outlet] = "Not used"
         Vehicle._connected_chademo_ = False
-        Vehicle.settings_chademo = None        
+        Vehicle.settings_chademo = None
 
 
 @router.put("/")

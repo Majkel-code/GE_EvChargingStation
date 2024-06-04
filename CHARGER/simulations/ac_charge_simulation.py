@@ -54,7 +54,10 @@ class AcVehicle(ChargeSimulation):
 
     def charged_kw_per_minute(self, charging_after_voltage_drop=None):
         if self.estimated_time_to_full_charge_in_min > 0:
-            if type(charging_after_voltage_drop) is int or type(charging_after_voltage_drop) is float:
+            if (
+                type(charging_after_voltage_drop) is int
+                or type(charging_after_voltage_drop) is float
+            ):
                 kw_per_minute = self.actual_kw_per_min / charging_after_voltage_drop
                 Charger.settings["AC_ACTUAL_KW_PER_MIN"] = kw_per_minute
                 return kw_per_minute
@@ -112,9 +115,16 @@ class AcVehicle(ChargeSimulation):
         if Vehicle._connected_ac_:
             Vehicle.take_ac_vehicle_specification()
             self.actual_battery_level = Vehicle.settings_ac["BATTERY_LEVEL"]
-            if self.actual_battery_level < self.effective_charging_cap and self.actual_battery_level < percent:
+            if (
+                self.actual_battery_level < self.effective_charging_cap
+                and self.actual_battery_level < percent
+            ):
                 Charger._charging_finished_ac_ = False
-                while self.actual_battery_level <= percent and Main_server.check_server_is_alive() and Vehicle._connected_ac_:
+                while (
+                    self.actual_battery_level <= percent
+                    and Main_server.check_server_is_alive()
+                    and Vehicle._connected_ac_
+                ):
                     Vehicle.take_ac_vehicle_specification()
                     self.actual_battery_level = Vehicle.settings_ac["BATTERY_LEVEL"]
                     if self.actual_battery_level >= self.effective_charging_cap:
@@ -138,7 +148,7 @@ class AcVehicle(ChargeSimulation):
                             "complete": True,
                             "error": f"Vehicle disconnected from CHARGER! \n"
                             f" Last battery status: {self.actual_battery_level}",
-                        }  
+                        }
                 ac_logger.info(f"{self.actual_battery_level}% OF BATTERY LEVEL ACHIVE...")
                 return {"complete": True, "error": None}
             return {"complete": True, "error": None}

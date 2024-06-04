@@ -80,7 +80,7 @@ height: 75px;
 line-height: 75px;
 border-radius: 5px;
 transition: 0.5s;
-color:#888;  
+color:#888;
 background-color: #1b1b1b;
 border: #777 solid 2px;
 font-weight:700;
@@ -91,7 +91,7 @@ text-transform:uppercase;
 
 .numpad-custom-session .numpad .numpad-container .keyboard .number .confirm-session-button i svg{
     height: 100%;
-    width: 100%; 
+    width: 100%;
 }
 .numpad-custom-session .numpad .numpad-container .keyboard .number .confirm-session-button i svg path{
     height: 100%;

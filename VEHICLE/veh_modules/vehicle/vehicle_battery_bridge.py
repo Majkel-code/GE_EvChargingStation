@@ -14,7 +14,7 @@ class VehicleBatteryBridge:
         elif outlet == "CHADEMO":
             VehicleBatteryBridge.chademo_vehicle_spec.actual_kw_per_min = kw_min
             VehicleBatteryBridge.chademo_vehicle_spec.calculate_battery_increase()
-    
+
     def save_after_server_shutdown():
         if Vehicle.settings_ac["SESSION_ID"] is not None:
             VehicleBatteryBridge.perform_charge_saver("AC")

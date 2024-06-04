@@ -1,5 +1,6 @@
-import requests
 import time
+
+import requests
 
 from tests.test_configuration import TestConfigureServer
 
@@ -13,7 +14,6 @@ class TestChargerEndpoints(TestConfigureServer):
         self.CHARGER_EVERY_SETTING = self.test_config["CHARGER_CHECK_EVERY_SETTING"]
         self.FAKE_SECIURE_CODE = self.test_config["FAKE_SECIURE_CODE"]
         print("charger")
-
 
     def setUp(self) -> None:
         return super().setUp()

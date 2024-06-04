@@ -1,6 +1,6 @@
 # DEVELOPER CHARGER/VEHICLE PATH
 # ----> please verify path to your CHARGER/VEHICLE module <----
-# ---> It should look similat to this: 
+# ---> It should look similat to this:
 # ---> <YOUR_PATH>/CHARGER/charger_server.py
 # ---> <YOUR_PATH>/VEHICLE/vehicle_server.py
 

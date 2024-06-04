@@ -191,4 +191,3 @@ startCustomChademoChargingButton.addEventListener("click", () => {
 disconnectChademoVehicleButton.addEventListener("click", () =>{
   SendDisconnectChademo();
 })
-

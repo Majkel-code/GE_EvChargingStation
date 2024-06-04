@@ -2,8 +2,8 @@ from fastapi import APIRouter
 from pydantic import BaseModel
 from veh_config.logging_system.logging_config import Logger
 from veh_config.vehicle_config_bridge import VehicleBridge as Vehicle
-from veh_modules.vehicle.vehicle_battery_bridge import VehicleBatteryBridge
 from veh_modules.battery.AC.ac_battery import AcVehicleSpecification
+from veh_modules.vehicle.vehicle_battery_bridge import VehicleBatteryBridge
 
 
 class Structure_connect(BaseModel):

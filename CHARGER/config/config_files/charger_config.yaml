@@ -2,7 +2,7 @@ CHARGING_OUTLETS: ['CHADEMO', 'AC'] # DC: CHAdeMO >=50kW | AC >= 6.6kW (europe)
 MAX_CHARGING_POWER_CHADEMO: 49 #express value in kW
 MAX_CHARGING_POWER_AC: 6.6 #express value in kW
 AC_ACTUAL_KW_PER_MIN: 0 # actual kW output during charging
-CHADEMO_ACTUAL_KW_PER_MIN: 0 # actual kW output during charging
+CHADEMO_ACTUAL_KW_PER_MIN: 0 # actual kW output during charging›
 MAX_CHARGING_AMPERE: 48 #express value in A 3x 16A
 VOLT: 400 # max volt output
 LOSSES_DURING_CHARGING: 10 # express value in %

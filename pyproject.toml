@@ -1,7 +1,7 @@
 # CONFIG FOR PRE COMMIT FORMATTER (manual run: pre-commit run --all-files  )
 [tool.black]
 line-length = 100
-skip-string-normalization = true
+# skip-string-normalization = true
 
 [tool.isort]
 line_length = 100
@@ -15,5 +15,3 @@ max-line-length = 200
 pythonpath = [
   "CHARGER", "VEHICLE"
 ]
-
-

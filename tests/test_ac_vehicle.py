@@ -1,6 +1,5 @@
 import requests
-import asyncio
-import time
+
 from tests.test_configuration import TestConfigureServer
 
 
@@ -78,4 +77,3 @@ class TestAcVehicleEndpoints(TestConfigureServer):
             url_charger=self.CHARGER_SERVER_URL, key_word="ac_connect"
         ).json()["ac_connect"]:
             requests.post(f"{self.CONNECT_AC}{self.test_config['VEHICLE_DISCONNECT_AC']}")
-

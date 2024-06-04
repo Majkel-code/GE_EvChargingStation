@@ -1,8 +1,11 @@
-import requests
 import datetime
 
+import requests
+
 from tests.test_configuration import TestConfigureServer
+
 today = datetime.date.today()
+
 
 class TestChademoChargingSession(TestConfigureServer):
     @classmethod
@@ -73,14 +76,18 @@ class TestChademoChargingSession(TestConfigureServer):
     def test_chademo_charge_session_history_saved(self):
         self.test_session_start()
         print("CHECK CHARGING HISTORY IS CREATED AND SESSION IS SAVED CORRECTLY")
-        session_history = self.check_vehicle_data(self.VEHICLE_SERVER_URL, key_word="chademo_history").json()
+        session_history = self.check_vehicle_data(
+            self.VEHICLE_SERVER_URL, key_word="chademo_history"
+        ).json()
         for key in self.test_config["VEHICLE_HISTORY_KEYS"]:
             assert key in session_history["CHADEMO"][0][f"{today}"]
 
     def test_chademo_session_fillup(self):
         self.test_session_start()
         print("TEST CHADEMO SESSION FILL UP")
-        session_history = self.check_vehicle_data(self.VEHICLE_SERVER_URL, key_word="chademo_history").json()
+        session_history = self.check_vehicle_data(
+            self.VEHICLE_SERVER_URL, key_word="chademo_history"
+        ).json()
         first_session_id = session_history["CHADEMO"][0][f"{today}"]["SESSION_ID"]
         start_session_url = f"{self.CHARGER_URL}{self.test_config['START_SESSION_CHADEMO']}_chademo"
         response_session = requests.post(start_session_url)
@@ -95,7 +102,9 @@ class TestChademoChargingSession(TestConfigureServer):
                     is True
                 )
                 break
-        session_history = self.check_vehicle_data(self.VEHICLE_SERVER_URL, key_word="chademo_history").json()
+        session_history = self.check_vehicle_data(
+            self.VEHICLE_SERVER_URL, key_word="chademo_history"
+        ).json()
         fillup_session_id = session_history["CHADEMO"][0][f"{today}"]["SESSION_ID"]
         assert fillup_session_id == first_session_id
 

@@ -6,6 +6,7 @@ import requests
 
 
 class ChargerBridge:
+
     _charging_finished_chademo_ = False
     _charging_finished_ac_ = False
     _energy_is_send_loop_chademo_ = 0
@@ -56,7 +57,7 @@ class VehicleBridge:
                         VehicleBridge._connected_chademo_ = True
                         ChargerBridge._outlet_in_use_[outlet_used] = key
                         return {"handshake_chademo": True}
-                except:
+                except Exception:
                     return {"handshake_chademo": False}
 
             elif outlet_used == "AC":
@@ -70,7 +71,7 @@ class VehicleBridge:
                         VehicleBridge._connected_ac_ = True
                         ChargerBridge._outlet_in_use_[outlet_used] = key
                         return {"handshake_ac": True}
-                except:
+                except Exception:
                     return {"handshake_ac": False}
 
         except Exception as e:
@@ -94,7 +95,7 @@ class VehicleBridge:
                     VehicleBridge.settings_chademo = None
                     VehicleBridge._charged_chademo_kw = 0
                     return {"disconnect_chademo": True}
-            except:
+            except Exception:
                 return {"disconnect_chademo": False}
 
         elif outlet_used == "AC":
@@ -114,7 +115,7 @@ class VehicleBridge:
                     VehicleBridge.settings_ac = None
                     VehicleBridge._charged_ac_kw = 0
                     return {"disconnect_ac": True}
-            except:
+            except Exception:
                 return {"disconnect_ac": False}
 
     def take_ac_vehicle_specification():
@@ -132,20 +133,18 @@ class VehicleBridge:
         if response.ok:
             VehicleBridge.settings_chademo = response.json()
         return response
-    
-    def session_complete_chademo():
-            url = "http://127.0.0.1:5001/vehicle_chademo/chademo_complete"
-            payload ={"complete": ChargerBridge._charging_finished_chademo_}
-            headers = {"Content-Type": "application/json"}
-            response = requests.patch(url, headers=headers, data=json.dumps(payload))
 
-    
+    def session_complete_chademo():
+        url = "http://127.0.0.1:5001/vehicle_chademo/chademo_complete"
+        payload = {"complete": ChargerBridge._charging_finished_chademo_}
+        headers = {"Content-Type": "application/json"}
+        requests.patch(url, headers=headers, data=json.dumps(payload))
+
     def session_complete_ac():
-            url = "http://127.0.0.1:5001/vehicle_ac/ac_complete"
-            payload ={"complete": ChargerBridge._charging_finished_ac_}
-            headers = {"Content-Type": "application/json"}
-            response = requests.patch(url, headers=headers, data=json.dumps(payload))
-                      
+        url = "http://127.0.0.1:5001/vehicle_ac/ac_complete"
+        payload = {"complete": ChargerBridge._charging_finished_ac_}
+        headers = {"Content-Type": "application/json"}
+        requests.patch(url, headers=headers, data=json.dumps(payload))
 
 
 class IsServerAlive:

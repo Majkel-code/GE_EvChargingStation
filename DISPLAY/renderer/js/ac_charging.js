@@ -186,4 +186,3 @@ startCustomAcChargingButton.addEventListener("click", () => {
 disconnectAcVehicleButton.addEventListener("click", () =>{
   SendAcDisconnect();
 })
-

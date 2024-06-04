@@ -4,7 +4,6 @@ import os
 import os.path
 from pathlib import Path
 
-
 current_path = Path(__file__).absolute().parents[2]
 today = datetime.date.today()
 
@@ -56,7 +55,7 @@ class SessionSaver:
         elif outlet == "CHADEMO":
             with open(self.chademo_path, "r") as f:
                 return json.load(f)
-            
+
     def check_save_history_record(self, outlet, current_session_id, current_battery):
         if outlet == "AC":
             with open(self.ac_path, "r+") as f:
@@ -64,35 +63,44 @@ class SessionSaver:
                 if len(data[outlet]) > 0:
                     if f"{today}" not in data[outlet][0]:
                         return True
-                    if (data[outlet][0][f"{today}"]["SESSION_ID"] == current_session_id 
+                    if (
+                        data[outlet][0][f"{today}"]["SESSION_ID"] == current_session_id
                         and data[outlet][0][f"{today}"]["BATTERY_LEVEL"] < current_battery
-                        ):
-                        return True                    
-                    if data[outlet][0][f"{today}"]["SESSION_ID"] == current_session_id or current_session_id == None:
+                    ):
+                        return True
+                    if (
+                        data[outlet][0][f"{today}"]["SESSION_ID"] == current_session_id
+                        or current_session_id is None
+                    ):
                         return False
                     elif data[outlet][0] != self.ac_history:
                         return True
-                    else: return False
+                    else:
+                        return False
                 else:
-                    return True            
+                    return True
         if outlet == "CHADEMO":
             with open(self.chademo_path, "r+") as f:
                 data = json.load(f)
                 if len(data[outlet]) > 0:
                     if f"{today}" not in data[outlet][0]:
                         return True
-                    if (data[outlet][0][f"{today}"]["SESSION_ID"] == current_session_id 
+                    if (
+                        data[outlet][0][f"{today}"]["SESSION_ID"] == current_session_id
                         and data[outlet][0][f"{today}"]["BATTERY_LEVEL"] < current_battery
-                        ):
+                    ):
                         return True
-                    if data[outlet][0][f"{today}"]["SESSION_ID"] == current_session_id or current_session_id == None:
+                    if (
+                        data[outlet][0][f"{today}"]["SESSION_ID"] == current_session_id
+                        or current_session_id is None
+                    ):
                         return False
                     elif data[outlet][0] != self.chademo_history:
                         return True
-                    else: return False
+                    else:
+                        return False
                 else:
                     return True
-
 
     def save_session(self, outlet, session_id, battery, charged_kw, time):
         if outlet == "AC":
@@ -100,7 +108,9 @@ class SessionSaver:
             self.ac_history[f"{today}"]["BATTERY_LEVEL"] = battery
             self.ac_history[f"{today}"]["CHARGED_KW"] = charged_kw
             self.ac_history[f"{today}"]["CHARGE_TIME"] = time
-            if self.check_save_history_record(outlet=outlet, current_session_id=session_id, current_battery=battery):
+            if self.check_save_history_record(
+                outlet=outlet, current_session_id=session_id, current_battery=battery
+            ):
                 with open(self.ac_path, "r+") as f:
                     self.ac_history_file["AC"].insert(0, self.ac_history)
                     f.write(json.dumps(self.ac_history_file))
@@ -110,7 +120,9 @@ class SessionSaver:
             self.chademo_history[f"{today}"]["BATTERY_LEVEL"] = battery
             self.chademo_history[f"{today}"]["CHARGED_KW"] = charged_kw
             self.chademo_history[f"{today}"]["CHARGE_TIME"] = time
-            if self.check_save_history_record(outlet, current_session_id=session_id, current_battery=battery):
+            if self.check_save_history_record(
+                outlet, current_session_id=session_id, current_battery=battery
+            ):
                 with open(self.chademo_path, "r+") as f:
                     self.chademo_history_file["CHADEMO"].insert(0, self.chademo_history)
                     f.write(json.dumps(self.chademo_history_file))

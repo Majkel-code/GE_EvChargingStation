@@ -1,0 +1,88 @@
+{
+	"info": {
+		"_postman_id": "1618fa8b-0d39-46c1-9d90-cb8ad66db1c1",
+		"name": "VEHICLE CHADEMO",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29635343"
+	},
+	"item": [
+		{
+			"name": "GET_ALL",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5001/vehicle_chademo/all",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5001",
+					"path": [
+						"vehicle_chademo",
+						"all"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET_SPECIFIC_KEY",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5001/vehicle_chademo/BATTERY_LEVEL",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5001",
+					"path": [
+						"vehicle_chademo",
+						"BATTERY_LEVEL"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "EDIT_KEY_VEHICLE",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"key\": \"BATTERY_LEVEL\",\r\n  \"value\": 70\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5001/vehicle_chademo/edit",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5001",
+					"path": [
+						"vehicle_chademo",
+						"edit"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -1,0 +1,100 @@
+{
+	"info": {
+		"_postman_id": "6608e98e-5c3d-46d7-b454-b4d0866de3e4",
+		"name": "VEHICLE AC",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29635343"
+	},
+	"item": [
+		{
+			"name": "GET_ALL",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5001/vehicle_ac/all",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5001",
+					"path": [
+						"vehicle_ac",
+						"all"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET_SPECIFIC_KEY",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5001/vehicle_ac/BATTERY_LEVEL",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5001",
+					"path": [
+						"vehicle_ac",
+						"BATTERY_LEVEL"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "EDIT_KEY_VEHICLE",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"key\": \"BATTERY_LEVEL\",\r\n  \"value\": 85\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5001/vehicle_ac/edit",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5001",
+					"path": [
+						"vehicle_ac",
+						"edit"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

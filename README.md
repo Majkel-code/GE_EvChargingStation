@@ -15,7 +15,7 @@ GE_EvChargingStation is a charger and vehicle simulator.
 - Editing Charger settings
 - Editiong Vehicle settings
 - Run charge session for one or two outlets
-- See console logs or preview output in dedicated display
+- See console logs or preview output in dedicated display (Can be run as a Electron app)
 
 GE_EvChargingStation is a lightweight charge station and vehicle simulator
 where you can check charging flow, connectivity types and base "know how" it's work.
@@ -31,6 +31,8 @@ GE_EvChargingStation uses a number of open source technologies to work properly:
 
 - [FastApi] - FastAPI is a modern, fast (high-performance), web framework
 - [Python] -  >= 3.11
+- [JavaScript]
+- [Electron]
 
 ## Installation
 
@@ -52,17 +54,54 @@ GE_EvChargingStation have two possibility to be used.
 First Tab:
 
 ```sh
-python3 ./server.py
+cd GE_EvChargingStation/CHARGER
+python3 ./charger_server.py
 ```
+Second Tab:
 
-Second Tab: (optional)
-Thats it! In second tab you can send curl's or use for it  [Postman](https://www.postman.com/)
+```sh
+cd GE_EvChargingStation/VEHICLE
+python3 ./vehicle_server.py
+```
+__
+
+Thats it! In third tab (next step) you can send curl's or use for it  [Postman](https://www.postman.com/)
+
+### HINT
+In project root dir you can find `/postman_collection` what contains `.json` files. If you want, you can import them to your [Postman](https://www.postman.com/) app for better experience.
+
+Third Tab: (optional)
 
 ```sh
 curl http://127.0.0.1:5000/is_alive
 ```
 That's should return you "is_alive" state and in console with server, you will see code 200 if everything is fine.
 Full list of curl's is placed on end of this READ.ME
+
+### Optional
+If you wan use display install [Node.js](https://nodejs.org/)
+
+confirm that Node.js is correctly installed by run these commands
+```sh
+node -v
+npm -v
+```
+then:
+
+```sh
+cd GE_EvChargingStation/DISPLAY
+npm install electron --save-dev
+```
+That should init and create a `/node_modules` file.
+
+
+Now return to project root directory.
+
+To start display run:
+```sh
+npm start main.js
+```
+
 
 #### Curl's list
 ##### Server
@@ -159,8 +198,10 @@ curl --location --request PUT 'http://127.0.0.1:5000/vehicle_chademo/' \
   "key": "BATTERY_LEVEL",
   "value": 50
 ```
+
 # TODO
 #### 2. Run it on external machine (linux) with dedicated display
+software is running - there is some additional work with platform configurations
 ## License
 
 MIT

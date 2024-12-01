@@ -26,14 +26,18 @@ class InitialiseServer:
             self.app.include_router(display_chademo.router)
             self.server = uvicorn.Server
             charger_vehicle_config_bridge.ChargerBridge()
-            current_path = Path(__file__).absolute().parent
-            config_path = f"{current_path}/config/config_files"
+            current_path = Path.cwd()
+            print(Path.cwd())
+            config_path = f"{current_path}/CHARGER/config/config_files"
             with open(
                 f"{config_path}/charger_server_config.yaml",
                 "r+",
             ) as f:
                 server_config = yaml.safe_load(f)
-            self.auth = AuthorizationSystem(server_config["AUTHORIZATION_KEY_SAVE_PATH"])
+            
+            
+            self.auth = AuthorizationSystem(f"{current_path}{server_config['AUTHORIZATION_KEY_SAVE_PATH']}")
+            # self.auth = AuthorizationSystem(server_config["AUTHORIZATION_KEY_SAVE_PATH"])
             self.config = uvicorn.Config(
                 app=self.app,
                 port=server_config["PORT"],

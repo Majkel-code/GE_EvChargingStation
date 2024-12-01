@@ -14,7 +14,7 @@ def read_tests_settings():
     return test_config
 
 
-current_path = Path(__file__).absolute().parents[1]
+# current_path = Path(__file__).absolute().parents[1]
 
 
 def read_local_key(key_path):
@@ -30,17 +30,22 @@ class TestConfigureServer(unittest.TestCase):
         self.test_config = read_tests_settings()
         self.CHARGER_SERVER_URL = self.test_config["CHARGER_SERVER_URL"]
         self.VEHICLE_SERVER_URL = self.test_config["VEHICLE_SERVER_URL"]
-        self.AUTH_KEY_PATH = self.test_config["AUTHORIZATION_KEY_SAVE_PATH"]
 
-        current_path = Path(__file__).absolute().parents[1]
+        # current_path = Path(__file__).absolute().parents[1]
+        current_path = Path.cwd()
+
+        print(current_path)
+
+        self.AUTH_KEY_PATH = f"{current_path}{self.test_config["AUTHORIZATION_KEY_SAVE_PATH"]}"
+
         charger_path = f"{current_path}/CHARGER/charger_server.py"
         vehicle_path = f"{current_path}/VEHICLE/vehicle_server.py"
         self.procs = []
         if self.CHARGER_SERVER_URL == "http://127.0.0.1:5000/":
-            self.procs.append(subprocess.Popen(["python3", f"{charger_path}"]))
+            self.procs.append(subprocess.Popen([f"{current_path}/.venv/Scripts/python", f"{charger_path}"]))
         if self.VEHICLE_SERVER_URL == "http://127.0.0.1:5001/":
-            self.procs.append(subprocess.Popen(["python3", f"{vehicle_path}"]))
-
+            self.procs.append(subprocess.Popen([f"{current_path}/.venv/Scripts/python", f"{vehicle_path}"]))
+        time.sleep(2)
         self.AUTH_KEY = read_local_key(self.AUTH_KEY_PATH)
 
     def check_charger_data(self, url_charger, key_word):

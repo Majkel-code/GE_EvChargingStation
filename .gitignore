@@ -6,3 +6,4 @@ CHARGER/server_logs/*
 .DS_Store
 node_modules
 renderer/.DS_Store
+dist/

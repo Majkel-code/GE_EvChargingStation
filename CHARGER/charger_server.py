@@ -33,7 +33,7 @@ class InitialiseServer:
                 "r+",
             ) as f:
                 server_config = yaml.safe_load(f)
-            self.auth = AuthorizationSystem(server_config["AUTHORIZATION_KEY_SAVE_PATH"])
+            self.auth = AuthorizationSystem(f"{Path(__file__).absolute().parents[1]}/AUTHORIZATION_KEY/host_key.txt")
             self.config = uvicorn.Config(
                 app=self.app,
                 port=server_config["PORT"],

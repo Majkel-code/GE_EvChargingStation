@@ -19,3 +19,4 @@ typing_extensions==4.8.0
 urllib3==2.0.7
 uvicorn==0.23.2
 pre-commit
+selenium==4.28.1

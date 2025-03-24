@@ -24,12 +24,21 @@ server_logger = ServerLogger.logger_server
 ac_logger = ACChargeSessionLogger.ac_charge_flow_logger
 chademo_logger = CHADEMOChargeSessionLogger.chademo_charge_flow_logger
 
+return_dict = {
+    "response": "OK",
+    "error": None,
+    "data": {
+        "parameters": None,
+    },
+}
 
 @router.get("/all")
 async def read_items():
     try:
         server_logger.info("PROPERLY READED SETTINGS")
-        return Charger.settings
+        data = return_dict
+        data["data"]["parameters"] = Charger.settings
+        return data
     except Exception as e:
         server_logger.error(e)
         return {"response": False, "error": e}
@@ -37,7 +46,10 @@ async def read_items():
 
 @router.get("/outlets")
 async def read_outlets():
-    return Charger._outlet_in_use_
+    data = return_dict
+    data["data"]["parameters"] = Charger._outlet_in_use_
+    return data
+
 
 
 @router.get("/energy_ongoing_chademo")
@@ -61,7 +73,9 @@ async def read_item(item_id: str):
     if item_id not in Charger.settings:
         server_logger.error(f"'{item_id}' CAN'T BE FINDED IN CHARGER!")
         raise HTTPException(status_code=404, detail="REQUEST CAN'T BE FIND!")
-    return Charger.settings[item_id]
+    data = return_dict
+    data["data"]["parameters"] = {f"{item_id}": Charger.settings[item_id]}
+    return data
 
 
 @router.post("/start_chademo")

@@ -1,0 +1,80 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "response": {
+      "type": "string"
+    },
+    "error": {
+      "type": "null"
+    },
+    "data": {
+      "type": "object",
+      "properties": {
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "CHARGING_OUTLETS": {
+              "type": "array",
+              "items": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            },
+            "MAX_CHARGING_POWER_CHADEMO": {
+              "type": "integer"
+            },
+            "MAX_CHARGING_POWER_AC": {
+              "type": "number"
+            },
+            "AC_ACTUAL_KW_PER_MIN": {
+              "type": "integer"
+            },
+            "CHADEMO_ACTUAL_KW_PER_MIN": {
+              "type": "integer"
+            },
+            "MAX_CHARGING_AMPERE": {
+              "type": "integer"
+            },
+            "VOLT": {
+              "type": "integer"
+            },
+            "LOSSES_DURING_CHARGING": {
+              "type": "integer"
+            },
+            "VOLTAGE_DROP_AC": {
+              "type": "number"
+            },
+            "VOLTAGE_DROP_CHADEMO": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "CHARGING_OUTLETS",
+            "MAX_CHARGING_POWER_CHADEMO",
+            "MAX_CHARGING_POWER_AC",
+            "AC_ACTUAL_KW_PER_MIN",
+            "CHADEMO_ACTUAL_KW_PER_MIN",
+            "MAX_CHARGING_AMPERE",
+            "VOLT",
+            "LOSSES_DURING_CHARGING",
+            "VOLTAGE_DROP_AC",
+            "VOLTAGE_DROP_CHADEMO"
+          ]
+        }
+      },
+      "required": [
+        "parameters"
+      ]
+    }
+  },
+  "required": [
+    "response",
+    "error",
+    "data"
+  ]
+}

@@ -1,0 +1,71 @@
+{
+	"$schema": "http://json-schema.org/draft-07/schema#",
+	"type": "object",
+	"properties": {
+		"response": {
+			"type": "string"
+		},
+		"error": {
+			"type": "null"
+		},
+		"data": {
+			"type": "object",
+			"properties": {
+				"parameters": {
+					"type": "object",
+					"properties": {
+                        "CHARGING_OUTLETS": {
+                            "type": "array",
+                            "items": [
+                              {
+                                "type": "string"
+                              },
+                              {
+                                "type": "string"
+                              }
+                            ]
+                          },
+						"MAX_CHARGING_POWER_CHADEMO": {
+							"type": "integer"
+						},
+                        "MAX_CHARGING_POWER_AC": {
+                            "type": "number"
+                        },
+                        "AC_ACTUAL_KW_PER_MIN": {
+                          "type": "integer"
+                        },
+                        "CHADEMO_ACTUAL_KW_PER_MIN": {
+                          "type": "integer"
+                        },
+                        "MAX_CHARGING_AMPERE": {
+                          "type": "integer"
+                        },
+                        "VOLT": {
+                          "type": "integer"
+                        },
+                        "LOSSES_DURING_CHARGING": {
+                          "type": "integer"
+                        },
+                        "VOLTAGE_DROP_AC": {
+                          "type": "number"
+                        },
+                        "VOLTAGE_DROP_CHADEMO": {
+                          "type": "number"
+                        }
+					},
+					"additionalProperties": false
+				}
+			},
+			"additionalProperties": true,
+			"required": [
+				"parameters"
+			]
+		}
+	},
+	"additionalProperties": true,
+	"required": [
+		"response",
+		"error",
+		"data"
+	]
+}

@@ -5,7 +5,7 @@ Resource    ../../../../keywords/imports.resource
 Library    RequestsLibrary
 
 *** Test Cases ***
-Verify Existing User
+Verify used outlets
     Log To Console    \nSending Request to ${GLOBAL_ENDPOINT_CHARGER_USED_OUTLETS}\n
     ${params}    Create Dictionary    filter=all
     ${response}    GET    url=${GLOBAL_ENDPOINT_CHARGER_USED_OUTLETS}    expected_status=200

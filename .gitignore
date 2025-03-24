@@ -7,3 +7,6 @@ CHARGER/server_logs/*
 node_modules
 renderer/.DS_Store
 dist/
+log.html
+output.xml
+report.html

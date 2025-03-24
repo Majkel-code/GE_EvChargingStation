@@ -1,18 +1,37 @@
 {
   "name": "ge_evchargingstation_gui",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "This is GUI to GE_EvCharging_Station",
+  "homepage": "https://github.com/Majkel-code/GE_EvChargingStation",
   "main": "main.js",
   "scripts": {
     "start": "electron",
-    "make-mac": "electron-forge make --platform darwin",
-    "make-linux": "electron-forge make --platform linux"
+    "build": "electron-builder"
   },
-  "author": "Michal Kotlowski",
+  "build": {
+    "appId": "ge_evchargingstation_gui",
+    "productName": "ge_evchargingstation_gui",
+    "files": [
+      "renderer/**/*",
+      "node_modules/**/*",
+      "main.js",
+      "package.json"
+    ],
+    "linux": {
+      "target": ["AppImage", "deb"],
+      "category": "Utility"
+    }
+  },
+  "bugs": {
+    "url": "https://github.com/Majkel-code/GE_EvChargingStation",
+    "email": "michalkotlowski7@gmail.com"
+  },
+  "author": "Michal Kotlowski <michalkotlowski7@gmail.com> (https://github.com/Majkel-code/GE_EvChargingStation)",
   "license": "ISC",
   "devDependencies": {
     "@electron-forge/cli": "^7.2.0",
     "@electron/rebuild": "^3.5.0",
-    "electron": "^28.3.3"
+    "electron": "^33.3.1",
+    "electron-builder": "^25.1.8"
   }
 }

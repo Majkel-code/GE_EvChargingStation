@@ -46,8 +46,10 @@ class InitialiseServer:
             @self.app.get("/{name}")
             async def check(name: str, request: Request):
                 data_to_return = None
-                key = request.headers.get("AUTHORIZATION")
+                key = request.headers.get("authorization")
+                print(request.headers)
                 if self.auth.read_local_key() == key:
+                    print(request.headers)
 
                     if name == "is_alive":
                         data_to_return = _main_server.check_server_is_alive()
@@ -93,8 +95,17 @@ class InitialiseServer:
                         )
                 else:
                     server_logger.error("UNABLE TO AUTHORIZE REQUEST!")
-
-                return {f"{name}": data_to_return}
+                    return {
+                        "response": "NOK",
+                        "error": "UNABLE TO AUTHORIZE REQUEST!",
+                        "data": None,
+                    }
+                return {
+                        "response": "OK",
+                        "error": None,
+                        "data": {f"{name}": data_to_return},
+                    }
+                # return {f"{name}": data_to_return}
 
         except Exception as e:
             server_logger.error(e)

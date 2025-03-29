@@ -1,0 +1,60 @@
+{
+	"$schema": "http://json-schema.org/draft-07/schema#",
+	"type": "object",
+	"properties": {
+		"response": {
+			"type": "string"
+		},
+		"error": {
+			"type": "null"
+		},
+		"data": {
+			"type": "object",
+			"properties": {
+				"parameters": {
+					"type": "object",
+					"properties": {
+            "SESSION_ID": {
+              "type": "null"
+            },
+            "BATTERY_LEVEL": {
+              "type": "integer"
+            },
+            "CHARGING_PORT": {
+              "type": "string"
+            },
+            "MAX_BATTERY_CAPACITY_IN_KWH": {
+              "type": "integer"
+            },
+            "ACTUAL_BATTERY_STATUS_IN_KWH": {
+              "type": "number"
+            },
+            "BATTERY_VOLTAGE": {
+              "type": "integer"
+            },
+            "COOLING_SYSTEM": {
+              "type": "string"
+            },
+            "LOG_LEVEL_VEHICLE": {
+              "type": "string"
+            },
+            "EFFECTIVE_CHARGING_CAP": {
+              "type": "integer"
+            }
+					},
+					"additionalProperties": false
+				}
+			},
+			"additionalProperties": true,
+			"required": [
+				"parameters"
+			]
+		}
+	},
+	"additionalProperties": true,
+	"required": [
+		"response",
+		"error",
+		"data"
+	]
+}

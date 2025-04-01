@@ -6,6 +6,10 @@ ${GLOBAL_SCHEMA_CHARGER_GET_SPECIFIC_NEGATIVE}  ${CURDIR}/../schemas/charger/cha
 ${GLOBAL_SCHEMA_CHARGER_USED_OUTLETS}           ${CURDIR}/../schemas/charger/charger_used_outlets.json
 ${GLOBAL_SCHEMA_CHARGER_UNABLE_AUTHORIZED}      ${CURDIR}/../schemas/charger/charger_unable_authorization.json
 ${GLOBAL_SCHEMA_CHARGER_SERVER_ALIVE}           ${CURDIR}/../schemas/charger/charger_server_alive.json
+# JSON Schema files for CONNECTOR
+${GLOBAL_SCHEMA_CHARGER_CONNECT_VEHICLE}            ${CURDIR}/../schemas/charger/charger_connect_vehicle.json
+${GLOBAL_SCHEMA_CHARGER_DISCONNECT_VEHICLE}            ${CURDIR}/../schemas/charger/charger_disconnect_vehicle.json
+${GLOBAL_SCHEMA_CHARGER_ACTUAL_CONNECTED}            ${CURDIR}/../schemas/charger/charger_actual_connected.json
 
 # JSON Schema files for VEHICLE
 ${GLOBAL_SCHEMA_VEHICLE_GET_ALL}                ${CURDIR}/../schemas/vehicle/vehicle_get_all.json 

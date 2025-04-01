@@ -21,6 +21,6 @@ Verify VEHICLE AC EFFECTIVE_CHARGING_CAP              EFFECTIVE_CHARGING_CAP
 Custom Test Template
     [Arguments]    ${option}
     Log To Console    \nSending Request to ${GLOBAL_ENDPOINT_VEHICLE_AC_GET_SPECIFIC}/${option}\n
-    VEHICLE get specific    endpoint=${GLOBAL_ENDPOINT_VEHICLE_AC_GET_SPECIFIC}    schema=${GLOBAL_SCHEMA_VEHICLE_AC_GET_SPECIFIC}    option=${option}
+    VEHICLE get specific    endpoint=${GLOBAL_ENDPOINT_VEHICLE_AC_GET_SPECIFIC}    schema=${GLOBAL_SCHEMA_VEHICLE_GET_SPECIFIC}    option=${option}
     # ${response}    GET    url=${GLOBAL_ENDPOINT_VEHICLE_AC_GET_SPECIFIC}/${option}    expected_status=200
     # Validate Schema    inputJson=${response.json()}    referenceSchemaPath=${GLOBAL_SCHEMA_VEHICLE_AC_GET_SPECIFIC}

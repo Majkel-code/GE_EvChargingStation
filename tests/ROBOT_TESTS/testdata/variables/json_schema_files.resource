@@ -8,6 +8,6 @@ ${GLOBAL_SCHEMA_CHARGER_UNABLE_AUTHORIZED}      ${CURDIR}/../schemas/charger/cha
 ${GLOBAL_SCHEMA_CHARGER_SERVER_ALIVE}           ${CURDIR}/../schemas/charger/charger_server_alive.json
 
 # JSON Schema files for VEHICLE
-${GLOBAL_SCHEMA_VEHICLE_AC_GET_ALL}                ${CURDIR}/../schemas/vehicle/vehicle_get_all.json 
-${GLOBAL_SCHEMA_VEHICLE_AC_GET_SPECIFIC}           ${CURDIR}/../schemas/vehicle/vehicle_get_specific.json
-${GLOBAL_SCHEMA_VEHICLE_AC_GET_SPECIFIC_NEGATIVE}  ${CURDIR}/../schemas/vehicle/vehicle_get_specific_negative.json
+${GLOBAL_SCHEMA_VEHICLE_GET_ALL}                ${CURDIR}/../schemas/vehicle/vehicle_get_all.json 
+${GLOBAL_SCHEMA_VEHICLE_GET_SPECIFIC}           ${CURDIR}/../schemas/vehicle/vehicle_get_specific.json
+${GLOBAL_SCHEMA_VEHICLE_GET_SPECIFIC_NEGATIVE}  ${CURDIR}/../schemas/vehicle/vehicle_get_specific_negative.json

@@ -122,16 +122,18 @@ class VehicleBridge:
         url = "http://127.0.0.1:5001/vehicle_ac/all"
         headers = {"Content-Type": "application/json"}
         response = requests.get(url, headers=headers)
-        if response.ok:
-            VehicleBridge.settings_ac = response.json()
+        veh_data = response.json()
+        if veh_data["response"] == "OK":
+            VehicleBridge.settings_ac = veh_data["data"]["parameters"]
         return response
 
     def take_chademo_vehicle_specification():
         url = "http://127.0.0.1:5001/vehicle_chademo/all"
         headers = {"Content-Type": "application/json"}
         response = requests.get(url, headers=headers)
-        if response.ok:
-            VehicleBridge.settings_chademo = response.json()
+        veh_data = response.json()
+        if veh_data["response"] == "OK":
+            VehicleBridge.settings_chademo = veh_data["data"]["parameters"]
         return response
 
     def session_complete_chademo():

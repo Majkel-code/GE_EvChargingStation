@@ -47,10 +47,7 @@ class InitialiseServer:
             async def check(name: str, request: Request):
                 data_to_return = None
                 key = request.headers.get("authorization")
-                print(request.headers)
                 if self.auth.read_local_key() == key:
-                    print(request.headers)
-
                     if name == "is_alive":
                         data_to_return = _main_server.check_server_is_alive()
 

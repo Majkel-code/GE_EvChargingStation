@@ -25,9 +25,9 @@
                               }
                             ]
                           },
-						"MAX_CHARGING_POWER_CHADEMO": {
-							"type": "integer"
-						},
+                        "MAX_CHARGING_POWER_CHADEMO": {
+                          "type": "integer"
+                        },
                         "MAX_CHARGING_POWER_AC": {
                             "type": "number"
                         },

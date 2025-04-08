@@ -32,7 +32,7 @@
               "type": "number"
             },
             "AC_ACTUAL_KW_PER_MIN": {
-              "type": "integer"
+              "type": "number"
             },
             "CHADEMO_ACTUAL_KW_PER_MIN": {
               "type": "integer"

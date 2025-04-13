@@ -8,7 +8,7 @@ from config.logging_system.logging_config import (
     CHADEMOChargeSessionLogger,
     ServerLogger,
 )
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, status, Response
 from pydantic import BaseModel
 from simulations import ac_charge_simulation, chademo_charging_simulation
 
@@ -95,11 +95,16 @@ async def start_chademo():
 
 
 @router.post("/start_chademo_{percent}")
-async def start_chademo_custom(percent: int):
+async def start_chademo_custom(response: Response, percent: int):
     if Vehicle._connected_chademo_:
         if percent > 100:
             ac_logger.error("PERCENT SHOULD BE 100 OR LOWER!")
-            raise HTTPException(status_code=404, detail="UNABLE TO PERFORM CHARGE SESSION")
+            response.status_code = status.HTTP_406_NOT_ACCEPTABLE
+            return {
+                "response": "NOK",
+                "error": "UNABLE TO PERFORM CHARGE SESSION - PERCENT SHOULD BE 100 OR LOWER!",
+                "data": None,
+            }
         else:
             try:
                 initialize_charge_simulation = chademo_charging_simulation.ChademoVehicle()
@@ -136,11 +141,16 @@ async def start_ac():
 
 
 @router.post("/start_ac_{percent}")
-async def start_ac_custom(percent: int):
+async def start_ac_custom(response: Response, percent: int):
     if Vehicle._connected_ac_:
         if percent > 100:
             ac_logger.error("PERCENT SHOULD BE 100 OR LOWER!")
-            raise HTTPException(status_code=404, detail="UNABLE TO PERFORM CHARGE SESSION")
+            response.status_code = status.HTTP_406_NOT_ACCEPTABLE
+            return {
+                "response": "NOK",
+                "error": "UNABLE TO PERFORM CHARGE SESSION - PERCENT SHOULD BE 100 OR LOWER!",
+                "data": None,
+            }
         else:
             try:
                 initialize_charge_simulation = ac_charge_simulation.AcVehicle()

@@ -35,7 +35,7 @@
               "type": "number"
             },
             "CHADEMO_ACTUAL_KW_PER_MIN": {
-              "type": "integer"
+              "type": "number"
             },
             "MAX_CHARGING_AMPERE": {
               "type": "integer"

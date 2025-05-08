@@ -1,4 +1,5 @@
 import datetime
+import os
 import logging
 import logging.handlers
 from pathlib import Path
@@ -7,10 +8,16 @@ import yaml
 
 current_path = Path(__file__).absolute().parents[2]
 
+def check_logs_paths(LOG_DIR):
+    if not os.path.exists(LOG_DIR):
+        os.makedirs(LOG_DIR, exist_ok=True)
+    else:
+        pass
 
 class CustomFormatter(logging.Formatter):
-    LOG_DIR = f"{current_path}/veh_logs/vehicle_server/"
-
+    LOG_DIR = f"{os.getcwd()}/logs/vehicle/"
+    check_logs_paths(LOG_DIR)
+    
     blue = "\x1b[38;5;39m"
     green = "\x1b[1;32m"
     yellow = "\x1b[38;5;226m"

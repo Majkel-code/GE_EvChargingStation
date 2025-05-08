@@ -101,6 +101,8 @@ class ChademoVehicle(ChargeSimulation):
                     self.actual_kw_per_min = self.charged_kw_per_minute(
                         Charger.settings["VOLTAGE_DROP_CHADEMO"]
                     )
+                if self.kw_needed_to_charge_charge - self.actual_kw_per_min < 0:
+                    self.actual_kw_per_min = self.kw_needed_to_charge_charge 
                 self.actual_battery_status_in_kwh += self.actual_kw_per_min
                 Vehicle._charged_chademo_kw += self.actual_kw_per_min
                 self.send_energy()

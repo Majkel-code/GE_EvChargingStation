@@ -12,10 +12,10 @@ const createWindow = () => {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
     title: 'GE_Ev_ChargingStation',
-    width: 1024,
-    height: 600,
-    maxHeight: 600,
-    maxWidth: 1024,
+    width: 480,
+    height: 800,
+    maxHeight: 800,
+    maxWidth: 480,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js')
     },

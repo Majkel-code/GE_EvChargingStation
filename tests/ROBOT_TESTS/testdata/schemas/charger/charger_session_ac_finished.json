@@ -1,0 +1,28 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+      "response": {
+        "type": "string"
+      },
+      "error": {
+        "type": "null"
+      },
+      "data": {
+        "type": "object",
+        "properties": {
+          "ac_finished": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "ac_finished"
+        ]
+      }
+    },
+    "required": [
+      "response",
+      "error",
+      "data"
+    ]
+  }

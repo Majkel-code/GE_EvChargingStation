@@ -12,7 +12,7 @@ class ChademoVehicleSpecification:
 
     def exchange_kw_to_percent(self):
         actual_percent = round(
-            (self.actual_battery_status_in_kwh / self.max_battery_capacity_in_kwh) * 100,
+            (round(self.actual_battery_status_in_kwh, 2) / self.max_battery_capacity_in_kwh) * 100,
             2,
         )
         return actual_percent
@@ -29,7 +29,8 @@ class ChademoVehicleSpecification:
     def calculate_battery_increase(self):
         self.charged_kw += self.actual_kw_per_min
         self.actual_battery_status_in_kwh += self.actual_kw_per_min
-        Vehicle.settings_chademo["ACTUAL_BATTERY_STATUS_IN_KWH"] = self.actual_battery_status_in_kwh
+        # Vehicle.settings_chademo["ACTUAL_BATTERY_STATUS_IN_KWH"] = self.actual_battery_status_in_kwh
+        Vehicle.settings_chademo["ACTUAL_BATTERY_STATUS_IN_KWH"] = round(self.actual_battery_status_in_kwh, 2)
         self.actual_battery_level = self.exchange_kw_to_percent()
         Vehicle.settings_chademo["BATTERY_LEVEL"] = self.actual_battery_level
         if self.actual_battery_level == 100:

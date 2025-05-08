@@ -1,4 +1,5 @@
 import datetime
+import os
 import logging
 import logging.handlers
 from pathlib import Path
@@ -7,12 +8,30 @@ import yaml
 
 current_path = Path(__file__).absolute().parents[2]
 
+    
+def check_logs_paths(LOG_DIR, LOG_DIR_AC_CHARGING_SESSION, LOG_DIR_CHADEMO_CHARGING_SESSION):
+    if not os.path.exists(LOG_DIR):
+        os.makedirs(LOG_DIR, exist_ok=True)
+    else:
+        pass
+
+    if not os.path.exists(LOG_DIR_AC_CHARGING_SESSION):
+        os.makedirs(LOG_DIR_AC_CHARGING_SESSION, exist_ok=True)
+    else:
+        pass
+
+    if not os.path.exists(LOG_DIR_CHADEMO_CHARGING_SESSION):
+        os.makedirs(LOG_DIR_CHADEMO_CHARGING_SESSION, exist_ok=True)
+    else:
+        pass
+
 
 class CustomFormatter(logging.Formatter):
-    LOG_DIR = f"{current_path}/charger_logs/server_logs/"
-    LOG_DIR_AC_CHARGING_SESSION = f"{current_path}/charger_logs/charging_logs/"
-    LOG_DIR_CHADEMO_CHARGING_SESSION = f"{current_path}/charger_logs/charging_logs/"
-
+    LOG_DIR = f"{os.getcwd()}/logs/charger/"
+    LOG_DIR_AC_CHARGING_SESSION = f"{os.getcwd()}/logs/charger/AC/"
+    LOG_DIR_CHADEMO_CHARGING_SESSION = f"{os.getcwd()}/logs/charger/CHADEMO/"
+    check_logs_paths(LOG_DIR, LOG_DIR_AC_CHARGING_SESSION, LOG_DIR_CHADEMO_CHARGING_SESSION)
+    
     blue = "\x1b[38;5;39m"
     green = "\x1b[1;32m"
     yellow = "\x1b[38;5;226m"

@@ -5,8 +5,8 @@
 }
 
 body {
-  width: 1024px;
-  height: 600px;
+  width: 480px;
+  height: 800px;
   justify-content: center;
   align-items: center;
   display: relative;
@@ -16,8 +16,8 @@ body {
 }
 
 .container {
-  width: 1024px;
-  height: 600px;
+  width: 480px;
+  height: 800px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(3, 1fr);
@@ -30,8 +30,8 @@ body {
 
 .btn {
   position:relative;
-  width: 170px;
-  height: 75px;
+  width: 150px;
+  height: 65px;
   color:#777;
   background-color: #1b1b1b;
   border: #777 solid 2px;
@@ -76,6 +76,9 @@ body {
   align-items: left;
 }
 
+.btn.chademo.left-btn.bottom-left-btn{
+    top: -45px;
+}
 
 .top-right {
   grid-area: 1 / 3 / 2 / 4;
@@ -87,8 +90,8 @@ body {
 }
 
 .right-btn {
-  width: 75px;
-  height: 75px;
+  width: 65px;
+  height: 65px;
   top: 10px;
   left: -10px;
   margin-left: 0;
@@ -97,6 +100,7 @@ body {
 }
 .btn.help.bottom-right-btn{
     font-size: 32px;
+    top: -45px;
 }
 
 .center {
@@ -124,14 +128,16 @@ body {
 }
 .logo-container .logo-right-bottom {
   margin: 10px;
+  max-width: 125px;
+  max-height: 75px;
 }
 
 .close-page-btn {
   position: absolute;
   font-size: 36px;
   margin: 0px;
-  width: 75px;
-  height: 75px;
+  width: 65px;
+  height: 65px;
   top: 10px;
   right: 10px;
   z-index: 2;
@@ -157,8 +163,8 @@ body {
   grid-column-gap: 0px;
   grid-row-gap: 0px;
   font-family: sans-serif;
-  width: 1024px;
-  height: 600px;
+  width: 480px;
+  height: 800px;
   font-size: 18px;
   line-height: 24px;
   background:#222;
@@ -184,10 +190,10 @@ body {
   margin-left: 50px;
   margin-right: 50px;
 }
-.help-display .help-message p {
+/* .help-display .help-message p {
   margin-right: 150px;
   margin-left: 150px;
-}
+} */
 
 .help-display .close-help-display {
   grid-area: 1 / 3 / 2 / 4;

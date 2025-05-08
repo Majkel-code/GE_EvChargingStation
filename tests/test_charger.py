@@ -48,7 +48,7 @@ class TestChargerEndpoints(TestConfigureServer):
     def test_seciure_endpoint(self):
         print("TEST SECIURE CHARGER ENDPOINT")
         url = f"{self.CHARGER_SERVER_URL}{self.test_config['SECIURE_ENDPOINT']}"
-        headers = {"Content-Type": "application/json", "AUTHORIZATION": self.FAKE_SECIURE_CODE}
+        headers = {"Content-Type": "application/json", "Authorization": self.FAKE_SECIURE_CODE}
         response = requests.get(url=url, headers=headers)
         assert response.status_code == 200
         assert response.json() == {self.test_config["SECIURE_ENDPOINT"]: None}

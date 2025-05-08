@@ -1,8 +1,16 @@
 __pycache__/
-CHARGER/server_logs/*
+logs
+AUTHORIZATION_KEY
+build/
+BUILDER/vehicle
+BUILDER/charger
 .vscode
 .DS_Store
 .idea
 .DS_Store
 node_modules
 renderer/.DS_Store
+dist/
+log.html
+output.xml
+report.html

@@ -8,7 +8,7 @@ from config.logging_system.logging_config import (
     CHADEMOChargeSessionLogger,
     ServerLogger,
 )
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, status, Response
 from pydantic import BaseModel
 from simulations import ac_charge_simulation, chademo_charging_simulation
 
@@ -24,12 +24,21 @@ server_logger = ServerLogger.logger_server
 ac_logger = ACChargeSessionLogger.ac_charge_flow_logger
 chademo_logger = CHADEMOChargeSessionLogger.chademo_charge_flow_logger
 
+return_dict = {
+    "response": "OK",
+    "error": None,
+    "data": {
+        "parameters": None,
+    },
+}
 
 @router.get("/all")
 async def read_items():
     try:
         server_logger.info("PROPERLY READED SETTINGS")
-        return Charger.settings
+        data = return_dict
+        data["data"]["parameters"] = Charger.settings
+        return data
     except Exception as e:
         server_logger.error(e)
         return {"response": False, "error": e}
@@ -37,7 +46,10 @@ async def read_items():
 
 @router.get("/outlets")
 async def read_outlets():
-    return Charger._outlet_in_use_
+    data = return_dict
+    data["data"]["parameters"] = Charger._outlet_in_use_
+    return data
+
 
 
 @router.get("/energy_ongoing_chademo")
@@ -61,7 +73,9 @@ async def read_item(item_id: str):
     if item_id not in Charger.settings:
         server_logger.error(f"'{item_id}' CAN'T BE FINDED IN CHARGER!")
         raise HTTPException(status_code=404, detail="REQUEST CAN'T BE FIND!")
-    return Charger.settings[item_id]
+    data = return_dict
+    data["data"]["parameters"] = {f"{item_id}": Charger.settings[item_id]}
+    return data
 
 
 @router.post("/start_chademo")
@@ -81,11 +95,16 @@ async def start_chademo():
 
 
 @router.post("/start_chademo_{percent}")
-async def start_chademo_custom(percent: int):
+async def start_chademo_custom(response: Response, percent: int):
     if Vehicle._connected_chademo_:
         if percent > 100:
             ac_logger.error("PERCENT SHOULD BE 100 OR LOWER!")
-            raise HTTPException(status_code=404, detail="UNABLE TO PERFORM CHARGE SESSION")
+            response.status_code = status.HTTP_406_NOT_ACCEPTABLE
+            return {
+                "response": "NOK",
+                "error": "UNABLE TO PERFORM CHARGE SESSION - PERCENT SHOULD BE 100 OR LOWER!",
+                "data": None,
+            }
         else:
             try:
                 initialize_charge_simulation = chademo_charging_simulation.ChademoVehicle()
@@ -122,11 +141,16 @@ async def start_ac():
 
 
 @router.post("/start_ac_{percent}")
-async def start_ac_custom(percent: int):
+async def start_ac_custom(response: Response, percent: int):
     if Vehicle._connected_ac_:
         if percent > 100:
             ac_logger.error("PERCENT SHOULD BE 100 OR LOWER!")
-            raise HTTPException(status_code=404, detail="UNABLE TO PERFORM CHARGE SESSION")
+            response.status_code = status.HTTP_406_NOT_ACCEPTABLE
+            return {
+                "response": "NOK",
+                "error": "UNABLE TO PERFORM CHARGE SESSION - PERCENT SHOULD BE 100 OR LOWER!",
+                "data": None,
+            }
         else:
             try:
                 initialize_charge_simulation = ac_charge_simulation.AcVehicle()

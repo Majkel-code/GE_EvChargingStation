@@ -95,6 +95,8 @@ class AcVehicle(ChargeSimulation):
                     self.actual_kw_per_min = self.charged_kw_per_minute(
                         Charger.settings["VOLTAGE_DROP_AC"]
                     )
+                if self.kw_needed_to_charge_charge - self.actual_kw_per_min < 0:
+                    self.actual_kw_per_min = self.kw_needed_to_charge_charge
                 self.actual_battery_status_in_kwh += self.actual_kw_per_min
                 Vehicle._charged_ac_kw += self.actual_kw_per_min
                 self.send_energy()
@@ -110,7 +112,7 @@ class AcVehicle(ChargeSimulation):
                 }
         ac_logger.info(f"{self.actual_battery_level}% OF BATTERY LEVEL ACHIVE...")
         return {"complete": True, "error": None}
-
+    
     def first_stage_charging(self, percent):
         if Vehicle._connected_ac_:
             Vehicle.take_ac_vehicle_specification()
@@ -125,29 +127,43 @@ class AcVehicle(ChargeSimulation):
                     and Main_server.check_server_is_alive()
                     and Vehicle._connected_ac_
                 ):
-                    Vehicle.take_ac_vehicle_specification()
-                    self.actual_battery_level = Vehicle.settings_ac["BATTERY_LEVEL"]
-                    if self.actual_battery_level >= self.effective_charging_cap:
-                        ac_logger.info(f"{self.effective_charging_cap}% OF BATTERY LEVEL ACHIVE...")
-                        return {"complete": True, "error": None}
-                    elif self.actual_battery_level < self.effective_charging_cap:
-                        self.actual_battery_status_in_kwh += self.actual_kw_per_min
-                        Vehicle._charged_ac_kw += self.actual_kw_per_min
-                        self.send_energy()
+                    try:
                         Vehicle.take_ac_vehicle_specification()
-                        self.actual_battery_status_in_kwh = Vehicle.settings_ac[
-                            "ACTUAL_BATTERY_STATUS_IN_KWH"
-                        ]
                         self.actual_battery_level = Vehicle.settings_ac["BATTERY_LEVEL"]
-                        ac_logger.info(f"AC CHARGING ONGOING: {self.actual_battery_level}%")
-                        Charger._energy_is_send_loop_ac_ += 1
-                        time.sleep(1)
-                    else:
-                        ac_logger.warning("VEHICLE DISCONNECTED CHARGE SESSION ABORD!")
+
+                        if self.actual_battery_level >= self.effective_charging_cap:
+                            ac_logger.info(f"{self.effective_charging_cap}% OF BATTERY LEVEL ACHIVE...")
+                            return {"complete": True, "error": None}
+                        elif self.actual_battery_level < self.effective_charging_cap:
+                            if self.actual_battery_level == percent:
+                                break
+                            if self.kw_needed_to_charge_charge - self.actual_kw_per_min < 0:
+                                self.actual_kw_per_min = self.kw_needed_to_charge_charge
+
+                            self.kw_needed_to_charge_charge = self.kw_needed_to_charge_charge - self.actual_kw_per_min
+                            self.actual_battery_status_in_kwh += self.actual_kw_per_min
+                            Vehicle._charged_ac_kw += self.actual_kw_per_min
+                            self.send_energy()
+                            Vehicle.take_ac_vehicle_specification()
+                            self.actual_battery_status_in_kwh = Vehicle.settings_ac[
+                                "ACTUAL_BATTERY_STATUS_IN_KWH"
+                            ]
+                            self.actual_battery_level = Vehicle.settings_ac["BATTERY_LEVEL"]
+                            ac_logger.info(f"AC CHARGING ONGOING: {self.actual_battery_level}%")
+                            Charger._energy_is_send_loop_ac_ += 1
+                            time.sleep(1)
+                        else:
+                            ac_logger.warning("VEHICLE DISCONNECTED CHARGE SESSION ABORD!")
+                            return {
+                                "complete": True,
+                                "error": f"Vehicle disconnected from CHARGER! \n"
+                                f" Last battery status: {self.actual_battery_level}",
+                            }
+                    except Exception as e:
+                        ac_logger.error(f"ERROR: {e}")
                         return {
                             "complete": True,
-                            "error": f"Vehicle disconnected from CHARGER! \n"
-                            f" Last battery status: {self.actual_battery_level}",
+                            "error": f"Error during charging session: {e}",
                         }
                 ac_logger.info(f"{self.actual_battery_level}% OF BATTERY LEVEL ACHIVE...")
                 return {"complete": True, "error": None}
@@ -182,5 +198,9 @@ class AcVehicle(ChargeSimulation):
         Charger.settings["AC_ACTUAL_KW_PER_MIN"] = 0
         Charger._charging_finished_ac_ = True
         Charger._energy_is_send_loop_ac_ = 0
-        Vehicle.session_complete_ac()
+        try:
+            Vehicle.session_complete_ac()
+        except Exception as e:
+            ac_logger.error(f"ERROR: {e}")
+        
         return constant_power_level_charging

@@ -46,7 +46,7 @@ class TestConfigureServer(unittest.TestCase):
     def check_charger_data(self, url_charger, key_word):
         time.sleep(1)
         url = f"{url_charger}{key_word}"
-        headers = {"Content-Type": "application/json", "AUTHORIZATION": self.AUTH_KEY}
+        headers = {"Content-Type": "application/json", "Authorization": self.AUTH_KEY}
         response = requests.get(url, headers=headers)
         if response.ok:
             return response

@@ -1,7 +1,8 @@
 from config.charger_vehicle_config_bridge import VehicleBridge as Vehicle
 from config.logging_system.logging_config import ServerLogger
-from fastapi import APIRouter
+from fastapi import APIRouter, status, Response
 from pydantic import BaseModel
+
 
 
 class Structure(BaseModel):
@@ -17,9 +18,10 @@ server_logger = ServerLogger.logger_server
 
 
 @router.post("/connect")
-async def read_items():
+async def read_items(response: Response):
     if Vehicle._connected_ac_:
         server_logger.warning(f"VEHICLE ACTUALLY CONNECTED: {Vehicle._connected_ac_}")
+        response.status_code = status.HTTP_406_NOT_ACCEPTABLE
         return {"response": False, "error": "VEHICLE ACTUALLY CONNECTED!"}
     else:
         handshake = Vehicle.connect_vehicle("AC")

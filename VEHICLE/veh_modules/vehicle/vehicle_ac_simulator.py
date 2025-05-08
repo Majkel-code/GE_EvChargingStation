@@ -25,21 +25,42 @@ router = APIRouter(
 
 logger = Logger.logger
 
+return_dict = {
+    "response": "OK",
+    "error": None,
+    "data": {
+        "parameters": None,
+    },
+}
 
 @router.get("/all")
 async def read_items():
-    return Vehicle.settings_ac
+    try:
+        logger.info("PROPERLY READED SETTINGS")
+        data = return_dict
+        data["data"]["parameters"] = Vehicle.settings_ac
+        return data
+    except Exception as e:
+        logger.error(e)
+        return {"response": False, "error": e}
+
 
 
 @router.get("/{item_id}")
 async def read_item(item_id: str):
-    if item_id in Vehicle.settings_ac:
-        logger.info(f"'{item_id}' FINDED IN VEHICLE!")
-        return Vehicle.settings_ac[item_id]
-    elif item_id not in Vehicle.settings_ac:
-        logger.error(f"'{item_id} CAN'T BE FINDED IN VEHICLE'")
-        raise HTTPException(status_code=404, detail="SETTING NOT FOUND IN VEHICLE SETTING")
-    raise HTTPException(status_code=404, detail=f"'{item_id}' CAN'T BE FIND!")
+    # if item_id in Vehicle.settings_ac:
+    #     logger.info(f"'{item_id}' FINDED IN VEHICLE!")
+    #     return Vehicle.settings_ac[item_id]
+    # elif item_id not in Vehicle.settings_ac:
+    #     logger.error(f"'{item_id} CAN'T BE FINDED IN VEHICLE'")
+    #     raise HTTPException(status_code=404, detail="SETTING NOT FOUND IN VEHICLE SETTING")
+    # raise HTTPException(status_code=404, detail=f"'{item_id}' CAN'T BE FIND!")
+    if item_id not in Vehicle.settings_ac:
+        logger.error(f"'{item_id}' CAN'T BE FINDED IN CHARGER!")
+        raise HTTPException(status_code=404, detail="REQUEST CAN'T BE FIND!")
+    data = return_dict
+    data["data"]["parameters"] = {f"{item_id}": Vehicle.settings_ac[item_id]}
+    return data
 
 
 @router.put("/edit")

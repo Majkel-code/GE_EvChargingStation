@@ -27,7 +27,6 @@
   - [3️⃣ Use the Server (Without Display)](#3️⃣-use-the-server-without-display)
   - [4️⃣ Setup Display](#4️⃣-optional-running-the-display)
 - [🌐 API Endpoints](#-api-endpoints)
-- [📝 TODO](#-todo)
 - [📜 License](#-license)
 - [💬 Contact](#-contact)
 
@@ -120,57 +119,21 @@ Here you should see structure as below.
 From here just run these apps
 - Logs and Authorization directory will create in your current directory
 
-### 3️⃣ **Use the Server (Without Display)**  
-
-In a third terminal tab, send a `curl` request or use [Postman](https://www.postman.com/):  
-```sh
-curl http://127.0.0.1:5000/is_alive
-```  
-⚠️ Some of the endpoints needs AUTHORIZATION_KEY (host_key.txt) Charger will create it in first run
-- You can paste 📋 it to ${GLOBAL_AUTH_KEY} in [./tests/ROBOT_TESTS/testdata/variables/globals.resource](./tests/ROBOT_TESTS/testdata/variables/globals.resource) to perform automation tests
-- Use it as authorization header via Postman
-- Send curls via terminal
-### 4️⃣ **Optional: Running the Display**  
-
-- To open setup for display please follow this link -> [CLICK HERE](./DISPLAY/README.md) 
-
----
-
-## 🌐 **API Endpoints**  
-
-### **Server**  
-- **Check server status**:  
+### 3️⃣ **Use the Server (Without Display)**
+  In a third terminal tab, send a `curl` request or use [Postman](https://www.postman.com/):  
   ```sh
   curl http://127.0.0.1:5000/is_alive
   ```  
+  ⚠️ Some of the endpoints needs AUTHORIZATION_KEY (host_key.txt) Charger will create it in first run
+  - You can paste 📋 it to ${GLOBAL_AUTH_KEY} in [./tests/ROBOT_TESTS/testdata/variables/globals.resource](./tests/ROBOT_TESTS/testdata/variables/globals.resource) to perform automation tests
+  - Use it as authorization header via Postman
+  - Send curls via terminal
 
-### **Charger**  
-- **Retrieve all charger settings**:  
-  ```sh
-  curl http://127.0.0.1:5000/charger/all
-  ```  
-- **Start charging using CHAdeMO protocol**:  
-  ```sh
-  curl --location --request POST 'http://127.0.0.1:5000/charger/start_chademo'
-  ```  
+  Collection of requests can be find in [./postman_collection](./postman_collection/)
 
-### **Vehicle**  
-- **Connect a vehicle using AC outlet**:  
-  ```sh
-  curl --location --request POST 'http://127.0.0.1:5000/vehicle_ac/connect'
-  ```  
-- **Retrieve all vehicle settings (AC outlet)**:  
-  ```sh
-  curl --location 'http://127.0.0.1:5000/vehicle_ac/all'
-  ```  
+### 4️⃣ **Optional: Running the Display**  
 
----
-
-## 📝 **TODO**  
-
-- [ ] Add support for running the software on external machines (Linux) with a dedicated display.  
-- [ ] Improve API documentation with examples.  
-- [ ] Add more charging protocols.  
+- To open setup for display please follow this link -> [CLICK HERE](./DISPLAY/README.md) 
 
 ---
 
@@ -183,8 +146,7 @@ MIT License.
 
 ## 💬 **Contact**  
 
-For questions or feedback, feel free to reach out:  
-📧 Email: [your-email@example.com]  
+For questions or feedback, feel free to reach out:   
 🌐 GitHub: [Majkel-code](https://github.com/Majkel-code)  
 
 ---

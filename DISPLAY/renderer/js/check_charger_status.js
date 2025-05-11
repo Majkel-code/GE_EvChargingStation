@@ -5,7 +5,7 @@ async function CheckStatus(){
   const request_status = await fetch("http://127.0.0.1:5000/charger/outlets");
   let used_outlets = await request_status.json();
   if (request_status.ok) {
-    if( used_outlets["CHADEMO"] !== "Not used"){
+    if( used_outlets["data"]["parameters"]["CHADEMO"] !== "Not used"){
       if (!ChademoIsConnected){
         ChargingPreparationDisplay();
         SetConnectChademo();
@@ -22,7 +22,7 @@ async function CheckStatus(){
         }
       }
     }
-    if(used_outlets["AC"] !== "Not used") {
+    if(used_outlets["data"]["parameters"]["AC"] !== "Not used") {
       if (!AcIsConnected){
         ChargingPreparationDisplay();
         SetConnectAc();
@@ -39,10 +39,10 @@ async function CheckStatus(){
         }
       }
     }
-    if ( used_outlets["CHADEMO"] === "Not used"){
+    if ( used_outlets["data"]["parameters"]["CHADEMO"] === "Not used"){
       SetDisconnectStatusChademo();
     }
-    if (used_outlets["AC"] === "Not used"){
+    if (used_outlets["data"]["parameters"]["AC"] === "Not used"){
       SetDisconnectStatusAc();
     }
   }

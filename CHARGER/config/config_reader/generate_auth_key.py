@@ -1,13 +1,16 @@
 import os
 import secrets
-from pathlib import Path
-
-current_path = Path(__file__).absolute().parents[1]
-
+from os.path import abspath, normpath
+import sys
 
 class AuthorizationSystem:
     def __init__(self, auth_path) -> None:
-        self.AUTH_PATH = f"{auth_path}/AUTHORIZATION_KEY"
+        path = normpath(abspath(sys.executable if getattr(sys, 'frozen', False) else os.getcwd()))
+        if getattr(sys, 'frozen', False):
+            directory_path = os.path.dirname(path)
+        else:
+            directory_path = path
+        self.AUTH_PATH = f"{directory_path}/AUTHORIZATION_KEY"
         self.check_path()
 
     def check_path(self):

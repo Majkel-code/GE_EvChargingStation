@@ -3,7 +3,8 @@ import os
 import logging
 import logging.handlers
 from pathlib import Path
-
+from os.path import abspath, normpath
+import sys
 import yaml
 
 current_path = Path(__file__).absolute().parents[2]
@@ -15,7 +16,12 @@ def check_logs_paths(LOG_DIR):
         pass
 
 class CustomFormatter(logging.Formatter):
-    LOG_DIR = f"{os.getcwd()}/logs/vehicle/"
+    path = normpath(abspath(sys.executable if getattr(sys, 'frozen', False) else os.getcwd()))
+    if getattr(sys, 'frozen', False):
+        directory_path = os.path.dirname(path)
+    else:
+        directory_path = path
+    LOG_DIR = f"{directory_path}/logs/vehicle/"
     check_logs_paths(LOG_DIR)
     
     blue = "\x1b[38;5;39m"

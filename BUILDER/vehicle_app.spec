@@ -4,8 +4,8 @@ import os
 import time
 import PyInstaller.config
 dir = os.getcwd()
-timestr = time.strftime("%Y%m%d_%H%M")
-PyInstaller.config.CONF['distpath'] = f"{dir}/BUILDER/vehicle/out_{timestr}"
+
+PyInstaller.config.CONF['distpath'] = f"{dir}/BUILDER/vehicle"
 
 a = Analysis(
     [f'{dir}/VEHICLE/vehicle_server.py'],
@@ -30,7 +30,7 @@ exe = EXE(
     a.binaries,
     a.datas,
     [],
-    name='vehicle_app',
+    name='vehicle-app',
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,

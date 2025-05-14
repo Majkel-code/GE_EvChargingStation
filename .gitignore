@@ -14,3 +14,5 @@ dist/
 log.html
 output.xml
 report.html
+.DS_Store
+.pytest_cache/

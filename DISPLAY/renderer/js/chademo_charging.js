@@ -83,7 +83,7 @@ function ChangeInfoStageChademo(){
   }
 }
 
-CircleChademoDivInformation.addEventListener("click", ()=>{
+CircleChademoDivInformation.addEventListener("pointerup", ()=>{
   ChangeInfoStageChademo();
 })
 
@@ -176,18 +176,18 @@ function PrepareCustomChademoSession(){
   NumpadCustomSession.classList.add("chademo-numpad")
 }
 
-connectChademoButton.addEventListener("click", () => {
+connectChademoButton.addEventListener("pointerup", () => {
   SendConncetChademo();
 });
 
-startChademoChargingButton.addEventListener("click", () =>{
+startChademoChargingButton.addEventListener("pointerup", () =>{
   SendStartChademo();
 })
 
-startCustomChademoChargingButton.addEventListener("click", () => {
+startCustomChademoChargingButton.addEventListener("pointerup", () => {
   PrepareCustomChademoSession();
 })
 
-disconnectChademoVehicleButton.addEventListener("click", () =>{
+disconnectChademoVehicleButton.addEventListener("pointerup", () =>{
   SendDisconnectChademo();
 })

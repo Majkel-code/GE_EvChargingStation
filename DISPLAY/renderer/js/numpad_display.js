@@ -5,7 +5,7 @@ const deleteButton = document.querySelector(".delete");
 
 
 numberButtons.forEach((button) => {
-  button.addEventListener("click", () => {
+  button.addEventListener("pointerup", () => {
     if (numberInput.value.length < 3) {
       if (Number(numberInput.value + button.dataset.number) > 100){
         return
@@ -19,7 +19,7 @@ numberButtons.forEach((button) => {
 });
 
 
-deleteButton.addEventListener("click", () => {
+deleteButton.addEventListener("pointerup", () => {
   const percentNumber = numberInput.value.slice(0, -1);
   numberInput.value = "";
   numberInput.value = percentNumber;
@@ -57,7 +57,7 @@ async function SendCustomChademoStart(){
 }
 
 
-confirmSessionButton.addEventListener("click", ()=>{
+confirmSessionButton.addEventListener("pointerup", ()=>{
   if (NumpadCustomSession.className.includes("ac-numpad")) {
     customPercentAc = Number(numberInput.value);
     SendCustomAcStart();

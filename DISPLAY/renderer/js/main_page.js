@@ -33,11 +33,11 @@ function closeChargingDisplay() {
     preparationDisplay.classList.remove('active');
   }
 }
-closeChargingDisplayBtn.addEventListener("click", function() {
+closeChargingDisplayBtn.addEventListener("pointerup", function() {
   closeChargingDisplay();
 })
 
-document.querySelector(".start").addEventListener("click", () =>{
+document.querySelector(".start").addEventListener("pointerup", () =>{
   ChargingPreparationDisplay();
 })
 
@@ -63,25 +63,25 @@ function showMessage(title, first_p_message, second_p_message = null, third_p_me
   helpDisplay.classList.add('active');
 }
 
-closeHelpButton.addEventListener("click", function() {
+closeHelpButton.addEventListener("pointerup", function() {
   closeHelpDisplay();
 })
 
-cssButton.addEventListener("click", () => {
+cssButton.addEventListener("pointerup", () => {
   showMessage("AC", "From a technical point of view, the process of charging an electric car with this type of charger is less effective than when using a DC station. The key issue is the fact that we do not charge the batteries directly with alternating current, but along the way it must be 'rectified' by the built-in charger. This is one of the main disadvantages of AC charging because converters limit its power.");
 });
 
-chademoButton.addEventListener("click", () => {
+chademoButton.addEventListener("pointerup", () => {
   let chademo_title = "CHADEMO"
   let = chademo_message = "CHADEMO is a standard for charging electric cars with direct current - DC. It is used by the so-called fast chargers, characterized by much greater power, which in turn ensures a much shorter charging time for the battery in an electric car."
   showMessage(chademo_title, chademo_message);
 });
 
-enButton.addEventListener("click", () => {
+enButton.addEventListener("pointerup", () => {
   showMessage("EN", "Maybe it will have translate method to use in charger");
 });
 
-helpButton.addEventListener("click", () => {
+helpButton.addEventListener("pointerup", () => {
   let help_title = "HELP";
   let help_first_p_message = "GE_EvChargingStation is a lightweight charge station and vehicle simulator where you can check charging flow, connectivity types and base 'know how' it's work.";
   let help_second_p_message = "When you click 'START' button on the middle of the screen you will see, new display. Here you can choose charging method between AC and DC or use both at the same time. In this display, vehicle settings will be read by a simulator and prepare charger for simulate charging flow.";

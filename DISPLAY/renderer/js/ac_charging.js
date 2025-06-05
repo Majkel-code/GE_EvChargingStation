@@ -80,7 +80,7 @@ function ChangeInfoStageAc(){
   }
 }
 
-CircleAcDivInformation.addEventListener("click", ()=>{
+CircleAcDivInformation.addEventListener("pointerup", ()=>{
   ChangeInfoStageAc();
 })
 
@@ -171,18 +171,18 @@ function PrepareCustomAcSession(){
   NumpadCustomSession.classList.add("ac-numpad")
 }
 
-connectAcButton.addEventListener("click", () => {
+connectAcButton.addEventListener("pointerup", () => {
   SendAcConncet();
 });
 
-startAcChargingButton.addEventListener("click", () =>{
+startAcChargingButton.addEventListener("pointerup", () =>{
   SendAcStart();
 })
 
-startCustomAcChargingButton.addEventListener("click", () => {
+startCustomAcChargingButton.addEventListener("pointerup", () => {
   PrepareCustomAcSession();
 })
 
-disconnectAcVehicleButton.addEventListener("click", () =>{
+disconnectAcVehicleButton.addEventListener("pointerup", () =>{
   SendAcDisconnect();
 })

@@ -5,15 +5,14 @@ import time
 import PyInstaller.config
 dir = os.getcwd()
 
-PyInstaller.config.CONF['distpath'] = f"{dir}/BUILDER/charger"
+PyInstaller.config.CONF['distpath'] = f"{dir}/BUILDER/vehicle"
 
 a = Analysis(
-    [f'{dir}/CHARGER/charger_server.py'],
+    [f'{dir}/VEHICLE/vehicle_server.py'],
     pathex=[],
     binaries=[],
-    datas=[(f'{dir}/CHARGER/config', 'config'),
-    (f'{dir}/CHARGER/modules', 'modules'),
-    (f'{dir}/CHARGER/simulations', 'simulations')],
+    datas=[(f'{dir}/VEHICLE/veh_config', 'veh_config'),
+    (f'{dir}/VEHICLE/veh_modules', 'veh_modules')],
     hiddenimports=['requests', 'multiprocessing'],
     hookspath=[],
     hooksconfig={},
@@ -31,7 +30,7 @@ exe = EXE(
     a.binaries,
     a.datas,
     [],
-    name='charger-app',
+    name='vehicle-app',
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,

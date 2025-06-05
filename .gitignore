@@ -2,8 +2,7 @@ __pycache__/
 logs
 AUTHORIZATION_KEY
 build/
-BUILDER/vehicle
-BUILDER/charger
+BUILDER/
 .vscode
 .DS_Store
 .idea

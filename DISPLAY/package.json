@@ -13,6 +13,6 @@
   "devDependencies": {
     "@electron-forge/cli": "^8.0.0",
     "@electron/rebuild": "^4.2.0",
-    "electron": "^28.3.3"
+    "electron": "^41.10.6"
   }
 }
